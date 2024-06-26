@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fed4620e9e5a35419518f2edc701a9f, type: 3}
+  m_Name: tower_03_SiegeTower 1
+  m_EditorClassIdentifier: 
+  Type: 1
+  GoldCost: 20
+  Sprite: {fileID: 21300000, guid: 961542bf834d173448be6e9b235a3b66, type: 3}
+  GUISprite: {fileID: 21300000, guid: bdd6845875df02742979b38cbafb28c1, type: 3}
+  ProjectilePrefab: {fileID: 6862591093389004980, guid: 0247c0895b8dd2345a1d1913dd8e8172, type: 3}
+  RateOfFire: 1.8

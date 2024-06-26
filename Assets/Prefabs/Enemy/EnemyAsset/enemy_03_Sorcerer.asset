@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae52708488e3734480cede62283c381, type: 3}
+  m_Name: enemy_03_Sorcerer
+  m_EditorClassIdentifier: 
+  Type: 1
+  Name: Sorcerer
+  SpriteColor: {r: 1, g: 1, b: 1, a: 1}
+  SpriteScale: {x: 0.6, y: 0.8}
+  Animations: {fileID: 9100000, guid: 125e4008286f48140ba2288a56e0be34, type: 2}
+  ColliderRadius: 0.29
+  ColliderOffsetX: 0
+  ColliderOffsetY: 0
+  TeamID: 2
+  HitPoints: 70
+  ScoreValue: 3
+  MoveSpeed: 0.8
+  damageToPlayer: 1
+  goldValue: 2

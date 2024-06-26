@@ -1,0 +1,86 @@
+using UnityEngine;
+using TowerDefence;
+namespace SpaceShooter
+{
+    public class Explosion : MonoBehaviour
+    {
+        public enum ExplosionType
+        {
+            Missle,
+            Frost,
+            Siege,
+            Mine
+        }
+
+        [SerializeField] private ExplosionType m_Type;
+        [SerializeField] private float m_DebuffTime;
+
+        public void Explode(float explosionRadius, float explosionDamage, Projectile projectile = null, DebuffEffect disablerPrefab = null)
+        {
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+
+            if (hitColliders == null) return;
+
+            foreach (Collider2D hit in hitColliders)
+            {
+                Enemy enemy = hit.transform.root.GetComponent<Enemy>();
+
+                    var dist = Vector2.Distance(transform.position, hit.transform.position);
+                    int damage = CalculateDamage(dist, explosionRadius, explosionDamage);
+
+                    if (hit.transform.root.GetComponent<Destructible>() == true)
+                    {
+                        hit.transform.root.GetComponent<Destructible>().ApplyDamage(damage);
+
+                        if (projectile != null)
+                            projectile.OnTargetDestroyed(hit.transform.root.GetComponent<Destructible>());
+                    }
+
+                /*
+                if (m_Type == ExplosionType.Missle || m_Type == ExplosionType.Mine)
+                {
+                    if (hit.transform.root.TryGetComponent(out Rigidbody2D rb) == true)
+                    {
+                        Vector2 direction = (hit.transform.position - transform.position).normalized;
+
+                        if (hit.transform.root.GetComponent<SpaceShip>() == true)
+                            rb.AddForce(direction * CalculateDamage(dist, explosionRadius, explosionDamage) * 2f, ForceMode2D.Force);
+
+                        rb.AddForce(direction * CalculateDamage(dist, explosionRadius, explosionDamage) * 4f, ForceMode2D.Force);
+                    }
+                }
+                */
+                if (m_Type == ExplosionType.Frost)
+                {
+                    if (disablerPrefab != null)
+                    {
+                        if (hit.transform.root.TryGetComponent(out SpaceShip ship) == true)
+                        {
+                            if (hit.transform.root.TryGetComponent(out DebuffEffect debuff) == true)
+                            {
+                                ship.MaxLinearVelocity *= 2;
+                                ship.Thrust *= 2;
+
+                                Destroy(debuff);
+                            }
+
+                            DebuffEffect de = hit.transform.root.gameObject.AddComponent<DebuffEffect>();
+
+                            de.Type = DebuffEffect.DebuffType.Frost;
+                            de.DebuffTime = m_DebuffTime;
+                        }
+                    }
+                }
+            }
+
+            Destroy(gameObject);
+        }
+
+        private int CalculateDamage(float distance, float explosionRadius, float explosionDamage)
+        {
+            float _damage = explosionDamage * (1 - Mathf.Clamp01(distance / explosionRadius));
+
+            return (int)_damage;
+        }
+    }
+}

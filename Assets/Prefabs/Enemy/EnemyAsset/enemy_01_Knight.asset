@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae52708488e3734480cede62283c381, type: 3}
+  m_Name: enemy_01_Knight
+  m_EditorClassIdentifier: 
+  Type: 1
+  Name: Knight
+  SpriteColor: {r: 0.6053459, g: 1, b: 0.5990566, a: 1}
+  SpriteScale: {x: 0.8, y: 0.8}
+  Animations: {fileID: 9100000, guid: 9cad087c61cbd434c8b713fe02e85b10, type: 2}
+  ColliderRadius: 0.22
+  ColliderOffsetX: 0
+  ColliderOffsetY: 0.08
+  TeamID: 2
+  HitPoints: 30
+  ScoreValue: 1
+  MoveSpeed: 1.4
+  damageToPlayer: 1
+  goldValue: 1

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae52708488e3734480cede62283c381, type: 3}
+  m_Name: enemy_04_GhostMage
+  m_EditorClassIdentifier: 
+  Type: 2
+  Name: Ghost Mage
+  SpriteColor: {r: 0.6556604, g: 0.9527166, b: 1, a: 1}
+  SpriteScale: {x: 3, y: 3}
+  Animations: {fileID: 9100000, guid: 56f6ad8ea0b0a5e47945c37327742090, type: 2}
+  ColliderRadius: 0.35
+  ColliderOffsetX: 0
+  ColliderOffsetY: 0
+  TeamID: 2
+  HitPoints: 80
+  ScoreValue: 5
+  MoveSpeed: 1.6
+  damageToPlayer: 1
+  goldValue: 4
