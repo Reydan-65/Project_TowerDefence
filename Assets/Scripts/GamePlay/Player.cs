@@ -132,10 +132,10 @@ namespace SpaceShooter
         {
             m_CurrentNumLives -= damage;
 
-            if (m_CurrentNumLives <= 0)
-            {
-                LevelController.Instance.RestartLevel();
-            }
+            //if (m_CurrentNumLives <= 0)
+            //{
+            //    LevelController.Instance.RestartLevel();
+            //}
         }
 
         public void ReduceEnemiesLast()

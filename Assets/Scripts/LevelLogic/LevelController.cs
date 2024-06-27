@@ -12,7 +12,7 @@ namespace SpaceShooter
 
         [SerializeField] private LevelCondition[] m_Conditions;
 
-        //public event UnityAction LevelPassed;
+        public event UnityAction LevelPassed;
         public event UnityAction LevelLost;
 
         private bool m_IsLevelCompleted;
@@ -78,23 +78,42 @@ namespace SpaceShooter
 
         private void Lose()
         {
+            StopLevelActivity();
+
             LevelLost.Invoke();
-            Time.timeScale = 0f;
+            //Time.timeScale = 0f;
+        }
+
+        private static void StopLevelActivity()
+        {
+            BuyControl buyControl = FindAnyObjectByType<BuyControl>();
+
+            if (buyControl != null)
+                buyControl.gameObject.SetActive(false);
+
+            foreach (var enemy in FindObjectsOfType<Enemy>())
+            {
+                enemy.GetComponent<SpaceShip>().enabled = false;
+                enemy.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+
+            void DisableAll<T>() where T : MonoBehaviour
+            {
+                foreach (var obj in FindObjectsOfType<T>())
+                {
+                    obj.enabled = false;
+                }
+            }
+
+            DisableAll<Spawner>();
+            DisableAll<Projectile>();
+            DisableAll<Tower>();
         }
 
         private void Pass()
         {
-            if (m_LevelSequencesController.CurrentLevelIsLast() == false)
-            {
-                string nextLevelSceneName = m_LevelSequencesController.GetNextLevelProperties(m_CurrentLevelProperties).SceneName;
-
-                SceneManager.LoadScene(nextLevelSceneName);
-            }
-            else
-                SceneManager.LoadScene(0);
-
-            //LevelPassed.Invoke();
-            //Time.timeScale = 0f;
+            LevelPassed.Invoke();
+            Time.timeScale = 0f;
         }
 
         public void LoadNextLevel()
