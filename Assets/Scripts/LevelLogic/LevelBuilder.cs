@@ -27,6 +27,7 @@ namespace SpaceShooter
             TD_Player player = (TD_Player)m_PlayerSpawner.Spawn();
 
             player.Init();
+
             //m_SoundManager.Init();
 
             //Instantiate(m_PlayerHUDPrefab);       

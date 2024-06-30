@@ -9,6 +9,7 @@ namespace SpaceShooter
     public class LevelController : SingletonBase<LevelController>
     {
         private const string MainMenuSceneName = "main_menu";
+        private const string LevelMapSceneName = "levelMap";
 
         [SerializeField] private LevelCondition[] m_Conditions;
 
@@ -25,6 +26,8 @@ namespace SpaceShooter
         public AudioSource AudioSource { get => m_AudioSource; set => m_AudioSource = value; }
 
         public float LevelTime => m_LevelTime;
+
+        public LevelProperties CurrentLevelProperties => m_CurrentLevelProperties;
 
         private void Start()
         {
@@ -44,6 +47,13 @@ namespace SpaceShooter
 
         private void FixedUpdate()
         {
+
+#if UNITY_EDITOR
+
+            if (Input.GetKeyDown(KeyCode.F3) == true) Pass();
+
+#endif
+
             if (m_IsLevelCompleted == false)
             {
                 m_LevelTime += Time.deltaTime;
@@ -112,17 +122,25 @@ namespace SpaceShooter
 
         private void Pass()
         {
+            Instance.CurrentLevelProperties.LevelScore = 1;
+
+            MapCompletion.Instance.SaveLevelResult(m_CurrentLevelProperties.LevelScore);
+            StopLevelActivity();
+
             LevelPassed.Invoke();
-            Time.timeScale = 0f;
+            //Time.timeScale = 0f;
         }
 
         public void LoadNextLevel()
         {
             if (m_LevelSequencesController.CurrentLevelIsLast() == false)
             {
+                /*
                 string nextLevelSceneName = m_LevelSequencesController.GetNextLevelProperties(m_CurrentLevelProperties).SceneName;
 
                 SceneManager.LoadScene(nextLevelSceneName);
+                */
+                SceneManager.LoadScene(LevelMapSceneName);
             }
             else
                 SceneManager.LoadScene(MainMenuSceneName);

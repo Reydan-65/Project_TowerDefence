@@ -13,13 +13,11 @@ MonoBehaviour:
   m_Name: levelSequence
   m_EditorClassIdentifier: 
   LevelsProperties:
-  - m_LevelNum: TODO
-    m_Title: TODO
-    m_LevelObjective: TODO
-    m_SceneName: level_01
-    m_PreviewImage: {fileID: 0}
-  - m_LevelNum: TODO
-    m_Title: TODO
-    m_LevelObjective: TODO
-    m_SceneName: level_02
-    m_PreviewImage: {fileID: 0}
+  - m_SceneName: level_01
+    m_LevelScore: 1
+  - m_SceneName: level_02
+    m_LevelScore: 0
+  - m_SceneName: level_03
+    m_LevelScore: 0
+  - m_SceneName: level_04
+    m_LevelScore: 0

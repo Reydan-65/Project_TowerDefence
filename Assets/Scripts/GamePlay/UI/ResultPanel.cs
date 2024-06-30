@@ -9,6 +9,7 @@ namespace SpaceShooter
         private const string PassedText = "Passed";
         private const string LostText = "Lose";
         private const string NextText = "Next";
+        private const string LevelDoneText = "Done";
         private const string RestartText = "Restart";
         private const string MainMenuText = "Main Menu";
         private const string KillsPrefix = "Kills: ";
@@ -58,7 +59,8 @@ namespace SpaceShooter
             }
             else
             {
-                m_Button.text = NextText;
+                /*m_Button.text = NextText;*/
+                m_Button.text = LevelDoneText;
             }
         }
 
