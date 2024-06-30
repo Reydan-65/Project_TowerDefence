@@ -8,41 +8,55 @@ namespace TowerDefence
     [Serializable]
     public class Saver<T>
     {
-        private static string Path(string filename)
+        /// <summary>
+        /// Если файл сохранения найден - загружаем сохраненные данные.
+        /// </summary>
+        public static void TryLoad(string filename, ref T data)
+        {
+            var path = FileHandler.Path(filename);
+
+            if (File.Exists(path))
+            {
+                var dataString = File.ReadAllText(path);
+                var saver = JsonUtility.FromJson<Saver<T>>(dataString);
+                data = saver.data;
+            }
+        }
+
+        /// <summary>
+        /// Сохранение данных в файл.
+        /// </summary>
+        public static void Save(string filename, T data)
+        {
+            var wrapper = new Saver<T> { data = data };
+            var dataString = JsonUtility.ToJson(wrapper);
+
+            File.WriteAllText(FileHandler.Path(filename), dataString);
+        }
+
+        public T data;
+    }
+
+    public static class FileHandler
+    {
+        public static string Path(string filename)
         {
             return $"{Application.persistentDataPath}/{filename}";
         }
 
-        public static void TryLoad(string filename, ref T data)
+        public static void Reset(string filename)
         {
             var path = Path(filename);
 
             if (File.Exists(path))
             {
-                Debug.Log($"File {path} loaded.");
-            }
-            else
-            {
-                foreach (var properties in LevelSequencesController.Instance.LevelSequences.LevelsProperties)
-                {
-                    properties.LevelScore = 0;
-                }
-
-                Debug.Log($"File {path} not found.");
+                File.Delete(path);
             }
         }
 
-        public static void Save(string filename, T data)
+        internal static bool HasFile(string filename)
         {
-            Debug.Log($"File {Path(filename)} saved.");
-
-
-
-            var dataString = JsonUtility.ToJson(data);
-
-            //Debug.Log(dataString);
-
-            File.WriteAllText(Path(filename), dataString);
+            return File.Exists(Path(filename));
         }
     }
 }

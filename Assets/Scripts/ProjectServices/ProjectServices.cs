@@ -13,7 +13,9 @@ namespace SpaceShooter
             m_LevelSequencesController.Init();
 
             m_MapCompletion = FindAnyObjectByType<MapCompletion>();
-            m_MapCompletion.Init();
+
+            if (m_MapCompletion != null)
+                m_MapCompletion.Init();
         }
     }
 }

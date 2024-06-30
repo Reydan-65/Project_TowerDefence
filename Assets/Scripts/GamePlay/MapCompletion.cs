@@ -6,7 +6,7 @@ namespace TowerDefence
 {
     public class MapCompletion : SingletonBase<MapCompletion>
     {
-        const string filename = "completion.dat";
+        public const string filename = "completion.dat";
 
         [Serializable]
         private class LevelScoreData
@@ -24,7 +24,6 @@ namespace TowerDefence
             for (int i = 0; i < m_CompletionData.Length; i++)
             {
                 m_CompletionData[i].EpisodeName = LevelSequencesController.Instance.LevelSequences.LevelsProperties[i].SceneName;
-                m_CompletionData[i].Score = LevelSequencesController.Instance.LevelSequences.LevelsProperties[i].LevelScore;
             }
         }
 
@@ -56,7 +55,7 @@ namespace TowerDefence
                 if (item.EpisodeName == currentLevelProperties.SceneName)
                 {
                     if (levelScore > item.Score)
-                    { 
+                    {
                         item.Score = levelScore;
 
                         Saver<LevelScoreData[]>.Save(filename, m_CompletionData);

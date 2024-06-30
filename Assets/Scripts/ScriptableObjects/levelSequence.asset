@@ -14,10 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelsProperties:
   - m_SceneName: level_01
-    m_LevelScore: 1
   - m_SceneName: level_02
-    m_LevelScore: 0
   - m_SceneName: level_03
-    m_LevelScore: 0
   - m_SceneName: level_04
-    m_LevelScore: 0

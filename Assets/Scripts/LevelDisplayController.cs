@@ -14,23 +14,7 @@ namespace TowerDefence
             var drawLevel = 0;
             int levelScore = 1;
 
-            //LevelProperties[] properties = LevelSequencesController.Instance.LevelSequences.LevelsProperties;
-
-            /*
-            for (int i = 0; i < properties.Length; i++)
-            {
-                print(properties[i].SceneName);
-            }
-                print(drawLevel);
-                print(levelScore);
-                print(m_MapLevels.Length);
-                print(m_MapLevels[drawLevel]);
-                print(MapCompletion.Instance);
-            */
-            // Исправить...
-
             // Отрисовка всех доступных уровней
-
             while (levelScore != 0 && drawLevel < m_MapLevels.Length &&
                    MapCompletion.Instance.TryIndex(drawLevel, out var episodeName, out levelScore))
             {

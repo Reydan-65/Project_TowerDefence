@@ -12,8 +12,6 @@ namespace SpaceShooter
         /*[SerializeField] private Sprite m_PreviewImage;
         [SerializeField] private LevelProperties m_NextLevel;*/
 
-        [SerializeField] private int m_LevelScore;
-
         /*
         public string LevelNum => m_LevelNum;
         public string Title => m_Title;
@@ -22,7 +20,5 @@ namespace SpaceShooter
         */
 
         public string SceneName { get => m_SceneName; set => m_SceneName = value; }
-
-        public int LevelScore { get => m_LevelScore; set => m_LevelScore = value; }
     }
 }

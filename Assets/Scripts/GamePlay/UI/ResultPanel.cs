@@ -6,11 +6,12 @@ namespace SpaceShooter
 {
     public class ResultPanel : MonoBehaviour
     {
-        private const string PassedText = "Passed";
-        private const string LostText = "Lose";
+        private const string PassedText = "You Won!";
+        private const string LostText = "You Lose!";
         private const string NextText = "Next";
-        private const string LevelDoneText = "Done";
+        private const string LevelDoneText = "Continue";
         private const string RestartText = "Restart";
+        private const string BackToLevelMapText = "Back";
         private const string MainMenuText = "Main Menu";
         private const string KillsPrefix = "Kills: ";
         private const string ScoresPrefix = "Score: ";
@@ -23,11 +24,11 @@ namespace SpaceShooter
         [SerializeField] private TextMeshProUGUI m_Button;
 
         private bool m_LevelPassed = false;
-        private bool AudioClipHasPlayed = false;
+        //private bool AudioClipHasPlayed = false;
 
         private void Start()
         {
-            AudioClipHasPlayed = false;
+            //AudioClipHasPlayed = false;
 
             gameObject.SetActive(false);
 
@@ -73,21 +74,21 @@ namespace SpaceShooter
             //FillLevelStatistics();
 
             m_Result.text = LostText;
-            m_Button.text = RestartText;
+            m_Button.text = BackToLevelMapText;
         }
-
+        /*
         private void FillLevelStatistics()
         {
             m_Kills.text = KillsPrefix + Player.Instance.NumKills.ToString();
             m_Score.text = ScoresPrefix + Player.Instance.Score.ToString();
             m_Time.text = TimePrefix + LevelController.Instance.LevelTime.ToString("F0");
         }
-
+        */
         public void EX_OnButtonAction()
         {
             gameObject.SetActive(false);
 
-            AudioClipHasPlayed = false;
+            //AudioClipHasPlayed = false;
 
             if (m_LevelPassed == true)
             {
@@ -99,6 +100,7 @@ namespace SpaceShooter
             }
         }
 
+        /*
         // Выключить фоновый звук, и включить звук события
         private void PlaySoundByIndexOneTime(int index)
         {
@@ -112,5 +114,6 @@ namespace SpaceShooter
                 AudioClipHasPlayed = true;
             }
         }
+        */
     }
 }

@@ -17,8 +17,6 @@ namespace TowerDefence
         private void Awake()
         {
             m_LevelProperties = LevelSequencesController.Instance.LevelSequences.LevelsProperties[m_LevelIndex];
-
-            SetLevelData(m_LevelProperties.SceneName, m_LevelProperties.LevelScore);
         }
 
         public void EX_LoadLevel()

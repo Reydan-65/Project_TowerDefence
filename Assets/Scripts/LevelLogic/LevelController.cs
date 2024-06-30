@@ -29,6 +29,8 @@ namespace SpaceShooter
 
         public LevelProperties CurrentLevelProperties => m_CurrentLevelProperties;
 
+        public int LevelScore => 1;
+
         private void Start()
         {
             Time.timeScale = 1.0f;
@@ -47,22 +49,18 @@ namespace SpaceShooter
 
         private void FixedUpdate()
         {
-
-#if UNITY_EDITOR
-
-            if (Input.GetKeyDown(KeyCode.F3) == true) Pass();
-
-#endif
-
-            if (m_IsLevelCompleted == false)
+            if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("levelMap"))
             {
-                m_LevelTime += Time.deltaTime;
-                CheckLevelConditions();
-            }
+                if (m_IsLevelCompleted == false)
+                {
+                    m_LevelTime += Time.deltaTime;
+                    CheckLevelConditions();
+                }
 
-            if (Player.Instance.CurrentNumLives == 0)
-            {
-                Lose();
+                if (Player.Instance.CurrentNumLives == 0)
+                {
+                    Lose();
+                }
             }
         }
 
@@ -122,9 +120,7 @@ namespace SpaceShooter
 
         private void Pass()
         {
-            Instance.CurrentLevelProperties.LevelScore = 1;
-
-            MapCompletion.Instance.SaveLevelResult(m_CurrentLevelProperties.LevelScore);
+            MapCompletion.Instance.SaveLevelResult(LevelScore);
             StopLevelActivity();
 
             LevelPassed.Invoke();
@@ -148,7 +144,8 @@ namespace SpaceShooter
 
         public void RestartLevel()
         {
-            SceneManager.LoadScene(m_CurrentLevelProperties.SceneName);
+            SceneManager.LoadScene(LevelMapSceneName);
+            /*SceneManager.LoadScene(m_CurrentLevelProperties.SceneName);*/
         }
     }
 }
