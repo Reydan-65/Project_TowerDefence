@@ -51,6 +51,7 @@ namespace TowerDefence
             TD_Player.Instance.ChangeGold(m_Gold);
         }
 
+#if UNITY_EDITOR
         [CustomEditor(typeof(Enemy))]
         public class EnemyInspector : Editor
         {
@@ -66,5 +67,7 @@ namespace TowerDefence
                 }
             }
         }
+#endif
+
     }
 }

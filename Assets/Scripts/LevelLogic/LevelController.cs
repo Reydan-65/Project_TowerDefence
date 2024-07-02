@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using Common;
 using TowerDefence;
 
 namespace SpaceShooter
@@ -131,12 +130,9 @@ namespace SpaceShooter
         {
             if (m_LevelSequencesController.CurrentLevelIsLast() == false)
             {
-                /*
                 string nextLevelSceneName = m_LevelSequencesController.GetNextLevelProperties(m_CurrentLevelProperties).SceneName;
 
                 SceneManager.LoadScene(nextLevelSceneName);
-                */
-                SceneManager.LoadScene(LevelMapSceneName);
             }
             else
                 SceneManager.LoadScene(MainMenuSceneName);
@@ -144,8 +140,12 @@ namespace SpaceShooter
 
         public void RestartLevel()
         {
+            SceneManager.LoadScene(m_CurrentLevelProperties.SceneName);
+        }
+
+        public void ReturnLevelMap()
+        {
             SceneManager.LoadScene(LevelMapSceneName);
-            /*SceneManager.LoadScene(m_CurrentLevelProperties.SceneName);*/
         }
     }
 }

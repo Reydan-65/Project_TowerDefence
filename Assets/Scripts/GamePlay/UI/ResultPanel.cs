@@ -17,9 +17,11 @@ namespace SpaceShooter
         private const string ScoresPrefix = "Score: ";
         private const string TimePrefix = "Time: ";
 
+        /*
         [SerializeField] private TextMeshProUGUI m_Kills;
         [SerializeField] private TextMeshProUGUI m_Score;
         [SerializeField] private TextMeshProUGUI m_Time;
+        */
         [SerializeField] private TextMeshProUGUI m_Result;
         [SerializeField] private TextMeshProUGUI m_Button;
 
@@ -60,8 +62,7 @@ namespace SpaceShooter
             }
             else
             {
-                /*m_Button.text = NextText;*/
-                m_Button.text = LevelDoneText;
+                m_Button.text = NextText;
             }
         }
 
@@ -74,7 +75,7 @@ namespace SpaceShooter
             //FillLevelStatistics();
 
             m_Result.text = LostText;
-            m_Button.text = BackToLevelMapText;
+            m_Button.text = RestartText;
         }
         /*
         private void FillLevelStatistics()
@@ -98,6 +99,11 @@ namespace SpaceShooter
             {
                 LevelController.Instance.RestartLevel();
             }
+        }
+
+        public void EX_ReturnLevelMap()
+        {
+            LevelController.Instance.ReturnLevelMap();
         }
 
         /*
