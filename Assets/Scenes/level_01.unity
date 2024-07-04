@@ -563,6 +563,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1304182378}
     - target: {fileID: 4925879468183622336, guid: 78d1d373fe277fc4cb6607f68bb5331e, type: 3}
+      propertyPath: m_ReferenceTime
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4925879468183622336, guid: 78d1d373fe277fc4cb6607f68bb5331e, type: 3}
       propertyPath: m_Conditions.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -2616,6 +2620,7 @@ MonoBehaviour:
   - {fileID: 416559671}
   - {fileID: 3524590413977423586}
   - {fileID: 7992735894908067050}
+  m_TimeLimit: 16
 --- !u!1 &1934743871
 GameObject:
   m_ObjectHideFlags: 0

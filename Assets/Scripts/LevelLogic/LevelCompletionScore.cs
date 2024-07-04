@@ -1,12 +1,24 @@
 using TowerDefence;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 namespace SpaceShooter
 {
     public class LevelCompletionScore : LevelCondition
     {
-        //[SerializeField] private int m_Score;
+        public class Stats
+        {
+            public int numKills;
+            public float time;
+            public int score;
+        }
+
+        public static Stats TotalStats { get; private set; }
+
         [SerializeField] private EnemySpawner[] m_EnemySpawners;
+        [SerializeField] private float m_TimeLimit;
+
+        //[SerializeField] private int m_Score;
         //[SerializeField] private int m_Kills;
         //[SerializeField] private int m_BossesIsDead;
 
@@ -29,17 +41,24 @@ namespace SpaceShooter
             m_EnemiesLast = sum;
         }
 
+
+        private void UpdateCurrentLevelStats()
+        {
+            // Бонус за время прохождения
+            int timeBonus = (int)(LevelController.Instance.ReferenceTime - LevelController.Instance.LevelTime);
+
+            if (timeBonus > 0)
+            {
+                TotalStats.score += timeBonus;
+            }
+        }
+
         public override bool IsCompleted
         {
             get
             {
-                //if (Player.Instance.ActiveShip == null) return false;
-
-                if (EnemiesLast <= 0 /*Player.Instance.Score >= m_Score && Player.Instance.NumKills >= m_Kills &&
-                    Player.Instance.NumBossesIsDead == m_BossesIsDead*/)
+                if (EnemiesLast <= 0 || LevelController.Instance.LevelTime >= m_TimeLimit)
                 {
-                    //m_LevelExit.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-
                     return true;
                 }
                 

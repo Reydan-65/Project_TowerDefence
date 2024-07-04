@@ -18,6 +18,8 @@ namespace SpaceShooter
         private bool m_IsLevelCompleted;
         private float m_LevelTime;
 
+        [SerializeField] private float m_ReferenceTime;
+
         private LevelSequencesController m_LevelSequencesController;
         private LevelProperties m_CurrentLevelProperties;
         private AudioSource m_AudioSource;
@@ -25,18 +27,30 @@ namespace SpaceShooter
         public AudioSource AudioSource { get => m_AudioSource; set => m_AudioSource = value; }
 
         public float LevelTime => m_LevelTime;
+        public float ReferenceTime => m_ReferenceTime;
 
         public LevelProperties CurrentLevelProperties => m_CurrentLevelProperties;
 
-        public int LevelScore => 1;
+        private int m_LevelScore = 3;
 
         private void Start()
         {
             Time.timeScale = 1.0f;
             m_LevelTime = 0;
 
+            m_ReferenceTime += Time.time;
+
             m_LevelSequencesController = LevelSequencesController.Instance;
             m_CurrentLevelProperties = m_LevelSequencesController.GetCurrentLoadedLevel();
+
+            // —нижение очков уровн€ при первом получении урона
+            void LifeScoreChange(int _)
+            {
+                m_LevelScore -= 1;
+                TD_Player.OnLivesUpdate -= LifeScoreChange;
+            }
+            TD_Player.OnLivesUpdate += LifeScoreChange;
+
 
             //FollowCamera camera = FindAnyObjectByType<FollowCamera>();
 
@@ -119,8 +133,15 @@ namespace SpaceShooter
 
         private void Pass()
         {
-            MapCompletion.Instance.SaveLevelResult(LevelScore);
+            if (m_ReferenceTime <= Time.time)
+                m_LevelScore -= 1;
+
+            //if (TD_Player.Instance.CurrentNumLives < TD_Player.Instance.NumLives)
+            //    m_LevelScore -= 1;
+
+            MapCompletion.Instance.SaveLevelResult(m_LevelScore);
             StopLevelActivity();
+            print(m_LevelScore);
 
             LevelPassed.Invoke();
             //Time.timeScale = 0f;

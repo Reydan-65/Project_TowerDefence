@@ -12,6 +12,8 @@ namespace SpaceShooter
 
         [SerializeField] protected int m_NumLives;
         protected int m_CurrentNumLives;
+
+        public int NumLives => m_NumLives;
         public int CurrentNumLives { get { return m_CurrentNumLives; } }
 
         //[SerializeField] private SpaceShip m_PlayerShipPrefab;

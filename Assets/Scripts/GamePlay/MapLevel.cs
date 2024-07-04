@@ -1,16 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using SpaceShooter;
-using TMPro;
+using UnityEngine.UI;
 
 namespace TowerDefence
 {
     public class MapLevel : MonoBehaviour
     {
         private LevelProperties m_LevelProperties;
+        [SerializeField] private RectTransform m_ResultPanel;
+        [SerializeField] private Image[] m_ResultImage;
 
         [SerializeField] private int m_LevelIndex;
-        [SerializeField] private TextMeshProUGUI m_Text;
         
         public int LevelIndex => m_LevelIndex;
 
@@ -27,7 +28,13 @@ namespace TowerDefence
         public void SetLevelData(string episodeName, int levelScore)
         {
             m_LevelProperties.SceneName = episodeName;
-            m_Text.text = $"{levelScore} / 3";
+
+            m_ResultPanel.gameObject.SetActive(levelScore > 0);
+
+            for (int i = 0; i < levelScore; i++)
+            {
+                m_ResultImage[i].color = Color.white;
+            }
         }
     }
 }
