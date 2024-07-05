@@ -1,5 +1,4 @@
 using TowerDefence;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 namespace SpaceShooter
@@ -15,7 +14,7 @@ namespace SpaceShooter
 
         public static Stats TotalStats { get; private set; }
 
-        [SerializeField] private EnemySpawner[] m_EnemySpawners;
+        //[SerializeField] private EnemySpawner[] m_EnemySpawners;
         [SerializeField] private float m_TimeLimit;
 
         //[SerializeField] private int m_Score;
@@ -23,7 +22,7 @@ namespace SpaceShooter
         //[SerializeField] private int m_BossesIsDead;
 
         //private LevelCompletionPosition m_LevelExit;
-
+        /*
         private int m_EnemiesLast;
         public int EnemiesLast { get => m_EnemiesLast; set => m_EnemiesLast = value; }
 
@@ -40,8 +39,8 @@ namespace SpaceShooter
 
             m_EnemiesLast = sum;
         }
-
-
+        
+        
         private void UpdateCurrentLevelStats()
         {
             // Бонус за время прохождения
@@ -52,7 +51,17 @@ namespace SpaceShooter
                 TotalStats.score += timeBonus;
             }
         }
+        */
 
+        private void Start()
+        {
+            FindObjectOfType<EnemyWaveManager>().OnAllWavesDead += () =>
+            {
+                IsCompleted = true;
+            };
+        }
+
+        /*
         public override bool IsCompleted
         {
             get
@@ -64,6 +73,7 @@ namespace SpaceShooter
                 
                 return false;
             }
-        }
+        }*/
+
     }
 }

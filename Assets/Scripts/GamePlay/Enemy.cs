@@ -1,6 +1,7 @@
 using UnityEngine;
 using SpaceShooter;
 using UnityEditor;
+using System;
 
 namespace TowerDefence
 {
@@ -19,6 +20,10 @@ namespace TowerDefence
         private int m_Gold;
 
         public UnitType Type => m_Type;
+
+        public event Action OnEnemyDestroy;
+
+        public void OnDestroy() { OnEnemyDestroy?.Invoke(); }
 
         private void Start()
         {

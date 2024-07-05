@@ -140,9 +140,11 @@ namespace SpaceShooter
             //}
         }
 
+        /*
         public void ReduceEnemiesLast()
         {
             m_LevelCompletionScore.EnemiesLast -= 1;
         }
+        */
     }
 }

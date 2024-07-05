@@ -29,7 +29,7 @@ namespace TowerDefence
             else
             {
                 OnEndPath.Invoke();
-                TD_Player.Instance.ReduceEnemiesLast();
+                //TD_Player.Instance.ReduceEnemiesLast();
                 Destroy(gameObject);
             }
         }

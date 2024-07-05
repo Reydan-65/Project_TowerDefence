@@ -41,7 +41,7 @@ namespace SpaceShooter
                 //    }
                 //}
 
-                TD_Player.Instance.ReduceEnemiesLast();
+                //TD_Player.Instance.ReduceEnemiesLast();
             }
         }
 

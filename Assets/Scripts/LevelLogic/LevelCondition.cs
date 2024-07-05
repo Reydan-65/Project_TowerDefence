@@ -4,6 +4,6 @@ namespace SpaceShooter
 {
     public abstract class LevelCondition : MonoBehaviour
     {
-        public virtual bool IsCompleted { get; }
+        public virtual bool IsCompleted { get; set; }
     }
 }

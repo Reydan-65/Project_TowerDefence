@@ -129,6 +129,7 @@ namespace SpaceShooter
             DisableAll<Spawner>();
             DisableAll<Projectile>();
             DisableAll<Tower>();
+            DisableAll<NextWave_GUI>();
         }
 
         private void Pass()
