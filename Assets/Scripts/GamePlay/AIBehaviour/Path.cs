@@ -1,12 +1,15 @@
 using UnityEngine;
 using SpaceShooter;
+using Common;
 
 namespace TowerDefence
 {
     public class Path : MonoBehaviour
     {
+        [SerializeField] private CircleArea m_StartArea;
         [SerializeField] private AI_PatrolArea[] m_PatrolAreas;
 
+        public CircleArea StartArea => m_StartArea;
         public int Lenght { get => m_PatrolAreas.Length; }
         public AI_PatrolArea this[int i] { get => m_PatrolAreas[i]; }
 
