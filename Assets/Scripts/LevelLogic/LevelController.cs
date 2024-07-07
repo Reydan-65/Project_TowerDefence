@@ -21,7 +21,10 @@ namespace SpaceShooter
         [SerializeField] private float m_ReferenceTime;
 
         private LevelSequencesController m_LevelSequencesController;
+
         private LevelProperties m_CurrentLevelProperties;
+        private BranchLevelProperties m_CurrentBranchLevelProperties;
+
         private AudioSource m_AudioSource;
 
         public AudioSource AudioSource { get => m_AudioSource; set => m_AudioSource = value; }
@@ -30,6 +33,7 @@ namespace SpaceShooter
         public float ReferenceTime => m_ReferenceTime;
 
         public LevelProperties CurrentLevelProperties => m_CurrentLevelProperties;
+        public BranchLevelProperties CurrentBranchLevelProperties => m_CurrentBranchLevelProperties;
 
         private int m_LevelScore = 3;
 
@@ -41,7 +45,12 @@ namespace SpaceShooter
             m_ReferenceTime += Time.time;
 
             m_LevelSequencesController = LevelSequencesController.Instance;
-            m_CurrentLevelProperties = m_LevelSequencesController.GetCurrentLoadedLevel();
+
+            if (m_LevelSequencesController.GetCurrentLoadedLevel() != null)
+                m_CurrentLevelProperties = m_LevelSequencesController.GetCurrentLoadedLevel();
+
+            if (m_LevelSequencesController.GetCurrentLoadedBranchLevel() != null)
+                m_CurrentBranchLevelProperties = m_LevelSequencesController.GetCurrentLoadedBranchLevel();
 
             // —нижение очков уровн€ при первом получении урона
             void LifeScoreChange(int _)
@@ -49,6 +58,7 @@ namespace SpaceShooter
                 m_LevelScore -= 1;
                 TD_Player.OnLivesUpdate -= LifeScoreChange;
             }
+
             TD_Player.OnLivesUpdate += LifeScoreChange;
 
 
@@ -142,7 +152,6 @@ namespace SpaceShooter
 
             MapCompletion.Instance.SaveLevelResult(m_LevelScore);
             StopLevelActivity();
-            print(m_LevelScore);
 
             LevelPassed.Invoke();
             //Time.timeScale = 0f;
@@ -162,7 +171,11 @@ namespace SpaceShooter
 
         public void RestartLevel()
         {
-            SceneManager.LoadScene(m_CurrentLevelProperties.SceneName);
+            if (m_CurrentLevelProperties != null)
+                SceneManager.LoadScene(m_CurrentLevelProperties.SceneName);
+
+            if (m_CurrentBranchLevelProperties != null)
+                SceneManager.LoadScene(m_CurrentBranchLevelProperties.SceneName);
         }
 
         public void ReturnLevelMap()

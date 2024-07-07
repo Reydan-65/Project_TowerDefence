@@ -26,7 +26,19 @@ namespace SpaceShooter
                     return LevelSequences.LevelsProperties[i];
             }
 
-            Debug.Log("Level properties not found!");
+            return null;
+        }
+
+        public BranchLevelProperties GetCurrentLoadedBranchLevel()
+        {
+            string sceneName = SceneManager.GetActiveScene().name;
+
+            for (int i = 0; i < LevelSequences.BranchLevelsProperties.Length; i++)
+            {
+                if (LevelSequences.BranchLevelsProperties[i].SceneName == sceneName)
+                    return LevelSequences.BranchLevelsProperties[i];
+            }
+
             return null;
         }
 

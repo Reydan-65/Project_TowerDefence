@@ -17,3 +17,6 @@ MonoBehaviour:
   - m_SceneName: level_02
   - m_SceneName: level_03
   - m_SceneName: level_04
+  BranchLevelsProperties:
+  - m_SceneName: level_01_2
+  - m_SceneName: level_02_2
