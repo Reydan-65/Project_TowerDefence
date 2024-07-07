@@ -1,6 +1,4 @@
 using UnityEngine;
-using Common;
-using SpaceShooter;
 using System;
 
 namespace TowerDefence
@@ -10,12 +8,14 @@ namespace TowerDefence
         [SerializeField] private Enemy m_EnemyPrefab;
         [SerializeField] private Path[] m_Paths;
         [SerializeField] private EnemyWave m_CurrentWave;
+        public EnemyWave CurrentWave => m_CurrentWave;
 
         public event Action OnAllWavesDead;
 
         private int m_ActiveEnemyCount = 0;
+        private NextWave_GUI m_NextWaveGUI;
 
-        private void RecordEnemyDead()
+        public void RecordEnemyDead()
         {
             //Если уменьшенное количество врагов равно нулю
             if (--m_ActiveEnemyCount == 0)
@@ -35,6 +35,7 @@ namespace TowerDefence
         private void Start()
         {
             m_CurrentWave.Prepare(SpawnEnemies);
+            m_NextWaveGUI = FindObjectOfType<NextWave_GUI>();
         }
 
         private void SpawnEnemies()
@@ -53,12 +54,15 @@ namespace TowerDefence
                         enemy.GetComponent<TD_PatrolController>().SetPath(m_Paths[pathIndex]);
 
                         m_ActiveEnemyCount++;
-
                     }
                 }
                 else
                     Debug.Log($"Invalid pathIndex in {name}.");
             }
+
+            //Обнуляем прогресс бар
+            m_NextWaveGUI.NextWaveBar.fillAmount = 0f;
+            m_NextWaveGUI.WaveIndex++;
 
             //Готовится следующая волна
             m_CurrentWave = m_CurrentWave.PrepareNext(SpawnEnemies);

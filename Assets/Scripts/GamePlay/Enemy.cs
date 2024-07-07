@@ -20,11 +20,14 @@ namespace TowerDefence
         private int m_Gold;
 
         public UnitType Type => m_Type;
-
+        
         public event Action OnEnemyDestroy;
 
-        public void OnDestroy() { OnEnemyDestroy?.Invoke(); }
-
+        public void OnDestroy()
+        { 
+            OnEnemyDestroy?.Invoke();
+        }
+        
         private void Start()
         {
             gameObject.layer = LayerMask.NameToLayer("Enemy");    
@@ -57,6 +60,7 @@ namespace TowerDefence
         }
 
 #if UNITY_EDITOR
+
         [CustomEditor(typeof(Enemy))]
         public class EnemyInspector : Editor
         {
@@ -72,6 +76,7 @@ namespace TowerDefence
                 }
             }
         }
+
 #endif
 
     }

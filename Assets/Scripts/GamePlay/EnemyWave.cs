@@ -22,7 +22,8 @@ namespace TowerDefence
         }
 
         [SerializeField] private PathGroup[] m_PathGroups;
-        [SerializeField] private float m_PrepareTime = 10f;
+        [SerializeField] private float m_PrepareTime;
+        public float PrepareTime => m_PrepareTime;
 
         public float GetRemainingTime() { return m_PrepareTime - Time.time; }
 

@@ -16,10 +16,8 @@ namespace TowerDefence
         public RectTransform ResultPanel { get { return m_ResultPanel; } }
         public Image[] ResultImage => m_ResultImage;
 
-        [SerializeField] private int m_LevelIndex;
-        public int LevelIndex => m_LevelIndex;
-        [SerializeField] private int m_BranchLevelIndex;
-        public int BranchLevelIndex => m_BranchLevelIndex;
+        private int m_LevelIndex;
+        private int m_BranchLevelIndex;
 
         //Если панель результата уровня активна, уровень считается пройденым...
         public bool IsComplete
@@ -33,11 +31,24 @@ namespace TowerDefence
 
         private void Awake()
         {
+            //Назначаем каждому уровню соответствующую его типу и индексу сцену.
+            int index = -1;
+
+            m_LevelIndex = index;
+            m_BranchLevelIndex = index;
+
+            if (TryGetComponent(out MapBranchLevel branch) == false)
+                m_LevelIndex = transform.GetSiblingIndex();
+            else
+                m_BranchLevelIndex = transform.GetSiblingIndex();
+
             if (m_LevelIndex >= 0)
                 m_LevelProperties = LevelSequencesController.Instance.LevelSequences.LevelsProperties[m_LevelIndex];
 
             if (m_BranchLevelIndex >= 0)
                 m_BranchLevelProperties = LevelSequencesController.Instance.LevelSequences.BranchLevelsProperties[m_BranchLevelIndex];
+            
+            //Отключаем панель результата уровня
             m_ResultPanel.gameObject.SetActive(false);
         }
 

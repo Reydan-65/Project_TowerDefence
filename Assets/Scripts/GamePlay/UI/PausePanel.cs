@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using Common;
+using TowerDefence;
 
 namespace SpaceShooter
 {
@@ -9,10 +10,14 @@ namespace SpaceShooter
     {
         [SerializeField] private GameObject m_Panel;
 
+        private EnemyWaveManager m_EnemyWaveManager;
+
         private bool OnPause = false;
 
         private void Start()
         {
+            m_EnemyWaveManager = FindObjectOfType<EnemyWaveManager>();
+
             OnPause = false;
             gameObject.SetActive(false);
             Time.timeScale = 1.0f;
@@ -50,6 +55,7 @@ namespace SpaceShooter
         public void EX_LoadLevelMap()
         {
             OnPause = false;
+            OnLeaveLevelSceneUnsubscribe();
             //PlayClickSound();
             SceneManager.LoadScene(1);
             Time.timeScale = 1.0f;
@@ -60,11 +66,25 @@ namespace SpaceShooter
         public void EX_LoadMainMenu()
         {
             OnPause = false;
+            OnLeaveLevelSceneUnsubscribe();
             //PlayClickSound();
             SceneManager.LoadScene(0);
             Time.timeScale = 1.0f;
 
             //StartCoroutine(OnLoadMenu());
+        }
+
+        //Когда покидаем сцену уровня,
+        //отписываемся от подсчёта противников
+        private void OnLeaveLevelSceneUnsubscribe()
+        {
+            Enemy[] enemies = FindObjectsOfType<Enemy>();
+
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.OnEnemyDestroy -= m_EnemyWaveManager.RecordEnemyDead;
+                Destroy(enemy);
+            }
         }
 
         /*
