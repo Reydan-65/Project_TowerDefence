@@ -75,7 +75,8 @@ namespace SpaceShooter
         }
 
         //Когда покидаем сцену уровня,
-        //отписываемся от подсчёта противников
+        //отписываемся от подсчёта противников,
+        //если остались противники, уничтожаем их.
         private void OnLeaveLevelSceneUnsubscribe()
         {
             Enemy[] enemies = FindObjectsOfType<Enemy>();

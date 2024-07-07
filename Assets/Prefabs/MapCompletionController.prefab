@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5417858342758525243}
   - component: {fileID: 5123085477418035125}
+  - component: {fileID: 6777981536954193617}
   m_Layer: 0
   m_Name: MapCompletionController
   m_TagString: Untagged
@@ -25,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3222353930049369841}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -45,3 +46,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CompletionData: []
+--- !u!114 &6777981536954193617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3222353930049369841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9709acf51f6d214996de2480808f979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -5,7 +5,7 @@ namespace TowerDefence
 {
     public class ScoresIndicator : MonoBehaviour
     {
-        [SerializeField] private TextMeshPro m_Text;
+        [SerializeField] private TextMeshProUGUI m_Text;
 
         private void Start()
         {
