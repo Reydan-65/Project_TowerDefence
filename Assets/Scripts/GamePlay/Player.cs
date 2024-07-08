@@ -61,7 +61,8 @@ namespace SpaceShooter
         protected virtual void Start()
         {
             m_LevelCompletionScore = FindAnyObjectByType<LevelCompletionScore>();
-
+            
+            
             //Respawn();
         }
 

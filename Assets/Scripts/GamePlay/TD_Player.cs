@@ -40,6 +40,8 @@ namespace TowerDefence
         }
 
         [SerializeField] private int m_StartGold;
+        [SerializeField] private UpgradeAsset m_HealthUpgradeAsset;
+        [SerializeField] private UpgradeAsset m_GoldUpgradeAsset;
 
         private int m_CurrentGold;
         public int CurrentGold { get => m_CurrentGold; set => m_CurrentGold = value; }
@@ -48,6 +50,18 @@ namespace TowerDefence
         {
             m_CurrentNumLives = m_NumLives;
             m_CurrentGold = m_StartGold;
+
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+
+            var levelHealthUpgrade = Upgrades.GetUpgradeLevel(m_HealthUpgradeAsset);
+            ReduceLives(-levelHealthUpgrade * 5);
+
+            var levelGoldUpgrade = Upgrades.GetUpgradeLevel(m_GoldUpgradeAsset);
+            ChangeGold(levelGoldUpgrade * 5);
         }
 
         public void ReduceLives(int value)

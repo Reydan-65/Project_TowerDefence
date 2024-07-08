@@ -33,6 +33,21 @@ namespace TowerDefence
             }
         }
 
+        public static int GetTotalCost()
+        {
+            int result = 0;
+
+            foreach (var upgrade in Instance.m_Saves)
+            {
+                for (int i = 0; i < upgrade.UpgradeLevel; i++)
+                {
+                    result += upgrade.UpgradeAsset.CostByLevel[i];
+                }
+            }
+
+            return result;
+        }
+
         public static int GetUpgradeLevel(UpgradeAsset asset)
         {
             foreach (var upgrade in Instance.m_Saves)

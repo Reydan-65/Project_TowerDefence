@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: -5938484089505520804}
   - component: {fileID: -8130374766736755278}
   m_Layer: 0
-  m_Name: MagicTower_Projectile
+  m_Name: FrostTower_Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,6 +202,7 @@ MonoBehaviour:
   m_ExplosionRadius: 1.5
   m_ExplosionDamage: 15
   m_DebuffPrefab: {fileID: 3954142562345299217, guid: a7940d21f8d0a4145a4fe75cae9421c7, type: 3}
+  m_FrostProjectileRadiusUpgradeAsset: {fileID: 11400000, guid: 282c8078c6cb28a4b9e2209f235f9754, type: 2}
 --- !u!114 &-5938484089505520804
 MonoBehaviour:
   m_ObjectHideFlags: 0

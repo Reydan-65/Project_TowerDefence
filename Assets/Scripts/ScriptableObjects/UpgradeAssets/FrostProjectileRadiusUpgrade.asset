@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 895813ba8748b7342bf4a7261e82f504, type: 3}
-  m_Name: HealthUpgrade
+  m_Name: FrostProjectileRadiusUpgrade
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: ae93735604fc8d04e8159ac66b724f1f, type: 3}
-  CostByLevel: 030000000500000007000000
+  Sprite: {fileID: 21300000, guid: f7f287c9a72c33a4da91d7fd0305a58d, type: 3}
+  CostByLevel: 070000000e00000015000000

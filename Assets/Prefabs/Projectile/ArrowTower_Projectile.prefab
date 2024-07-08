@@ -134,3 +134,4 @@ MonoBehaviour:
   m_Lifetime: 10
   m_Damage: 10
   m_ImpactEffect: {fileID: 2999067560246322789, guid: d053a90fdea379a48bad37095342c14e, type: 3}
+  m_ArrowUpgradeAsset: {fileID: 11400000, guid: 14fb65bc4f4d6364c8ff4e808cc21c87, type: 2}

@@ -13,6 +13,8 @@ namespace TowerDefence
         public void EX_Accept()
         {
             FileHandler.Reset(MapCompletion.filename);
+            FileHandler.Reset(Upgrades.filename);
+
             SceneManager.LoadScene(1);
         }
 

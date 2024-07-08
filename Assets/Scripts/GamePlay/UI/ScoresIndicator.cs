@@ -9,11 +9,13 @@ namespace TowerDefence
 
         private void Start()
         {
-            transform.GetChild(0).gameObject.SetActive(false);
             m_Text.text = MapCompletion.Instance.TotalScore.ToString();
 
             if (MapCompletion.Instance.TotalScore > 0)
                 transform.GetChild(0).gameObject.SetActive(true);
+            else
+                transform.GetChild(0).gameObject.SetActive(false);
+
         }
     }
 }

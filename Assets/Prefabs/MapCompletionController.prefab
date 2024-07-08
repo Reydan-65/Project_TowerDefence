@@ -58,3 +58,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9709acf51f6d214996de2480808f979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Saves:
+  - UpgradeAsset: {fileID: 11400000, guid: 0e6e5bf89bb36af4e8f092c41299ca2a, type: 2}
+    UpgradeLevel: 0
+  - UpgradeAsset: {fileID: 11400000, guid: f945f28467f2f2e4882beb79ab65e64b, type: 2}
+    UpgradeLevel: 0
+  - UpgradeAsset: {fileID: 11400000, guid: 14fb65bc4f4d6364c8ff4e808cc21c87, type: 2}
+    UpgradeLevel: 0
+  - UpgradeAsset: {fileID: 11400000, guid: 282c8078c6cb28a4b9e2209f235f9754, type: 2}
+    UpgradeLevel: 0

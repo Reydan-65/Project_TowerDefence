@@ -4909,7 +4909,7 @@ GameObject:
   - component: {fileID: -1903780194919809561}
   - component: {fileID: -6452404905586845445}
   m_Layer: 0
-  m_Name: MagicProjectile_ImpactEffect
+  m_Name: FrostProjectile_ImpactEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
