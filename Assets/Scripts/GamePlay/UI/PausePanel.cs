@@ -11,12 +11,14 @@ namespace SpaceShooter
         [SerializeField] private GameObject m_Panel;
 
         private EnemyWaveManager m_EnemyWaveManager;
+        private SceneTransitionManager m_SceneTransitionManager;
 
         private bool OnPause = false;
 
         private void Start()
         {
             m_EnemyWaveManager = FindObjectOfType<EnemyWaveManager>();
+            m_SceneTransitionManager = FindObjectOfType<SceneTransitionManager>();
 
             OnPause = false;
             gameObject.SetActive(false);
@@ -57,7 +59,9 @@ namespace SpaceShooter
             OnPause = false;
             OnLeaveLevelSceneUnsubscribe();
             //PlayClickSound();
-            SceneManager.LoadScene(1);
+            LevelController.StopLevelActivity();
+            m_SceneTransitionManager.LoadScene("levelMap");
+            //SceneManager.LoadScene(1);
             Time.timeScale = 1.0f;
 
             //StartCoroutine(OnLoadMenu());
@@ -68,7 +72,9 @@ namespace SpaceShooter
             OnPause = false;
             OnLeaveLevelSceneUnsubscribe();
             //PlayClickSound();
-            SceneManager.LoadScene(0);
+            LevelController.StopLevelActivity();
+            m_SceneTransitionManager.LoadScene("mainMenu");
+            //SceneManager.LoadScene(0);
             Time.timeScale = 1.0f;
 
             //StartCoroutine(OnLoadMenu());

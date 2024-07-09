@@ -7,9 +7,17 @@ namespace TowerDefence
     public class BackToMainMenuButton : MonoBehaviour
     {
         [SerializeField] private Transform m_Transition;
+
+        private SceneTransitionManager m_SceneTransitionManager;
+
+        private void Start()
+        {
+            m_SceneTransitionManager = FindObjectOfType<SceneTransitionManager>();
+        }
         public void EX_LoadMainMenuScene()
         {
-            SceneManager.LoadScene(0);
+            m_SceneTransitionManager.LoadScene("mainMenu");
+            //SceneManager.LoadScene(0);
         }
     }
 }

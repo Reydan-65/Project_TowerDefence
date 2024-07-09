@@ -24,6 +24,7 @@ namespace SpaceShooter
 
         private LevelProperties m_CurrentLevelProperties;
         private BranchLevelProperties m_CurrentBranchLevelProperties;
+        private SceneTransitionManager m_SceneTransitionManager;
 
         private AudioSource m_AudioSource;
 
@@ -45,6 +46,7 @@ namespace SpaceShooter
             m_ReferenceTime += Time.time;
 
             m_LevelSequencesController = LevelSequencesController.Instance;
+            m_SceneTransitionManager = FindObjectOfType<SceneTransitionManager>();
 
             if (m_LevelSequencesController.GetCurrentLoadedLevel() != null)
                 m_CurrentLevelProperties = m_LevelSequencesController.GetCurrentLoadedLevel();
@@ -115,7 +117,7 @@ namespace SpaceShooter
             //Time.timeScale = 0f;
         }
 
-        private static void StopLevelActivity()
+        public static void StopLevelActivity()
         {
             BuyControl buyControl = FindAnyObjectByType<BuyControl>();
 
@@ -163,24 +165,32 @@ namespace SpaceShooter
             {
                 string nextLevelSceneName = m_LevelSequencesController.GetNextLevelProperties(m_CurrentLevelProperties).SceneName;
 
-                SceneManager.LoadScene(nextLevelSceneName);
+                m_SceneTransitionManager.LoadScene(nextLevelSceneName);
+                //SceneManager.LoadScene(nextLevelSceneName);
             }
             else
-                SceneManager.LoadScene(MainMenuSceneName);
+                m_SceneTransitionManager.LoadScene(MainMenuSceneName);
+            //SceneManager.LoadScene(MainMenuSceneName);
         }
 
         public void RestartLevel()
         {
             if (m_CurrentLevelProperties != null)
-                SceneManager.LoadScene(m_CurrentLevelProperties.SceneName);
+            {
+                m_SceneTransitionManager.LoadScene(m_CurrentLevelProperties.SceneName);
+                //SceneManager.LoadScene(m_CurrentLevelProperties.SceneName);
+            }
 
             if (m_CurrentBranchLevelProperties != null)
-                SceneManager.LoadScene(m_CurrentBranchLevelProperties.SceneName);
+            {
+                m_SceneTransitionManager.LoadScene(m_CurrentBranchLevelProperties.SceneName);
+                //SceneManager.LoadScene(m_CurrentBranchLevelProperties.SceneName);
+            }
         }
 
         public void ReturnLevelMap()
         {
-            SceneManager.LoadScene(LevelMapSceneName);
+            m_SceneTransitionManager.LoadScene(LevelMapSceneName);
         }
     }
 }

@@ -5,8 +5,11 @@ namespace TowerDefence
 {
     public class AcceptPanel : MonoBehaviour
     {
+        private SceneTransitionManager m_SceneTransitionManager;
+
         private void Start()
         {
+            m_SceneTransitionManager = FindObjectOfType<SceneTransitionManager>();
             gameObject.SetActive(false);
         }
 
@@ -15,7 +18,8 @@ namespace TowerDefence
             FileHandler.Reset(MapCompletion.filename);
             FileHandler.Reset(Upgrades.filename);
 
-            SceneManager.LoadScene(1);
+            m_SceneTransitionManager.LoadScene("levelMap");
+            //SceneManager.LoadScene(1);
         }
 
         public void EX_Cancel()

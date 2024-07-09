@@ -9,6 +9,7 @@ namespace TowerDefence
     {
         private LevelProperties m_LevelProperties;
         private BranchLevelProperties m_BranchLevelProperties;
+        private SceneTransitionManager m_SceneTransitionManager;
 
         [SerializeField] private RectTransform m_ResultPanel;
         [SerializeField] private Image[] m_ResultImage;
@@ -48,6 +49,8 @@ namespace TowerDefence
             if (m_BranchLevelIndex >= 0)
                 m_BranchLevelProperties = LevelSequencesController.Instance.LevelSequences.BranchLevelsProperties[m_BranchLevelIndex];
             
+            m_SceneTransitionManager = FindObjectOfType<SceneTransitionManager>();
+
             //Отключаем панель результата уровня
             m_ResultPanel.gameObject.SetActive(false);
         }
@@ -55,10 +58,16 @@ namespace TowerDefence
         public void EX_LoadLevel()
         {
             if (m_LevelIndex >= 0)
-                SceneManager.LoadScene(m_LevelProperties.SceneName);
+            {
+                m_SceneTransitionManager.LoadScene(m_LevelProperties.SceneName);
+                //SceneManager.LoadScene(m_LevelProperties.SceneName);
+            }
 
             if (m_BranchLevelIndex >= 0)
-                SceneManager.LoadScene(m_BranchLevelProperties.SceneName);
+            {
+                m_SceneTransitionManager.LoadScene(m_BranchLevelProperties.SceneName);
+                //SceneManager.LoadScene(m_BranchLevelProperties.SceneName);
+            }
         }
 
         public void SetLevelData(string episodeName, int levelScore)

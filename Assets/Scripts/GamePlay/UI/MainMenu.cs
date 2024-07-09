@@ -9,6 +9,13 @@ namespace TowerDefence
         [SerializeField] private Button m_ContinueButton;
         [SerializeField] private AcceptPanel m_AcceptPanel;
 
+        private SceneTransitionManager m_SceneTransitionManager;
+
+        private void Awake()
+        {
+            m_SceneTransitionManager = FindObjectOfType<SceneTransitionManager>();
+        }
+
         private void Start()
         {
             m_ContinueButton.interactable = FileHandler.HasFile(MapCompletion.filename);
@@ -19,12 +26,16 @@ namespace TowerDefence
             if (FileHandler.HasFile(MapCompletion.filename))
                 m_AcceptPanel.gameObject.SetActive(true);
             else
-                SceneManager.LoadScene(1);
+            {
+                m_SceneTransitionManager.LoadScene("levelMap");
+                //SceneManager.LoadScene(1);
+            }
         }
 
         public void EX_ContinueGame()
         {
-            SceneManager.LoadScene(1);
+            m_SceneTransitionManager.LoadScene("levelMap");
+            //SceneManager.LoadScene(1);
         }
 
         public void EX_Quit()
