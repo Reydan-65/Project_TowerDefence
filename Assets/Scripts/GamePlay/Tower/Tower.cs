@@ -78,12 +78,12 @@ namespace TowerDefence
 
             foreach (var turret in m_Turrets)
             {
-                if (m_SelectedTarget.GetComponent<Enemy>().Type == Enemy.UnitType.Ground)
+                if (m_SelectedTarget.GetComponent<Enemy>().UType == Enemy.UnitType.Ground)
                 {
                     if (turret.TowerAsset.Type == TowerAsset.TargetType.All ||
                         turret.TowerAsset.Type == TowerAsset.TargetType.Ground) return true;
                 }
-                else if (m_SelectedTarget.GetComponent<Enemy>().Type == Enemy.UnitType.Air)
+                else if (m_SelectedTarget.GetComponent<Enemy>().UType == Enemy.UnitType.Air)
                 {
                     if (turret.TowerAsset.Type == TowerAsset.TargetType.All ||
                             turret.TowerAsset.Type == TowerAsset.TargetType.Air) return true;

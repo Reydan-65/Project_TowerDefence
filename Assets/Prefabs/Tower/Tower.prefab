@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f148950fe01e0a48a4f8ab07d1bce6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Nickname: 
   m_Radius: 3
 --- !u!1 &8506646662175584423
 GameObject:
@@ -204,6 +205,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Mode: 0
-  m_TurretProperties: {fileID: 11400000, guid: d16ca7b835e9d5b43b90a4f6272ffca4, type: 2}
-  m_secondaryTurretBasePosition: {x: 0, y: 0}
-  m_secondaryTurretSecondPosition: {x: 0, y: 0}
+  m_TurretProperties: {fileID: 11400000, guid: f53e2a57a595c2f4faf7aa7d33bd7c7f, type: 2}
+  m_TowerAsset: {fileID: 0}

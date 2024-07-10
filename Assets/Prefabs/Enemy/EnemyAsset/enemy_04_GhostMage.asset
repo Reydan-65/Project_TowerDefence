@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae52708488e3734480cede62283c381, type: 3}
   m_Name: enemy_04_GhostMage
   m_EditorClassIdentifier: 
-  Type: 2
   Name: Ghost Mage
+  _UnitType: 2
+  _ArmorType: 1
   SpriteColor: {r: 0.6556604, g: 0.9527166, b: 1, a: 1}
   SpriteScale: {x: 3, y: 3}
   Animations: {fileID: 9100000, guid: 56f6ad8ea0b0a5e47945c37327742090, type: 2}
@@ -22,6 +23,7 @@ MonoBehaviour:
   ColliderOffsetY: 0
   TeamID: 2
   HitPoints: 80
+  ArmorPoints: 0
   ScoreValue: 5
   MoveSpeed: 1.6
   damageToPlayer: 1

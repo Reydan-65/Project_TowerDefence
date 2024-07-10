@@ -198,6 +198,7 @@ MonoBehaviour:
   m_Velocity: 4
   m_Lifetime: 10
   m_Damage: 15
+  m_DamageType: 1
   m_ImpactEffect: {fileID: 1631787946939491745, guid: 2057caf1a54d80742a3bd83768f7b9d0, type: 3}
   m_ExplosionRadius: 1.5
   m_ExplosionDamage: 15

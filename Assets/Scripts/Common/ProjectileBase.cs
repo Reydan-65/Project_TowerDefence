@@ -13,6 +13,7 @@ namespace Common
 
         protected virtual void OnHit(Destructible destructible) { }
         protected virtual void OnHit(Collider2D collider2D) { }
+        protected virtual void OnHit(RaycastHit2D hit) { }
         protected virtual void OnProjectileLifeEnd(Collider2D collider, Vector2 position) { }
 
         public float Velocity => m_Velocity;
@@ -33,16 +34,7 @@ namespace Common
             if (hit)
             {
                 OnHit(hit.collider);
-
-                Destructible destructible = hit.collider.transform.root.GetComponent<Destructible>();
-
-                if (destructible != null && destructible != m_Parent)
-                {
-                    destructible.ApplyDamage(m_Damage);
-
-                    OnHit(destructible);
-                    OnProjectileLifeEnd(hit.collider, hit.point);
-                }
+                OnHit(hit);
             }
 
             //hit = OnHitObstacles(hit);
@@ -55,6 +47,12 @@ namespace Common
 
             transform.position += new Vector3(step.x, step.y, 0);
         }
+        /*
+        
+        */
+        
+        
+        
 
         // Попадание в препятствие
         protected virtual RaycastHit2D OnHitObstacles(RaycastHit2D hit)

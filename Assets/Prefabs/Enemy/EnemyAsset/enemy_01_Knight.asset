@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae52708488e3734480cede62283c381, type: 3}
   m_Name: enemy_01_Knight
   m_EditorClassIdentifier: 
-  Type: 1
   Name: Knight
+  _UnitType: 1
+  _ArmorType: 1
   SpriteColor: {r: 0.6053459, g: 1, b: 0.5990566, a: 1}
   SpriteScale: {x: 0.8, y: 0.8}
   Animations: {fileID: 9100000, guid: 9cad087c61cbd434c8b713fe02e85b10, type: 2}
@@ -22,6 +23,7 @@ MonoBehaviour:
   ColliderOffsetY: 0.08
   TeamID: 2
   HitPoints: 30
+  ArmorPoints: 0
   ScoreValue: 1
   MoveSpeed: 1.4
   damageToPlayer: 1

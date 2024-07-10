@@ -6,15 +6,12 @@ namespace TowerDefence
     [CreateAssetMenu(fileName = "Enemy_n_Propeties", menuName = "TowerDefence/EnemyProperties")]
     public sealed class EnemyAsset : EnemyAssetBase
     {
-        public enum UnitType
-        {
-            None,
-            Ground,
-            Air
-        }
+        public enum UnitType {None, Ground, Air }
+        public enum ArmorType { Base, Magic }
 
-        public UnitType Type;
         public string Name = "Name";
+        public UnitType _UnitType;
+        public ArmorType _ArmorType;
 
         [Header("Visual Model")]
         public Color SpriteColor = Color.white;
@@ -27,6 +24,7 @@ namespace TowerDefence
         [Header("Properties")]
         public int TeamID = 2;
         public int HitPoints = 1;
+        public int ArmorPoints = 0;
         public int ScoreValue = 1;
 
         public float MoveSpeed = 1.0f;

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae52708488e3734480cede62283c381, type: 3}
   m_Name: enemy_05_Demon
   m_EditorClassIdentifier: 
-  Type: 2
   Name: Fly Demon
+  _UnitType: 2
+  _ArmorType: 1
   SpriteColor: {r: 1, g: 0.83581054, b: 0.5330188, a: 1}
   SpriteScale: {x: 1.6, y: 1}
   Animations: {fileID: 9100000, guid: 63d90ef12429b734c8387e0025efa086, type: 2}
@@ -22,6 +23,7 @@ MonoBehaviour:
   ColliderOffsetY: 0
   TeamID: 2
   HitPoints: 400
+  ArmorPoints: 0
   ScoreValue: 4
   MoveSpeed: 0.8
   damageToPlayer: 1

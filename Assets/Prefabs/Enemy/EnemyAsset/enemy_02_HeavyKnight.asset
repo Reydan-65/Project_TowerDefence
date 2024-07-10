@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae52708488e3734480cede62283c381, type: 3}
   m_Name: enemy_02_HeavyKnight
   m_EditorClassIdentifier: 
-  Type: 1
   Name: Heavy Knight
+  _UnitType: 1
+  _ArmorType: 0
   SpriteColor: {r: 1, g: 0.6839622, b: 0.6839622, a: 1}
   SpriteScale: {x: 1.2, y: 1.2}
   Animations: {fileID: 9100000, guid: 902aadc68b2f4e745b5a1a4603b17bea, type: 2}
@@ -22,6 +23,7 @@ MonoBehaviour:
   ColliderOffsetY: 0.12
   TeamID: 2
   HitPoints: 100
+  ArmorPoints: 5
   ScoreValue: 2
   MoveSpeed: 0.6
   damageToPlayer: 1

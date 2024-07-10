@@ -25,16 +25,22 @@ namespace SpaceShooter
             {
                 Enemy enemy = hit.transform.root.GetComponent<Enemy>();
 
-                    var dist = Vector2.Distance(transform.position, hit.transform.position);
-                    int damage = CalculateDamage(dist, explosionRadius, explosionDamage);
+                var dist = Vector2.Distance(transform.position, hit.transform.position);
+                int damage = CalculateDamage(dist, explosionRadius, explosionDamage);
 
-                    if (hit.transform.root.GetComponent<Destructible>() == true)
-                    {
-                        hit.transform.root.GetComponent<Destructible>().ApplyDamage(damage);
+                if (enemy.GetComponent<Destructible>() == true)
+                {
+                    Projectile.DamageType type;
 
-                        if (projectile != null)
-                            projectile.OnTargetDestroyed(hit.transform.root.GetComponent<Destructible>());
-                    }
+                    if (m_Type == ExplosionType.Frost) type = Projectile.DamageType.Magic;
+                    else type = Projectile.DamageType.Base;
+
+                    //enemy.GetComponent<Destructible>().ApplyDamage(damage);
+                    enemy.TakeDamage(damage, type);
+
+                    //if (projectile != null)
+                    //    projectile.OnTargetDestroyed(enemy.GetComponent<Destructible>());
+                }
 
                 /*
                 if (m_Type == ExplosionType.Missle || m_Type == ExplosionType.Mine)
@@ -54,9 +60,9 @@ namespace SpaceShooter
                 {
                     if (disablerPrefab != null)
                     {
-                        if (hit.transform.root.TryGetComponent(out SpaceShip ship) == true)
+                        if (enemy.TryGetComponent(out SpaceShip ship) == true)
                         {
-                            if (hit.transform.root.TryGetComponent(out DebuffEffect debuff) == true)
+                            if (enemy.TryGetComponent(out DebuffEffect debuff) == true)
                             {
                                 ship.MaxLinearVelocity *= 2;
                                 ship.Thrust *= 2;
@@ -64,7 +70,7 @@ namespace SpaceShooter
                                 Destroy(debuff);
                             }
 
-                            DebuffEffect de = hit.transform.root.gameObject.AddComponent<DebuffEffect>();
+                            DebuffEffect de = enemy.gameObject.AddComponent<DebuffEffect>();
 
                             de.Type = DebuffEffect.DebuffType.Frost;
                             de.DebuffTime = m_DebuffTime;

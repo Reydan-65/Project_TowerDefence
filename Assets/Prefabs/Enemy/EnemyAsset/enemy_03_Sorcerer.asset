@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae52708488e3734480cede62283c381, type: 3}
   m_Name: enemy_03_Sorcerer
   m_EditorClassIdentifier: 
-  Type: 1
   Name: Sorcerer
+  _UnitType: 1
+  _ArmorType: 1
   SpriteColor: {r: 1, g: 1, b: 1, a: 1}
   SpriteScale: {x: 0.6, y: 0.8}
   Animations: {fileID: 9100000, guid: 125e4008286f48140ba2288a56e0be34, type: 2}
@@ -22,6 +23,7 @@ MonoBehaviour:
   ColliderOffsetY: 0
   TeamID: 2
   HitPoints: 70
+  ArmorPoints: 0
   ScoreValue: 3
   MoveSpeed: 0.8
   damageToPlayer: 1
