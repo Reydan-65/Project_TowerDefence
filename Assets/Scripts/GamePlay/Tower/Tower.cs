@@ -17,6 +17,7 @@ namespace TowerDefence
 
         private static readonly Color GizmoColor = new Color(0, 1, 1, 0.2f);
 
+
         private void Start()
         {
             m_Turrets = GetComponentsInChildren<Turret>();
@@ -35,7 +36,7 @@ namespace TowerDefence
                     {
                         foreach (var turret in m_Turrets)
                         {
-                            turret.transform.up = MakeLead(targetVector, GetComponentInChildren<Turret>().TowerAsset.ProjectilePrefab.GetComponent<Projectile>().Velocity,
+                            turret.transform.up = MakeLead(targetVector, GetComponentInChildren<Turret>().TurretProperties.ProjectilePrefab.GetComponent<Projectile>().Velocity,
                                                            GetComponentInChildren<Turret>().transform.localPosition, m_SelectedTarget);
                             turret.Fire();
                         }
@@ -55,6 +56,16 @@ namespace TowerDefence
                 if (enter)
                     m_SelectedTarget = enter.transform.root.GetComponent<Destructible>();
             }
+        }
+
+        /// <summary>
+        /// Получение нового типа башни, до которого можно улучшить текущую.
+        /// </summary>
+        public void Use(TowerAsset towerAsset)
+        {
+            GetComponentInChildren<SpriteRenderer>().sprite = towerAsset.Sprite;
+            GetComponentInChildren<Turret>().TurretProperties = towerAsset.TurretProperties;
+            GetComponentInChildren<BuildPoint>().SetBuildableTowers(towerAsset.m_UpgradesTo);
         }
 
         // Упреждение цели для турели
@@ -103,5 +114,6 @@ namespace TowerDefence
         }
 
 #endif
+
     }
 }

@@ -58,10 +58,10 @@ namespace SpaceShooter
             void LifeScoreChange(int _)
             {
                 m_LevelScore -= 1;
-                TD_Player.OnLivesUpdate -= LifeScoreChange;
+                TD_Player.Instance.OnLivesUpdate -= LifeScoreChange;
             }
 
-            TD_Player.OnLivesUpdate += LifeScoreChange;
+            TD_Player.Instance.OnLivesUpdate += LifeScoreChange;
 
 
             //FollowCamera camera = FindAnyObjectByType<FollowCamera>();

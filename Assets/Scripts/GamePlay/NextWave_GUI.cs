@@ -20,6 +20,8 @@ namespace TowerDefence
 
         public Image NextWaveBar { get => m_NextWaveBar; set => m_NextWaveBar = value; }
 
+        #region Unity Events
+
         private void Start()
         {
             m_WaveIndex = 0;
@@ -44,11 +46,6 @@ namespace TowerDefence
             };
         }
 
-        public void EX_CallWave()
-        {
-            m_EnemyWaveManager.ForceNextWave();
-        }
-
         private void Update()
         {
             var bonus = (int)m_TimeNextWave;
@@ -66,6 +63,21 @@ namespace TowerDefence
                 m_ButtonImage.GetComponent<Button>().interactable = false;
                 m_ButtonImage.sprite = m_CrossSprite;
             }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Принудительный вызов новой волны, если она есть.
+        /// Закрыть BuyControl, если открыт.
+        /// </summary>
+        public void EX_CallWave()
+        {
+            m_EnemyWaveManager.ForceNextWave();
+
+            BuyControl bc = FindObjectOfType<BuyControl>();
+
+            if (bc != null) bc.gameObject.SetActive(false);
         }
     }
 }

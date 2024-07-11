@@ -7,16 +7,20 @@ namespace Common
     public abstract class TurretBase : MonoBehaviour
     {
         [SerializeField] protected TurretMode m_Mode;
-        [SerializeField] protected TurretProperties m_TurretProperties;
-        [SerializeField] protected TowerAsset m_TowerAsset;
+
+        protected TurretProperties m_TurretProperties;
+        protected TowerAsset m_TowerAsset;
 
         public TurretMode Mode => m_Mode;
-        public TurretProperties TurretProperties => m_TurretProperties;
+
+        /// <summary>
+        /// TowerAsset и TurretProperties назначаются при создании башни
+        /// </summary>
         public TowerAsset TowerAsset { get => m_TowerAsset; set => m_TowerAsset = value; }
+        public TurretProperties TurretProperties { get => m_TurretProperties; set => m_TurretProperties = value; }
 
         protected virtual void FixedUpdate() { }
 
-        // Public API
         public virtual void Fire() { }
         public virtual void AssingLoadout(TurretProperties properties) { }
     }

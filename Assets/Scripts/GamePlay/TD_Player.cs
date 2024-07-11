@@ -14,28 +14,18 @@ namespace TowerDefence
             }
         }
 
-        private static event Action<int> OnGoldUpdate;
-        public static event Action<int> OnLivesUpdate;
+        private event Action<int> OnGoldUpdate;
+        public event Action<int> OnLivesUpdate;
 
-        public static void GoldUpdateSubscribe(Action<int> action)
+        public void GoldUpdateSubscribe(Action<int> action)
         {
             OnGoldUpdate += action;
             action(Instance.m_CurrentGold);
         }
-        public static void GoldUpdateUnSubscribe(Action<int> action)
-        {
-            OnGoldUpdate -= action;
-            action(Instance.m_CurrentGold);
-        }
 
-        public static void LivesUpdateSubscribe(Action<int> action)
+        public void LivesUpdateSubscribe(Action<int> action)
         {
             OnLivesUpdate += action;
-            action(Instance.CurrentNumLives);
-        }
-        public static void LivesUpdateUnSubscribe(Action<int> action)
-        {
-            OnLivesUpdate -= action;
             action(Instance.CurrentNumLives);
         }
 
@@ -82,18 +72,14 @@ namespace TowerDefence
         {
             if (buildPoint != null)
             {
-                //if (m_CurrentGold >= m_TowerAsset.GoldCost)
-                //{
-
                 ChangeGold(-towerAsset.GoldCost);
 
                 var tower = Instantiate(m_TowerPrefab, buildPoint.position, Quaternion.identity);
 
-                tower.GetComponentInChildren<SpriteRenderer>().sprite = towerAsset.Sprite;
                 tower.GetComponentInChildren<Turret>().TowerAsset = towerAsset;
+                tower.Use(towerAsset);
 
                 Destroy(buildPoint.gameObject);
-                //}
             }
         }
     }

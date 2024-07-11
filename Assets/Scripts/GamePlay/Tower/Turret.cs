@@ -11,6 +11,11 @@ namespace SpaceShooter
 
         public bool CanFire => m_RefireTimer <= 0;
 
+        private void Start()
+        {
+            m_Tower = transform.root.GetComponent<Tower>();
+        }
+
         protected override void FixedUpdate()
         {
             if (m_RefireTimer > 0)
@@ -21,8 +26,6 @@ namespace SpaceShooter
 
         public override void Fire()
         {
-            m_Tower = transform.root.GetComponent<Tower>();
-
             if (m_TurretProperties == null) return;
             if (m_RefireTimer > 0) return;
 
@@ -36,7 +39,7 @@ namespace SpaceShooter
             */
 
             // Создание снаряда при выстреле
-            Projectile projectile = Instantiate(m_TowerAsset.ProjectilePrefab).GetComponent<Projectile>();
+            Projectile projectile = Instantiate(m_TurretProperties.ProjectilePrefab).GetComponent<Projectile>();
             projectile.transform.position = transform.position;
             projectile.transform.up = transform.up;
 
@@ -50,7 +53,7 @@ namespace SpaceShooter
             if (m_Ship.TeamId == 3) projectile.Nickname = "Debris Projectile";
             */
 
-            m_RefireTimer = m_TowerAsset.RateOfFire;
+            m_RefireTimer = m_TurretProperties.RateOfFire;
 
             /// <summary>
             /// Звук выстрела.

@@ -17,12 +17,11 @@ namespace TowerDefence
             public int Score;
         }
 
-        [SerializeField] private List<LevelScoreData> m_CompletionData = new List<LevelScoreData>();
-
+        private List<LevelScoreData> m_CompletionData = new List<LevelScoreData>();
         private LevelProperties[] m_LevelProperties;
         private BranchLevelProperties[] m_BranchLevelProperties;
-
         private int m_TotalScore;
+        
         public int TotalScore => m_TotalScore;
 
         private void Awake()
@@ -78,29 +77,10 @@ namespace TowerDefence
 
             return false;
         }
-        /*
-        public void SaveLevelResult(int levelScore)
-        {
-            Instance.SaveResult(LevelController.Instance.CurrentLevelProperties, levelScore);
-        }
-        
-        private void SaveResult(LevelProperties currentLevelProperties, int levelScore)
-        {
-            foreach (var item in m_CompletionData)
-            {
-                if (item.EpisodeName == currentLevelProperties.SceneName)
-                {
-                    if (levelScore > item.Score)
-                    {
-                        item.Score = levelScore;
 
-                        Saver<LevelScoreData[]>.Save(filename, m_CompletionData);
-                    }
-                }
-            }
-        }
-        */
-
+        /// <summary>
+        /// Сохранение результата уровня.
+        /// </summary>
         public void SaveLevelResult(int levelScore)
         {
             LevelProperties currentLevelProperties = LevelController.Instance.CurrentLevelProperties;
@@ -120,12 +100,11 @@ namespace TowerDefence
             {
                 if (m_CompletionData[i].EpisodeName == episodeName)
                 {
-                    if (levelScore > m_CompletionData[i].Score)
+                    if (levelScore > m_CompletionData[i].Score) //Если новое значение больше текущего
                     {
                         m_CompletionData[i].Score = levelScore;
 
-                        //Сохраняем изменения
-                        Saver<List<LevelScoreData>>.Save(filename, m_CompletionData);
+                        Saver<List<LevelScoreData>>.Save(filename, m_CompletionData); //Сохраняем изменения
                         CalculateTotalScore(); //Пересчитываем общие очки
                     }
 

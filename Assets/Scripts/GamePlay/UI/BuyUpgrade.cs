@@ -51,6 +51,11 @@ namespace TowerDefence
             Initialize();
         }
 
+        /// <summary>
+        /// Проверяем стоимость улучшения,
+        /// если денег хватает - кнопка активна;
+        /// иначе - кнопка неактивна.
+        /// </summary>
         public void CheckCost(int m_Money)
         {
             if (m_Money >= m_Cost && m_Cost >= 0)

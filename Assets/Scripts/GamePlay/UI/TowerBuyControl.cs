@@ -11,28 +11,25 @@ namespace TowerDefence
         [SerializeField] private Button m_Button;
         [SerializeField] private Transform m_BuildPoint;
 
-        public void SetBuildPoint(Transform value)
-        {
-            m_BuildPoint = value;
-        }
-
-        private void Awake()
-        {
-            TD_Player.GoldUpdateSubscribe(GoldStatusCheck);
-        }
+        public void SetTowerAsset(TowerAsset towerAsset) { m_TowerAsset = towerAsset; }
+        public void SetBuildPoint(Transform value) { m_BuildPoint = value; }
 
         private void Start()
         {
             m_Text.text = m_TowerAsset.GoldCost.ToString();
             m_Button.GetComponent<Image>().sprite = m_TowerAsset.GUISprite;
+            TD_Player.Instance.GoldUpdateSubscribe(GoldStatusCheck);
         }
 
         private void GoldStatusCheck(int value)
         {
-            if (value >= m_TowerAsset.GoldCost != m_Button.interactable)
+            if (m_Button != null)
             {
-                m_Button.interactable = !m_Button.interactable;
-                m_Text.color = m_Button.interactable ? Color.green : Color.red;
+                if (value >= m_TowerAsset.GoldCost != m_Button.interactable)
+                {
+                    m_Button.interactable = !m_Button.interactable;
+                    m_Text.color = m_Button.interactable ? Color.green : Color.red;
+                }
             }
         }
 
@@ -41,11 +38,6 @@ namespace TowerDefence
             TD_Player.Instance.TryBuild(m_TowerAsset, m_BuildPoint);
 
             BuildPoint.HideControls();
-        }
-
-        private void OnDestroy()
-        {
-            TD_Player.GoldUpdateUnSubscribe(GoldStatusCheck);
         }
     }
 }

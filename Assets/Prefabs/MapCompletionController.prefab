@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3660d870d86ff6d4eb2fbf7def7999c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CompletionData: []
 --- !u!114 &6777981536954193617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,4 +65,10 @@ MonoBehaviour:
   - UpgradeAsset: {fileID: 11400000, guid: 14fb65bc4f4d6364c8ff4e808cc21c87, type: 2}
     UpgradeLevel: 0
   - UpgradeAsset: {fileID: 11400000, guid: 282c8078c6cb28a4b9e2209f235f9754, type: 2}
+    UpgradeLevel: 0
+  - UpgradeAsset: {fileID: 11400000, guid: 3fea97967aec4a94c8c2475b4059f097, type: 2}
+    UpgradeLevel: 0
+  - UpgradeAsset: {fileID: 11400000, guid: ff25534044932bb4bb20394179460dd7, type: 2}
+    UpgradeLevel: 0
+  - UpgradeAsset: {fileID: 11400000, guid: e453b94064e6970439daea46f0ac3808, type: 2}
     UpgradeLevel: 0

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04380299ba58a1647b1c68014c60d15a, type: 3}
-  m_Name: Turret_n_Propeties
+  m_Name: FrostTower_01_Properties
   m_EditorClassIdentifier: 
   m_Mode: 0
-  m_ProjectilePrefab: {fileID: 0}
-  m_RateOfFire: 0
+  m_ProjectilePrefab: {fileID: -3872553205469559338, guid: 692245087f491c74990b69feca08f423, type: 3}
+  m_RateOfFire: 1.5
   m_EnergyUsage: 0
   m_AmmoUsage: 0

@@ -21,6 +21,11 @@ namespace TowerDefence
             Saver<UpgradeSave[]>.TryLoad(filename, ref m_Saves);    
         }
 
+        /// <summary>
+        /// Покупаем улучшение:
+        /// повышаем его уровень,
+        /// сохранаяем.
+        /// </summary>
         public static void BuyUpgrade(UpgradeAsset asset)
         {
             foreach (var upgrade in Instance.m_Saves)
@@ -33,6 +38,27 @@ namespace TowerDefence
             }
         }
 
+        /// <summary>
+        /// Получаем уровень улучшения из сохранённых данных,
+        /// Если этих данных нет - уровень равен 0.
+        /// </summary>
+        public static int GetUpgradeLevel(UpgradeAsset asset)
+        {
+            foreach (var upgrade in Instance.m_Saves)
+            {
+                if (upgrade.UpgradeAsset == asset)
+                {
+                    return upgrade.UpgradeLevel;
+                }
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// В зависимости от уровня улучшения,
+        /// получаем его стоимость из массива в ассете.
+        /// </summary>
         public static int GetTotalCost()
         {
             int result = 0;
@@ -46,19 +72,6 @@ namespace TowerDefence
             }
 
             return result;
-        }
-
-        public static int GetUpgradeLevel(UpgradeAsset asset)
-        {
-            foreach (var upgrade in Instance.m_Saves)
-            {
-                if (upgrade.UpgradeAsset == asset)
-                {
-                    return upgrade.UpgradeLevel;
-                }
-            }
-
-            return 0;
         }
     }
 }

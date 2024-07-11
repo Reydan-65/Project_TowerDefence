@@ -17,11 +17,11 @@ namespace TowerDefence
             switch (source)
             { 
                 case UpdateSource.Gold:
-                    TD_Player.GoldUpdateSubscribe(UpdateText);
+                    TD_Player.Instance.GoldUpdateSubscribe(UpdateText);
                     break;
 
                 case UpdateSource.Lives:
-                    TD_Player.LivesUpdateSubscribe(UpdateText);
+                    TD_Player.Instance.LivesUpdateSubscribe(UpdateText);
                     break;
             }
         }
@@ -29,12 +29,6 @@ namespace TowerDefence
         private void UpdateText(int value)
         {
             m_Text.text = value.ToString();
-        }
-
-        private void OnDestroy()
-        {
-            TD_Player.GoldUpdateUnSubscribe(UpdateText);
-            TD_Player.LivesUpdateUnSubscribe(UpdateText);
         }
     }
 }

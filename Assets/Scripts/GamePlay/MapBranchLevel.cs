@@ -7,17 +7,16 @@ namespace TowerDefence
     public class MapBranchLevel : MonoBehaviour
     {
         [SerializeField] private MapLevel m_RootLevel;
-
         [SerializeField] private int m_NeedScors;
         [SerializeField] private TextMeshProUGUI m_NeedScoresText;
 
-        public bool RootIsActive
-        {
-            get
-            {
-                return m_RootLevel.IsComplete;
-            }
-        }
+        //public bool RootIsActive
+        //{
+        //    get
+        //    {
+        //        return m_RootLevel.IsComplete;
+        //    }
+        //}
 
         ///<summary>
         ///≈сли общее число набранных очков меньше необходимого дл€ активации уровн€,

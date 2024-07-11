@@ -99,7 +99,8 @@ namespace Common
 
         protected virtual void OnDestroy()
         {
-            m_AllDestructible.Remove(this);
+            if (m_AllDestructible != null)
+                m_AllDestructible.Remove(this);
         }
 
         public const int TeamId_Neutral = 0;
