@@ -64,8 +64,8 @@ namespace SpaceShooter
                         {
                             if (enemy.TryGetComponent(out DebuffEffect debuff) == true)
                             {
-                                ship.MaxLinearVelocity *= 2;
-                                ship.Thrust *= 2;
+                                ship.RestoreMaxLinearVelocityOnValue();
+                                //ship.Thrust *= 2;
 
                                 Destroy(debuff);
                             }

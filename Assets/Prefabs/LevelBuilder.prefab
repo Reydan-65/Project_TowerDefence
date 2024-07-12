@@ -44,7 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0641dc071119147939ad77c1a1c1da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Conditions: []
+  m_Conditions:
+  - {fileID: 0}
+  m_ReferenceTime: 50
 --- !u!1 &3502839285179922484
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,4 +140,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerSpawner: {fileID: 1278649808940570657}
-  m_LevelController: {fileID: 0}
+  m_LevelController: {fileID: 4925879468183622336}
+  m_Abilities: {fileID: 0}

@@ -1,10 +1,14 @@
 using UnityEngine;
 using System;
+using SpaceShooter;
+using UnityEngine.UI;
 
 namespace TowerDefence
 {
     public class EnemyWaveManager : MonoBehaviour
     {
+        public static event Action<Enemy> OnEnemySpawn;
+
         [SerializeField] private Enemy m_EnemyPrefab;
         [SerializeField] private Path[] m_Paths;
         [SerializeField] private EnemyWave m_CurrentWave;
@@ -44,8 +48,14 @@ namespace TowerDefence
                             enemy.GetComponent<TD_PatrolController>().SetPath(m_Paths[pathIndex]);
                         else
                             Debug.LogWarning($"No TD_PatrolController found on {enemy.name}. Ensure TD_PatrolController is attached.");
+                        
+                        var images = enemy.GetComponentInChildren<HitPointBar>().GetComponentsInChildren<Image>();
+
+                        foreach (var image in images)
+                            image.enabled = false;
 
                         m_ActiveEnemyCount++;
+                        OnEnemySpawn?.Invoke(enemy);
                     }
                 }
                 else

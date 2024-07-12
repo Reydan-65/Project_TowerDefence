@@ -66,17 +66,22 @@ namespace TowerDefence
                         m_ActiveTowerBuyControl[i].transform.position += offset;
                     }
 
-                foreach (var towerBuyControl in GetComponentsInChildren<TowerBuyControl>())
-                {
-                    towerBuyControl.SetBuildPoint(buildPoint.transform.root);
-                }
+                    foreach (var towerBuyControl in GetComponentsInChildren<TowerBuyControl>())
+                    {
+                        towerBuyControl.SetBuildPoint(buildPoint.transform.root);
+                    }
                 }
             }
             else
             {
-                foreach (var control in m_ActiveTowerBuyControl) Destroy(control.gameObject);
+                if (m_ActiveTowerBuyControl != null)
+                {
+                    foreach (var control in m_ActiveTowerBuyControl)
+                        Destroy(control.gameObject);
 
-                m_ActiveTowerBuyControl.Clear();
+                    m_ActiveTowerBuyControl.Clear();
+                }
+
                 gameObject.SetActive(false);
             }
         }

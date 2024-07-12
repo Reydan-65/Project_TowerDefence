@@ -24,11 +24,6 @@ namespace SpaceShooter
             float sizeX = transform.root.GetComponentInChildren<CircleCollider2D>().radius * 2;
 
             m_CanvasRect.localScale = new Vector2(sizeX, m_CanvasRect.localScale.y);
-
-            for (int i = 0; i < m_Image.Length; i++)
-            {
-                m_Image[i].enabled = false;
-            }
         }
 
         protected virtual void Update()

@@ -25,8 +25,8 @@ namespace SpaceShooter
             {
                 if (transform.root.TryGetComponent(out SpaceShip ship) == true)
                 {
-                    ship.MaxLinearVelocity /= 2;
-                    ship.Thrust /= 2;
+                    ship.ChangeMaxLinearVelocityOnValue(0.5f);
+                    //ship.Thrust /= 2;
                 }
             }
 
@@ -41,8 +41,8 @@ namespace SpaceShooter
             {
                 if (transform.root.TryGetComponent(out SpaceShip ship) == true)
                 {
-                    ship.MaxLinearVelocity *= 2;
-                    ship.Thrust *= 2;
+                    ship.RestoreMaxLinearVelocityOnValue();
+                    //ship.Thrust *= 2;
                 }
             }
 

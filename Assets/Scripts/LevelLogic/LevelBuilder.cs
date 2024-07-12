@@ -18,6 +18,8 @@ namespace SpaceShooter
         //[SerializeField] private LevelBoundary m_LevelBoundary;
         [SerializeField] private LevelController m_LevelController;
         //[SerializeField] private SoundManager m_SoundManager;
+        [SerializeField] private Abilities m_Abilities;
+        [SerializeField] private ClickProtection m_ClickProtection;
 
         private void Awake()
         {
@@ -27,7 +29,8 @@ namespace SpaceShooter
             TD_Player player = (TD_Player)m_PlayerSpawner.Spawn();
 
             player.Init();
-
+            m_Abilities.Init();
+            m_ClickProtection.Init();
             //m_SoundManager.Init();
 
             //Instantiate(m_PlayerHUDPrefab);       

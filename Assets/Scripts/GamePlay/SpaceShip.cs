@@ -24,6 +24,7 @@ namespace SpaceShooter
         [SerializeField] private float m_Thrust;
         [SerializeField] private float m_Mobility;
         [SerializeField] private float m_MaxLinearVelocity;
+        private float m_MaxLinearVelocityBackup;
         [SerializeField] private float m_MaxAngularVelocity;
         [SerializeField] private Sprite m_ShipPreview;
 
@@ -55,7 +56,15 @@ namespace SpaceShooter
         public SpriteRenderer SpriteProperties => m_SpriteProperties;
         public float Thrust { get => m_Thrust; set => m_Thrust = value; }
         public float Mobility { get => m_Mobility; set => m_Mobility = value; }
-        public float MaxLinearVelocity { get => m_MaxLinearVelocity; set => m_MaxLinearVelocity = value; }
+        //public float MaxLinearVelocity { get => m_MaxLinearVelocity; set => m_MaxLinearVelocity = value; }
+
+        public void ChangeMaxLinearVelocityOnValue(float value) 
+        { 
+            m_MaxLinearVelocityBackup = m_MaxLinearVelocity;
+            m_MaxLinearVelocity *= value;
+        }
+        public void RestoreMaxLinearVelocityOnValue() { m_MaxLinearVelocity = m_MaxLinearVelocityBackup; }
+        
         public float MaxAngularVelocity => m_MaxAngularVelocity;
         public Sprite ShipPreview => m_ShipPreview;
 
