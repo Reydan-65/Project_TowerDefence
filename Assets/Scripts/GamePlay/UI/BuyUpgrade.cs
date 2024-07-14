@@ -1,34 +1,53 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static TowerDefence.UpgradeAsset;
 
 namespace TowerDefence
 {
     public class BuyUpgrade : MonoBehaviour
     {
-        [SerializeField] private UpgradeAsset m_UpgradeAsset;
+        private const string PlayerUpgrade = "PlayerUpgrades";
+        private const string TowersUpgrade = "TowersUpgrades";
+        private const string AbilitiesUpgrade = "AbilitiesUpgrades";
+
         [SerializeField] private Image m_UpgradeIcon;
         [SerializeField] private TextMeshProUGUI m_LevelNumText, m_CostText;
         [SerializeField] private Button m_BuyButton;
 
         private int m_Cost;
+        private int m_Index;
 
-        /// <summary>
-        /// Инициализация панели апгрейда в магазине:
-        /// назначение спрайта апгрейда.
-        /// уровня апгрейда.
-        /// После выполнения покупки:
-        /// Если куплен последний уровень апгрейда, блокируем.
-        /// Иначе обновляем параметры.
-        /// </summary>
+        private PropertiesUpgrade m_PropertiesUpgrade;
+
+        private void Awake()
+        {
+            // Определяем индекс и тип улучшения
+            m_Index = transform.GetSiblingIndex();
+
+            if (transform.parent.name == PlayerUpgrade)
+                m_PropertiesUpgrade = Upgrades.Instance.Assets.PlayerProperties[m_Index];
+            else if (transform.parent.name == TowersUpgrade)
+                m_PropertiesUpgrade = Upgrades.Instance.Assets.TowerProperties[m_Index];
+            else if (transform.parent.name == AbilitiesUpgrade)
+                m_PropertiesUpgrade = Upgrades.Instance.Assets.AbilityProperties[m_Index];
+        }
+
         public void Initialize()
         {
-            m_UpgradeIcon.sprite = m_UpgradeAsset.Sprite;
+            // Инициализация спрайта и стоимости
+            if (m_PropertiesUpgrade != null)
+            {
+                m_UpgradeIcon.sprite = m_PropertiesUpgrade.Sprite;
+                InitCost(m_PropertiesUpgrade.CostByLevel, m_PropertiesUpgrade.UpgradeName);
+            }
+        }
 
-            var savedLevel = Upgrades.GetUpgradeLevel(m_UpgradeAsset);
+        private void InitCost(int[] costByLevel, string propertiesName)
+        {
+            var savedLevel = Upgrades.GetUpgradeLevel(propertiesName);
 
-            if (savedLevel >= m_UpgradeAsset.CostByLevel.Length)
+            if (savedLevel >= costByLevel.Length)
             {
                 m_BuyButton.interactable = false;
                 m_BuyButton.transform.Find("ScoreIcon_Image").gameObject.SetActive(false);
@@ -39,25 +58,25 @@ namespace TowerDefence
             }
             else
             {
-                this.m_LevelNumText.text = $"Level: {savedLevel + 1}";
-                m_Cost = m_UpgradeAsset.CostByLevel[savedLevel];
+                m_LevelNumText.text = $"Level: {savedLevel + 1}";
+                m_Cost = costByLevel[savedLevel];
                 m_CostText.text = m_Cost.ToString();
             }
         }
 
         public void EX_Buy()
         {
-            Upgrades.BuyUpgrade(m_UpgradeAsset);
-            Initialize();
+            // Выполнение покупки
+            if (m_PropertiesUpgrade != null)
+            {
+                Upgrades.BuyUpgrade(m_PropertiesUpgrade.UpgradeName);
+                Initialize(); // Обновление после покупки
+            }
         }
 
-        /// <summary>
-        /// Проверяем стоимость улучшения,
-        /// если денег хватает - кнопка активна;
-        /// иначе - кнопка неактивна.
-        /// </summary>
         public void CheckCost(int m_Money)
         {
+            // Проверка стоимости улучшения
             if (m_Money >= m_Cost && m_Cost >= 0)
             {
                 m_CostText.color = Color.green;

@@ -17,7 +17,6 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 0d1dc428e29b59d4da665429794be749, type: 3}
   GUISprite: {fileID: 21300000, guid: ef25b92a8e4b2644b8420de820e6c11f, type: 3}
   TurretProperties: {fileID: 11400000, guid: 4c7ec1dcb8237754fac43b644acfbc33, type: 2}
-  RequaredUpgrade: {fileID: 11400000, guid: 3fea97967aec4a94c8c2475b4059f097, type: 2}
-  RequaredLevelUpgrade: 2
-  m_UpgradesTo:
-  - {fileID: 11400000, guid: 2d83d6b87408c644cbacf2c1311a9b47, type: 2}
+  RequaredUpgradeName: Archer Tower
+  RequaredLevelUpgrade: 1
+  m_UpgradesTo: []

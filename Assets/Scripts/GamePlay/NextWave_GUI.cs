@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +7,9 @@ namespace TowerDefence
 {
     public class NextWave_GUI : MonoBehaviour
     {
+        [SerializeField] private TextMeshProUGUI m_BonusText;
         [SerializeField] private TextMeshProUGUI m_BonusAmount;
+        [SerializeField] private Image m_BonusImage;
         [SerializeField] private Image m_NextWaveBar;
         [SerializeField] private Image m_ButtonImage;
         [SerializeField] private Sprite m_CrossSprite;
@@ -25,7 +28,6 @@ namespace TowerDefence
         private void Start()
         {
             m_WaveIndex = 0;
-            m_ButtonImage.GetComponent<Button>().interactable = true;
 
             m_EnemyWaveManager = FindObjectOfType<EnemyWaveManager>();
             m_EnemyWaves = m_EnemyWaveManager.GetComponentsInChildren<EnemyWave>();
@@ -40,27 +42,38 @@ namespace TowerDefence
                 }
             }
 
+            SwitchEnabledForceNextWaveButton(false);
+
             EnemyWave.OnWavePrepared += (float time) =>
             {
                 m_TimeNextWave = time;
+
+                if (m_WaveIndex != 0)
+                {
+                    SwitchEnabledForceNextWaveButton(true);
+                }
             };
         }
 
         private void Update()
         {
-            var bonus = (int)m_TimeNextWave;
+            var bonus = (int)(m_TimeNextWave * 0.5f);
 
             if (bonus < 0) bonus = 0;
-
             m_BonusAmount.text = bonus.ToString();
-            m_TimeNextWave -= Time.deltaTime;
 
-            if (m_WaveIndex >= 0 && m_WaveIndex < m_EnemyWaves.Length)
+            if (m_WaveIndex >= 0 && m_WaveIndex < m_EnemyWaves.Length && m_ButtonImage.GetComponent<Button>().interactable == true)
+            {
+                m_TimeNextWave -= Time.deltaTime;
+                m_NextWaveBar.enabled = true;
                 m_NextWaveBar.fillAmount += Time.deltaTime / m_TimeToSpawn[m_WaveIndex];
+            }
+            else
+                m_NextWaveBar.enabled = false;
 
             if (m_WaveIndex == m_EnemyWaves.Length)
             {
-                m_ButtonImage.GetComponent<Button>().interactable = false;
+                SwitchEnabledForceNextWaveButton(false);
                 m_ButtonImage.sprite = m_CrossSprite;
             }
         }
@@ -69,15 +82,46 @@ namespace TowerDefence
 
         /// <summary>
         /// Принудительный вызов новой волны, если она есть.
-        /// Закрыть BuyControl, если открыт.
+        /// - закрыть BuyControl, если открыт;
+        /// - отключить кнопку вызова волны, до окончания текущего призыва.
         /// </summary>
         public void EX_CallWave()
         {
+            float delay = m_EnemyWaveManager.CurrentWave.SpawnDelayForEachEnemyInWave * m_EnemyWaveManager.EnemyCountInWave;
+
             m_EnemyWaveManager.ForceNextWave();
 
             BuyControl bc = FindObjectOfType<BuyControl>();
 
             if (bc != null) bc.gameObject.SetActive(false);
+
+            StartCoroutine(WaitCooldown(delay));
+        }
+
+        private IEnumerator WaitCooldown(float delay)
+        {
+            SwitchEnabledForceNextWaveButton(false);
+
+            yield return new WaitForSeconds(delay);
+
+            SwitchEnabledForceNextWaveButton(true);
+        }
+
+        public void SwitchEnabledForceNextWaveButton(bool value)
+        {
+            if (m_ButtonImage != null)
+            {
+                Button button = m_ButtonImage.GetComponent<Button>();
+
+                if (button != null)
+                {
+                    button.interactable = value;
+                }
+
+                m_BonusText.enabled = value;
+                m_BonusImage.enabled = value;
+                m_BonusAmount.enabled = value;
+            }
         }
     }
 }

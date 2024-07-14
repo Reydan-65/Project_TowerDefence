@@ -17,7 +17,6 @@ namespace TowerDefence
 
         private static readonly Color GizmoColor = new Color(0, 1, 1, 0.2f);
 
-
         private void Start()
         {
             m_Turrets = GetComponentsInChildren<Turret>();

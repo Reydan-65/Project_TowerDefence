@@ -22,11 +22,11 @@ namespace TowerDefence
 
         [Space(10)]
         [Header("UpgradesProperties")]
-        [SerializeField] private UpgradeAsset RequaredUpgrade;
+        [SerializeField] private string RequaredUpgradeName;
         [SerializeField] private int RequaredLevelUpgrade;
 
-        public bool IsAvailable() => 
-            !RequaredUpgrade || RequaredLevelUpgrade <= Upgrades.GetUpgradeLevel(RequaredUpgrade);
+        public bool IsAvailable() =>
+            RequaredUpgradeName != null && RequaredLevelUpgrade <= Upgrades.GetUpgradeLevel(RequaredUpgradeName);
 
         public TowerAsset[] m_UpgradesTo;
     }

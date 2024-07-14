@@ -45,7 +45,7 @@ namespace TowerDefence
 
             if (m_LevelIndex >= 0)
                 m_LevelProperties = LevelSequencesController.Instance.LevelSequences.LevelsProperties[m_LevelIndex];
-
+            else
             if (m_BranchLevelIndex >= 0)
                 m_BranchLevelProperties = LevelSequencesController.Instance.LevelSequences.BranchLevelsProperties[m_BranchLevelIndex];
             
@@ -58,16 +58,10 @@ namespace TowerDefence
         public void EX_LoadLevel()
         {
             if (m_LevelIndex >= 0)
-            {
                 m_SceneTransitionManager.LoadScene(m_LevelProperties.SceneName);
-                //SceneManager.LoadScene(m_LevelProperties.SceneName);
-            }
 
             if (m_BranchLevelIndex >= 0)
-            {
                 m_SceneTransitionManager.LoadScene(m_BranchLevelProperties.SceneName);
-                //SceneManager.LoadScene(m_BranchLevelProperties.SceneName);
-            }
         }
 
         public void SetLevelData(string episodeName, int levelScore)

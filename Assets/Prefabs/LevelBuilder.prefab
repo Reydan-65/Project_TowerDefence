@@ -142,3 +142,4 @@ MonoBehaviour:
   m_PlayerSpawner: {fileID: 1278649808940570657}
   m_LevelController: {fileID: 4925879468183622336}
   m_Abilities: {fileID: 0}
+  m_ClickProtection: {fileID: 0}

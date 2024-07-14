@@ -47,6 +47,9 @@ MonoBehaviour:
   m_PathGroups:
   - Squads:
     - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
-      Count: 1
+      Count: 2
+    - Asset: {fileID: 11400000, guid: 44430cdde0d87274a9c6173f5434dfd9, type: 2}
+      Count: 2
   m_PrepareTime: 2
+  m_SpawnDelayForEachEnemyInWave: 0.5
   m_NextWave: {fileID: 0}

@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using SpaceShooter;
 using UnityEngine.UI;
+using System.Collections;
 
 namespace TowerDefence
 {
@@ -19,16 +20,37 @@ namespace TowerDefence
 
         private int m_ActiveEnemyCount = 0;
         private NextWave_GUI m_NextWaveGUI;
+        private int m_EnemyCountInWave;
+        public int EnemyCountInWave => m_EnemyCountInWave;
 
         private void Start()
         {
-            m_CurrentWave.Prepare(SpawnEnemies);
+            m_CurrentWave.Prepare(SpawnWave);
             m_NextWaveGUI = FindObjectOfType<NextWave_GUI>();
         }
 
-        private void SpawnEnemies()
+        /// <summary>
+        /// Определение общего количества врагов для текущей волны и их создание.
+        /// </summary>
+        private void SpawnWave()
         {
-            //Создать волну врагов
+            m_EnemyCountInWave = 0;
+
+            foreach ((EnemyAsset enemyAsset, int count, int pathIndex) in m_CurrentWave.EnumerateSquads())
+            {
+                m_EnemyCountInWave += count;
+            }
+
+            StartCoroutine(SpawnEnemies());
+        }
+
+        /// <summary>
+        /// Создание врагов:
+        /// - их тип, количество и путь заданы в настройках волны
+        /// - они создаются один за другим.
+        /// </summary>
+        private IEnumerator SpawnEnemies()
+        {
             foreach ((EnemyAsset enemyAsset, int count, int pathIndex) in m_CurrentWave.EnumerateSquads())
             {
                 if (pathIndex < m_Paths.Length)
@@ -45,10 +67,10 @@ namespace TowerDefence
                         TD_PatrolController patrolController = enemy.GetComponent<TD_PatrolController>();
 
                         if (patrolController != null)
-                            enemy.GetComponent<TD_PatrolController>().SetPath(m_Paths[pathIndex]);
+                            patrolController.SetPath(m_Paths[pathIndex]);
                         else
                             Debug.LogWarning($"No TD_PatrolController found on {enemy.name}. Ensure TD_PatrolController is attached.");
-                        
+
                         var images = enemy.GetComponentInChildren<HitPointBar>().GetComponentsInChildren<Image>();
 
                         foreach (var image in images)
@@ -56,6 +78,8 @@ namespace TowerDefence
 
                         m_ActiveEnemyCount++;
                         OnEnemySpawn?.Invoke(enemy);
+
+                        yield return new WaitForSeconds(CurrentWave.SpawnDelayForEachEnemyInWave);
                     }
                 }
                 else
@@ -70,7 +94,7 @@ namespace TowerDefence
             }
 
             //Готовится следующая волна
-            m_CurrentWave = m_CurrentWave.PrepareNext(SpawnEnemies);
+            m_CurrentWave = m_CurrentWave.PrepareNext(SpawnWave);
         }
 
         /// <summary>
@@ -86,6 +110,7 @@ namespace TowerDefence
                 if (m_CurrentWave)
                 {
                     ForceNextWave();
+                    m_NextWaveGUI.SwitchEnabledForceNextWaveButton(false);
                 }
                 else
                 {
@@ -108,7 +133,7 @@ namespace TowerDefence
                 TD_Player.Instance.ChangeGold((int)m_CurrentWave.GetRemainingTime());
 
                 //Вызов волны
-                SpawnEnemies();
+                SpawnWave();
             }
         }
 

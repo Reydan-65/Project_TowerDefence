@@ -30,8 +30,6 @@ namespace TowerDefence
         }
 
         [SerializeField] private int m_StartGold;
-        [SerializeField] private UpgradeAsset m_HealthUpgradeAsset;
-        [SerializeField] private UpgradeAsset m_GoldUpgradeAsset;
 
         private int m_CurrentGold;
         public int CurrentGold { get => m_CurrentGold; set => m_CurrentGold = value; }
@@ -47,10 +45,10 @@ namespace TowerDefence
         {
             base.Start();
 
-            var levelHealthUpgrade = Upgrades.GetUpgradeLevel(m_HealthUpgradeAsset);
+            var levelHealthUpgrade = Upgrades.GetUpgradeLevel(Upgrades.Instance.Assets.PlayerProperties[0].UpgradeName);
             ReduceLives(-levelHealthUpgrade * 5);
 
-            var levelGoldUpgrade = Upgrades.GetUpgradeLevel(m_GoldUpgradeAsset);
+            var levelGoldUpgrade = Upgrades.GetUpgradeLevel(Upgrades.Instance.Assets.PlayerProperties[1].UpgradeName);
             ChangeGold(levelGoldUpgrade * 5);
         }
 

@@ -40,8 +40,11 @@ namespace SpaceShooter
 
         private void OnDestroy()
         {
-            LevelController.Instance.LevelLost -= OnLevelLost;
-            LevelController.Instance.LevelPassed -= OnLevelPassed;
+            if (LevelController.Instance != null)
+            {
+                LevelController.Instance.LevelLost -= OnLevelLost;
+                LevelController.Instance.LevelPassed -= OnLevelPassed;
+            }
         }
 
         private void OnLevelPassed()

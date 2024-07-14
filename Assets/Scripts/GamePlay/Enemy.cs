@@ -78,8 +78,9 @@ namespace TowerDefence
         {
             var sr = transform.Find("View").GetComponent<SpriteRenderer>();
             sr.color = asset.SpriteColor;
-            sr.transform.localScale = new Vector3(asset.SpriteScale.x, asset.SpriteScale.y, 1f);
+
             sr.GetComponent<Animator>().runtimeAnimatorController = asset.Animations;
+            sr.transform.localScale = new Vector3(asset.SpriteScale.x, asset.SpriteScale.y, 1f);
 
             GetComponent<SpaceShip>().Use(asset);
             GetComponentInChildren<CircleCollider2D>().radius = asset.ColliderRadius;

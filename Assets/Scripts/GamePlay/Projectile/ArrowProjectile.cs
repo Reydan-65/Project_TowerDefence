@@ -6,15 +6,13 @@ namespace TowerDefence
 {
     public class ArrowProjectile : Projectile
     {
-        [SerializeField] private UpgradeAsset m_ArrowUpgradeAsset;
-
         protected override void Awake()
         {
             base.Awake();
         
-            var level = Upgrades.GetUpgradeLevel(m_ArrowUpgradeAsset);
+            //var level = Upgrades.GetUpgradeLevel(Upgrades.Instance.Assets.TowerProperties[0].UpgradeName);
 
-            m_Damage += level;
+            //m_Damage += level;
         }
 
         protected override void FixedUpdate()

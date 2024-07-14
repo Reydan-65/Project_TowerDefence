@@ -21,14 +21,24 @@ namespace TowerDefence
             }
 
             UpdateMoney();
-
             gameObject.SetActive(false);
         }
 
+        /// <summary>
+        /// Обновление количества ресурсов:
+        /// - создание списка для объединения всех обновлений;
+        /// - добавление элементов из каждого массива в общик список;
+        /// - получение общей стоимости обновлений;
+        /// - обновление количества ресурсов;
+        /// - обновление стоимости элементов.
+        /// </summary>
         public void UpdateMoney()
         {
             m_Money = MapCompletion.Instance.TotalScore;
-            m_Money -= Upgrades.GetTotalCost();
+
+            int cost = Upgrades.GetTotalCost();
+
+            m_Money -= cost;
             m_MoneyText.text = m_Money.ToString();
 
             foreach (var slot in m_Sales)
@@ -40,6 +50,14 @@ namespace TowerDefence
         public void EX_CloseShop()
         {
             gameObject.SetActive(false);
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var slot in m_Sales)
+            {
+                slot.transform.Find("Buy_Button").GetComponent<Button>().onClick.RemoveListener(UpdateMoney);
+            }
         }
     }
 }

@@ -558,7 +558,7 @@ MonoBehaviour:
   m_MaxEnergy: 0
   m_MaxAmmo: 0
   m_EnergyRegenPerSecond: 0
-  impactPrefab: {fileID: 0}
+  impactPrefab: {fileID: 299338270147196603, guid: f16339e1c786fa041a1c2a4f83ff6799, type: 3}
 --- !u!114 &425751018161530608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,7 +643,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
+  m_LocalScale: {x: 1.1999999, y: 1.1999999, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 256500437963370037}

@@ -17,7 +17,7 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 961542bf834d173448be6e9b235a3b66, type: 3}
   GUISprite: {fileID: 21300000, guid: bdd6845875df02742979b38cbafb28c1, type: 3}
   TurretProperties: {fileID: 11400000, guid: feb21130aa0e3134e8513672e716123e, type: 2}
-  RequaredUpgrade: {fileID: 11400000, guid: e453b94064e6970439daea46f0ac3808, type: 2}
+  RequaredUpgradeName: Siege Tower
   RequaredLevelUpgrade: 1
   m_UpgradesTo:
   - {fileID: 11400000, guid: 7d34618b92eab4e4aa838f90976764b4, type: 2}

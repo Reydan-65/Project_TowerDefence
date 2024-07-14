@@ -56,16 +56,6 @@ namespace SpaceShooter
         public SpriteRenderer SpriteProperties => m_SpriteProperties;
         public float Thrust { get => m_Thrust; set => m_Thrust = value; }
         public float Mobility { get => m_Mobility; set => m_Mobility = value; }
-        //public float MaxLinearVelocity { get => m_MaxLinearVelocity; set => m_MaxLinearVelocity = value; }
-
-        public void ChangeMaxLinearVelocityOnValue(float value) 
-        { 
-            m_MaxLinearVelocityBackup = m_MaxLinearVelocity;
-            m_MaxLinearVelocity *= value;
-        }
-        public void RestoreMaxLinearVelocityOnValue() { m_MaxLinearVelocity = m_MaxLinearVelocityBackup; }
-        
-        public float MaxAngularVelocity => m_MaxAngularVelocity;
         public Sprite ShipPreview => m_ShipPreview;
 
         #region Public API
@@ -118,7 +108,27 @@ namespace SpaceShooter
 
             m_Rigid.AddTorque(TorqueControl * m_Mobility * Time.fixedDeltaTime, ForceMode2D.Force);
             m_Rigid.AddTorque(-m_Rigid.angularVelocity * (m_Mobility / m_MaxAngularVelocity) * Time.fixedDeltaTime, ForceMode2D.Force);
+
+            if (m_MaxLinearVelocity < 0.2f) m_MaxLinearVelocity = 0.2f;
+            if (m_MaxAngularVelocity < 0.2f) m_MaxAngularVelocity = 0.2f;
         }
+
+        /// <summary>
+        /// Запоминание максимальной линейной скорости и
+        /// её изменение на value.
+        /// </summary>
+        public void ChangeMaxLinearVelocityOnValue(float value)
+        {
+            if (m_MaxLinearVelocityBackup < m_MaxLinearVelocity)
+                m_MaxLinearVelocityBackup = m_MaxLinearVelocity;
+
+            m_MaxLinearVelocity *= value;
+        }
+
+        /// <summary>
+        /// Восстановление максимальной линейной скорости из бэкапа.
+        /// </summary>
+        public void RestoreMaxLinearVelocityOnValue() { m_MaxLinearVelocity = m_MaxLinearVelocityBackup; }
 
         /// <summary>
         /// TODO: заменить временный метод-заглушку
@@ -135,7 +145,6 @@ namespace SpaceShooter
             //}
             return;
         }
-
 
         /*
         #region Offensive
@@ -178,10 +187,7 @@ namespace SpaceShooter
             m_PrimaryEnergy = Mathf.Clamp(m_PrimaryEnergy, 0, m_MaxEnergy);
         }
 
-        
-
         #endregion
-        
 
         /// <summary>
         /// Изменение свойств туррели.
@@ -226,9 +232,9 @@ namespace SpaceShooter
             base.OnDeath();
             //if (CompareTag("Boss") == true)
             //    Player.Instance.AddBossDead();
-
-            //Instantiate(impactPrefab, transform.root);
-            //isDead = true;
+            Vector3 position = new Vector3(transform.root.position.x, transform.root.position.y, 0);
+            Instantiate(impactPrefab, position,Quaternion.identity);
+            isDead = true;
         }
 
         public new void Use(EnemyAsset asset)

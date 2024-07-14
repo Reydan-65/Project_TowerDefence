@@ -25,6 +25,6 @@ MonoBehaviour:
   HitPoints: 30
   ArmorPoints: 0
   ScoreValue: 1
-  MoveSpeed: 1.4
+  MoveSpeed: 1.6
   damageToPlayer: 1
   goldValue: 1

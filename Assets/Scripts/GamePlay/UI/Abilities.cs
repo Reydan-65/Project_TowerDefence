@@ -4,6 +4,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static TowerDefence.Abilities;
 
 namespace TowerDefence
 {
@@ -14,8 +15,14 @@ namespace TowerDefence
         {
             [SerializeField] protected float m_Cost;
             [SerializeField] protected float m_Cooldown;
+
+            [Space(10)]
+            [SerializeField] protected string m_RequaredName;
+            [SerializeField] protected int m_RequaredLevelUpgrade;
             public float Cost => m_Cost;
             public float Cooldown => m_Cooldown;
+            public string RequaredName => m_RequaredName;
+            public int RequaredLevelUpgrade => m_RequaredLevelUpgrade;
 
             public virtual void ImageUpdate(Button button, float startTime, float time, TextMeshProUGUI text, int value)
             {
@@ -30,12 +37,16 @@ namespace TowerDefence
         }
 
         [Serializable]
-        public class FireAbility : Ability
+        public class ExplosionAbility : Ability
         {
             [Space(10)]
-            [SerializeField] private int m_Radius;
+            [SerializeField] private float m_Radius;
             [SerializeField] private int m_Damage;
             [SerializeField] private Color m_TargetingColor;
+
+            private int m_BaseDamage;
+            public int Damage { get => m_Damage; set => m_Damage = value; }
+            public int BaseDamage { get => m_BaseDamage; set => m_BaseDamage = value; }
 
             /// <summary>
             /// ѕрименение способности игрока.
@@ -43,30 +54,36 @@ namespace TowerDefence
             /// - ищем противников вокруг этой точки (в заданном радиусе);
             /// - каждому найденному противнику наноситс€ заданный урон;
             /// - кнопка активации отключаетс€ на врем€ перезар€дки;
-            /// - визуал дл€ перезар€дкию
+            /// - визуал дл€ перезар€дки.
             /// </summary>
             public void Use()
             {
                 Instance.m_TargetingCircle.gameObject.SetActive(true);
+                Instance.m_TargetingCircle.GetComponent<RectTransform>().sizeDelta = new Vector2(m_Radius * 2 * 100, m_Radius * 2 * 100);
 
                 ClickProtection.Instance.Activate((Vector2 clickPosition) =>
                 {
-                    Instance.m_FireAbilityTimerText.enabled = true;
-                    Instance.m_FireAbilityCooldownTime = m_Cooldown;
+                    Instance.m_ExplosionAbilityCooldownImage.color = Color.red;
+                    Instance.m_ExplosionAbilityTimerText.enabled = true;
+                    Instance.m_ExplosionAbilityCooldownTime = m_Cooldown;
+                    Instance.m_ExplosionAbilityImage.enabled = false;
 
                     Vector3 position = Camera.main.ScreenToWorldPoint(clickPosition);
+                    position.z = 0;
+
+                    GameObject explosion = Instantiate(Instance.m_ExplosionAbilityPrefab, position, Quaternion.identity);
 
                     foreach (var collider2D in Physics2D.OverlapCircleAll(position, m_Radius))
                     {
-                        if (collider2D.transform.root.TryGetComponent(out Enemy enemy) == true)
-                        {
+                        if (collider2D.transform.root.TryGetComponent(out Enemy enemy))
                             enemy.TakeDamage(m_Damage, Projectile.DamageType.Magic);
-                        }
                     }
 
+                    Destroy(explosion, 0.7f);
+
                     Instance.m_TargetingCircle.gameObject.SetActive(false);
-                    Instance.m_FireAbilityButton.interactable = false;
-                    Instance.m_FireAbilityButtonImage.fillAmount = 0;
+                    Instance.m_ExplosionAbilityButton.interactable = false;
+                    Instance.m_ExplosionAbilityCooldownImage.fillAmount = 0;
 
                     Instance.StartCoroutine(OnCooldownEnd());
                 });
@@ -74,8 +91,10 @@ namespace TowerDefence
                 IEnumerator OnCooldownEnd()
                 {
                     yield return new WaitForSeconds(m_Cooldown);
-                    Instance.m_FireAbilityButton.interactable = true;
-                    Instance.m_FireAbilityTimerText.enabled = false;
+                    Instance.m_ExplosionAbilityCooldownImage.color = Color.green;
+                    Instance.m_ExplosionAbilityImage.enabled = true;
+                    Instance.m_ExplosionAbilityButton.interactable = true;
+                    Instance.m_ExplosionAbilityTimerText.enabled = false;
                 }
             }
 
@@ -87,11 +106,15 @@ namespace TowerDefence
         }
 
         [Serializable]
-        public class TimeAbility : Ability
+        public class SlowEnemyAbility : Ability
         {
             [Space(10)]
             [SerializeField] private float m_Duration;
-            public float Duration => m_Duration;
+            private float m_BaseDuration;
+            [SerializeField] private float m_ValueToChangeVelocity;
+            public float Duration { get => m_Duration; set => m_Duration = value; }
+            public float BaseDuration { get => m_BaseDuration; set => m_BaseDuration = value; }
+            public float ValueToChangeVelocity { get => m_ValueToChangeVelocity; set => m_ValueToChangeVelocity = value; }
 
             /// <summary>
             /// ѕрименение способности игрока.
@@ -102,11 +125,11 @@ namespace TowerDefence
             /// </summary>
             public void Use()
             {
-                Instance.m_TimeAbilityDurationTime = m_Duration;
+                Instance.m_SlowEnemyAbilityDurationTime = m_Duration;
 
                 void Slow(Enemy enemy)
                 {
-                    enemy.GetComponent<SpaceShip>().ChangeMaxLinearVelocityOnValue(0.5f);
+                    enemy.GetComponent<SpaceShip>().ChangeMaxLinearVelocityOnValue(m_ValueToChangeVelocity);
                 }
 
                 foreach (var enemy in FindObjectsOfType<Enemy>())
@@ -120,10 +143,11 @@ namespace TowerDefence
 
                 IEnumerator Restore()
                 {
-                    Instance.m_TimeAbilityButtonImage.color = Color.cyan;
+                    Instance.m_SlowEnemyAbilityCooldownImage.color = Color.white;
 
                     yield return new WaitForSeconds(m_Duration);
 
+                    Instance.m_SlowEnemyAbilityImage.enabled = false;
                     foreach (var enemy in FindObjectsOfType<Enemy>())
                     {
                         enemy.GetComponent<SpaceShip>().RestoreMaxLinearVelocityOnValue();
@@ -136,18 +160,20 @@ namespace TowerDefence
 
                 IEnumerator TimeAbilityCooldown()
                 {
-                    Instance.m_TimeAbilityTimerText.enabled = true;
-                    Instance.m_TimeAbilityCooldownTime = m_Cooldown;
+                    Instance.m_SlowEnemyAbilityCooldownImage.color = Color.red;
+                    Instance.m_SlowEnemyAbilityTimerText.enabled = true;
+                    Instance.m_SlowEnemyAbilityCooldownTime = m_Cooldown;
 
-                    Instance.m_TimeAbilityButtonImage.color = Color.white;
-                    Instance.m_TimeAbilityButtonImage.fillAmount = 0;
+                    Instance.m_SlowEnemyAbilityCooldownImage.fillAmount = 0;
 
-                    Instance.m_TimeAbilityButton.interactable = false;
+                    Instance.m_SlowEnemyAbilityButton.interactable = false;
 
                     yield return new WaitForSeconds(m_Cooldown);
 
-                    Instance.m_TimeAbilityButton.interactable = true;
-                    Instance.m_TimeAbilityTimerText.enabled = false;
+                    Instance.m_SlowEnemyAbilityCooldownImage.color = Color.green;
+                    Instance.m_SlowEnemyAbilityImage.enabled = true;
+                    Instance.m_SlowEnemyAbilityButton.interactable = true;
+                    Instance.m_SlowEnemyAbilityTimerText.enabled = false;
                 }
             }
 
@@ -159,53 +185,88 @@ namespace TowerDefence
         }
 
         [Header("FireAbility")]
-        [SerializeField] private FireAbility m_FireAbility;
-        [SerializeField] private Button m_FireAbilityButton;
-        [SerializeField] private Image m_FireAbilityButtonImage;
-        [SerializeField] private TextMeshProUGUI m_FireAbilityTimerText;
+        [SerializeField] private ExplosionAbility m_ExplosionAbility;
+        [SerializeField] private Button m_ExplosionAbilityButton;
+        [SerializeField] private Image m_ExplosionAbilityCooldownImage;
+        [SerializeField] private Image m_ExplosionAbilityImage;
+        [SerializeField] private TextMeshProUGUI m_ExplosionAbilityTimerText;
         [SerializeField] private Image m_TargetingCircle;
+        [SerializeField] private GameObject m_ExplosionAbilityPrefab;
 
         [Header("TimeAbility")]
-        [SerializeField] private TimeAbility m_TimeAbility;
-        [SerializeField] private Button m_TimeAbilityButton;
-        [SerializeField] private Image m_TimeAbilityButtonImage;
-        [SerializeField] private TextMeshProUGUI m_TimeAbilityTimerText;
+        [SerializeField] private SlowEnemyAbility m_SlowEnemyAbility;
+        [SerializeField] private Button m_SlowEnemyAbilityButton;
+        [SerializeField] private Image m_SlowEnemyAbilityCooldownImage;
+        [SerializeField] private Image m_SlowEnemyAbilityImage;
+        [SerializeField] private TextMeshProUGUI m_SlowEnemyAbilityTimerText;
 
-        private float m_FireAbilityCooldownTime;
-        private float m_TimeAbilityCooldownTime;
-        private float m_TimeAbilityDurationTime;
+        private float m_ExplosionAbilityCooldownTime;
+        private float m_SlowEnemyAbilityCooldownTime;
+        private float m_SlowEnemyAbilityDurationTime;
 
-        public void EX_UseFireAbility() => m_FireAbility.Use();
-        public void EX_UseTimeAbility() => m_TimeAbility.Use();
+        public void EX_UseFireAbility() => m_ExplosionAbility.Use();
+        public void EX_UseTimeAbility() => m_SlowEnemyAbility.Use();
+
+        public bool IsAvailable(Ability ability) =>
+            ability.RequaredName != null && ability.RequaredLevelUpgrade <= Upgrades.GetUpgradeLevel(ability.RequaredName);
 
         private void Start()
         {
-            m_FireAbilityTimerText.enabled = false;
-            m_TimeAbilityTimerText.enabled = false;
+            m_ExplosionAbility.BaseDamage = m_ExplosionAbility.Damage;
+            m_SlowEnemyAbility.BaseDuration = m_SlowEnemyAbility.Duration;
+
+            m_ExplosionAbilityTimerText.enabled = false;
+            m_SlowEnemyAbilityTimerText.enabled = false;
+
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(false);
+
+            if (IsAvailable(m_ExplosionAbility))
+            {
+                transform.GetChild(0).gameObject.SetActive(true);
+                if (Upgrades.GetUpgradeLevel(m_ExplosionAbility.RequaredName) > 1) 
+                    m_ExplosionAbility.Damage += (int) (m_ExplosionAbility.BaseDamage * 0.5f * Upgrades.GetUpgradeLevel(m_ExplosionAbility.RequaredName));
+            }
+
+            if (IsAvailable(m_SlowEnemyAbility))
+            {
+                transform.GetChild(1).gameObject.SetActive(true);
+                if (Upgrades.GetUpgradeLevel(m_SlowEnemyAbility.RequaredName) > 1)
+                {
+                    m_SlowEnemyAbility.ValueToChangeVelocity -= 0.05f * Upgrades.GetUpgradeLevel(m_SlowEnemyAbility.RequaredName);
+                    m_SlowEnemyAbility.Duration += (float) (m_SlowEnemyAbility.BaseDuration * 0.25f);
+                }
+            }
         }
 
         private void Update()
         {
-            if (m_FireAbilityButton != null)
+            if (m_ExplosionAbilityButton != null)
             {
-                m_FireAbilityCooldownTime -= Time.deltaTime;
-                if (m_FireAbilityCooldownTime <= 0) m_FireAbilityCooldownTime = 0;
-                m_FireAbility.ImageUpdate(m_FireAbilityButton, m_FireAbility.Cooldown, m_FireAbilityCooldownTime, m_FireAbilityTimerText, 1);
+                m_ExplosionAbilityCooldownTime -= Time.deltaTime;
+                if (m_ExplosionAbilityCooldownTime <= 0) m_ExplosionAbilityCooldownTime = 0;
+                m_ExplosionAbility.ImageUpdate(m_ExplosionAbilityButton, m_ExplosionAbility.Cooldown, m_ExplosionAbilityCooldownTime, m_ExplosionAbilityTimerText, 1);
             }
 
-            if (m_TimeAbilityButton != null)
+            if (m_SlowEnemyAbilityButton != null)
             {
-                if (m_TimeAbilityDurationTime > 0)
+                if (m_SlowEnemyAbilityDurationTime > 0)
                 {
-                    m_TimeAbilityDurationTime -= Time.deltaTime;
-                    m_TimeAbility.ImageUpdate(m_TimeAbilityButton, m_TimeAbility.Duration, m_TimeAbilityDurationTime, m_TimeAbilityTimerText, -1);
+                    m_SlowEnemyAbilityDurationTime -= Time.deltaTime;
+                    m_SlowEnemyAbility.ImageUpdate(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Duration, m_SlowEnemyAbilityDurationTime, m_SlowEnemyAbilityTimerText, -1);
                 }
 
-                if (m_TimeAbilityCooldownTime > 0)
+                if (m_SlowEnemyAbilityCooldownTime > 0)
                 {
-                    m_TimeAbilityCooldownTime -= Time.deltaTime;
-                    m_TimeAbility.ImageUpdate(m_TimeAbilityButton, m_TimeAbility.Cooldown, m_TimeAbilityCooldownTime, m_TimeAbilityTimerText, 1);
+                    m_SlowEnemyAbilityCooldownTime -= Time.deltaTime;
+                    m_SlowEnemyAbility.ImageUpdate(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Cooldown, m_SlowEnemyAbilityCooldownTime, m_SlowEnemyAbilityTimerText, 1);
                 }
+            }
+
+            if (Instance.m_TargetingCircle.gameObject.activeSelf)
+            {
+                Vector3 mousePosition = Input.mousePosition;
+                Instance.m_TargetingCircle.transform.position = mousePosition;
             }
         }
     }
