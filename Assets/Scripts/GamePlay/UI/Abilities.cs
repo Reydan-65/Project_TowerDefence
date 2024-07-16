@@ -4,7 +4,6 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static TowerDefence.Abilities;
 
 namespace TowerDefence
 {
@@ -24,16 +23,16 @@ namespace TowerDefence
             public string RequaredName => m_RequaredName;
             public int RequaredLevelUpgrade => m_RequaredLevelUpgrade;
 
-            public virtual void ImageUpdate(Button button, float startTime, float time, TextMeshProUGUI text, int value)
-            {
-                if (button != null)
-                {
-                    button.GetComponent<Image>().fillAmount += (Time.deltaTime / startTime) * value;
+            //public virtual void ImageUpdate(Button button, float startTime, float time, TextMeshProUGUI text, int value)
+            //{
+            //    if (button != null)
+            //    {
+            //        button.GetComponent<Image>().fillAmount += (Time.deltaTime / startTime) * value;
 
-                    if (time <= 0) time = 0;
-                    text.text = Mathf.Ceil(time).ToString();
-                }
-            }
+            //        if (time <= 0) time = 0;
+            //        text.text = Mathf.Ceil(time).ToString();
+            //    }
+            //}
         }
 
         [Serializable]
@@ -66,7 +65,6 @@ namespace TowerDefence
                     Instance.m_ExplosionAbilityCooldownImage.color = Color.red;
                     Instance.m_ExplosionAbilityTimerText.enabled = true;
                     Instance.m_ExplosionAbilityCooldownTime = m_Cooldown;
-                    Instance.m_ExplosionAbilityImage.enabled = false;
 
                     Vector3 position = Camera.main.ScreenToWorldPoint(clickPosition);
                     position.z = 0;
@@ -93,17 +91,16 @@ namespace TowerDefence
                 {
                     yield return new WaitForSeconds(m_Cooldown);
                     Instance.m_ExplosionAbilityCooldownImage.color = Color.green;
-                    Instance.m_ExplosionAbilityImage.enabled = true;
                     Instance.m_ExplosionAbilityButton.interactable = true;
                     Instance.m_ExplosionAbilityTimerText.enabled = false;
                 }
             }
 
-            public override void ImageUpdate(Button button, float startTime, float time, TextMeshProUGUI text, int value)
-            {
-                base.ImageUpdate(button, startTime, time, text, value);
-                time = startTime;
-            }
+            //public override void ImageUpdate(Button button, float startTime, float time, TextMeshProUGUI text, int value)
+            //{
+            //    base.ImageUpdate(button, startTime, time, text, value);
+            //    time = startTime;
+            //}
         }
 
         [Serializable]
@@ -127,6 +124,7 @@ namespace TowerDefence
             public void Use()
             {
                 Instance.m_SlowEnemyAbilityDurationTime = m_Duration;
+                Instance.m_SlowEnemyAbilityButton.interactable = false;
 
                 void Slow(Enemy enemy)
                 {
@@ -149,7 +147,6 @@ namespace TowerDefence
 
                     yield return new WaitForSeconds(m_Duration);
 
-                    Instance.m_SlowEnemyAbilityImage.enabled = false;
                     foreach (var enemy in FindObjectsOfType<Enemy>())
                     {
                         enemy.GetComponent<SpaceShip>().RestoreMaxLinearVelocityOnValue();
@@ -173,17 +170,16 @@ namespace TowerDefence
                     yield return new WaitForSeconds(m_Cooldown);
 
                     Instance.m_SlowEnemyAbilityCooldownImage.color = Color.green;
-                    Instance.m_SlowEnemyAbilityImage.enabled = true;
                     Instance.m_SlowEnemyAbilityButton.interactable = true;
                     Instance.m_SlowEnemyAbilityTimerText.enabled = false;
                 }
             }
 
-            public override void ImageUpdate(Button button, float startTime, float time, TextMeshProUGUI text, int value)
-            {
-                base.ImageUpdate(button, startTime, time, text, value);
-                time = startTime;
-            }
+            //public override void ImageUpdate(Button button, float startTime, float time, TextMeshProUGUI text, int value)
+            //{
+            //    base.ImageUpdate(button, startTime, time, text, value);
+            //    time = startTime;
+            //}
         }
 
         [Header("FireAbility")]
@@ -235,7 +231,7 @@ namespace TowerDefence
                 transform.GetChild(0).gameObject.SetActive(true);
 
                 if (Upgrades.GetUpgradeLevel(m_ExplosionAbility.RequaredName) > 1)
-                    m_ExplosionAbility.Damage += (int)(m_ExplosionAbility.BaseDamage * 0.5f * Upgrades.GetUpgradeLevel(m_ExplosionAbility.RequaredName));
+                    m_ExplosionAbility.Damage += (int)(m_ExplosionAbility.BaseDamage * 0.5f * (Upgrades.GetUpgradeLevel(m_ExplosionAbility.RequaredName) - 1));
             }
 
             if (IsAvailable(m_SlowEnemyAbility))
@@ -252,50 +248,88 @@ namespace TowerDefence
 
         private void Update()
         {
-            if (m_ExplosionAbilityButton != null)
-            {
-                CheckEnergyEnough(m_ExplosionAbilityButton, m_ExplosionAbility.Cost, m_ExplosionAbilityLockerImage);
+            UpdateButtonState(m_ExplosionAbilityButton, m_ExplosionAbility.Cooldown, ref m_ExplosionAbilityCooldownTime, m_ExplosionAbilityTimerText, 1, m_ExplosionAbility.Cost, m_ExplosionAbilityLockerImage);
 
-                m_ExplosionAbilityCooldownTime -= Time.deltaTime;
+            if (m_SlowEnemyAbilityDurationTime > 0 && m_SlowEnemyAbilityCooldownTime ==0)
+                UpdateButtonState(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Duration, ref m_SlowEnemyAbilityDurationTime, m_SlowEnemyAbilityTimerText, -1, m_SlowEnemyAbility.Cost);
+            else
+                UpdateButtonState(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Cooldown, ref m_SlowEnemyAbilityCooldownTime, m_SlowEnemyAbilityTimerText, 1, m_SlowEnemyAbility.Cost, m_SlowEnemyAbilityLockerImage);
 
-                m_ExplosionAbility.ImageUpdate(m_ExplosionAbilityButton, m_ExplosionAbility.Cooldown, m_ExplosionAbilityCooldownTime, m_ExplosionAbilityTimerText, 1);
-            }
 
-            if (m_SlowEnemyAbilityButton != null)
-            {
-                CheckEnergyEnough(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Cost,m_SlowEnemyAbilityLockerImage);
+            //if (m_ExplosionAbilityButton != null)
+            //{
+            //    CheckEnergyEnough(m_ExplosionAbilityButton, m_ExplosionAbility.Cost, m_ExplosionAbilityLockerImage);
 
-                if (m_SlowEnemyAbilityDurationTime > 0)
-                {
-                    m_SlowEnemyAbilityDurationTime -= Time.deltaTime;
-                    m_SlowEnemyAbility.ImageUpdate(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Duration, m_SlowEnemyAbilityDurationTime, m_SlowEnemyAbilityTimerText, -1);
-                }
+            //    m_ExplosionAbilityCooldownTime -= Time.deltaTime;
 
-                if (m_SlowEnemyAbilityCooldownTime > 0)
-                {
-                    m_SlowEnemyAbilityCooldownTime -= Time.deltaTime;
-                    m_SlowEnemyAbility.ImageUpdate(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Cooldown, m_SlowEnemyAbilityCooldownTime, m_SlowEnemyAbilityTimerText, 1);
-                }
-            }
+            //    m_ExplosionAbility.ImageUpdate(m_ExplosionAbilityButton, m_ExplosionAbility.Cooldown, m_ExplosionAbilityCooldownTime, m_ExplosionAbilityTimerText, 1);
+            //}
+
+            //if (m_SlowEnemyAbilityButton != null)
+            //{
+            //    CheckEnergyEnough(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Cost,m_SlowEnemyAbilityLockerImage);
+
+            //    if (m_SlowEnemyAbilityDurationTime > 0)
+            //    {
+            //        m_SlowEnemyAbilityDurationTime -= Time.deltaTime;
+            //        m_SlowEnemyAbility.ImageUpdate(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Duration, m_SlowEnemyAbilityDurationTime, m_SlowEnemyAbilityTimerText, -1);
+            //    }
+
+            //    if (m_SlowEnemyAbilityCooldownTime > 0)
+            //    {
+            //        m_SlowEnemyAbilityCooldownTime -= Time.deltaTime;
+            //        m_SlowEnemyAbility.ImageUpdate(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Cooldown, m_SlowEnemyAbilityCooldownTime, m_SlowEnemyAbilityTimerText, 1);
+            //    }
+            //}
 
             if (Instance.m_TargetingCircle.gameObject.activeSelf)
             {
                 Vector3 mousePosition = Input.mousePosition;
                 Instance.m_TargetingCircle.transform.position = mousePosition;
             }
+
         }
 
-        private void CheckEnergyEnough(Button button, int costEnergy, Image lockerImage)
+        //private void CheckEnergyEnough(Button button, int costEnergy, Image lockerImage)
+        //{
+        //    if (TD_Player.Instance.CurrentNumEnergy >= costEnergy)
+        //    {
+        //        lockerImage.enabled = false;
+        //        button.interactable = true;
+        //    }
+        //    else
+        //    {
+        //        lockerImage.enabled = true;
+        //        button.interactable = false;
+        //    }
+        //}
+
+        public virtual void UpdateButtonState(Button button, float startTime, ref float time, TextMeshProUGUI text, int value, int costEnergy, Image lockerImage = null)
         {
-            if (TD_Player.Instance.CurrentNumEnergy >= costEnergy)
+            // Обновление заполнения кнопки
+            if (button != null)
             {
-                lockerImage.enabled = false;
-                button.interactable = true;
-            }
-            else
-            {
-                lockerImage.enabled = true;
-                button.interactable = false;
+                button.GetComponent<Image>().fillAmount += (Time.deltaTime / startTime) * value;
+
+                // Обновление текста таймера
+                time -= Time.deltaTime; // Уменьшаем время
+                if (time < 0) time = 0;
+                text.text = Mathf.Ceil(time).ToString();
+
+                // Проверка, достаточно ли энергии и закончилось ли время восстановления
+                if (lockerImage != null)
+                {
+                    if (time <= 0 && TD_Player.Instance.CurrentNumEnergy >= costEnergy)
+                    {
+                        lockerImage.enabled = false;
+                        button.interactable = true;
+                    }
+                    else
+                    {
+                        lockerImage.enabled = true;
+                        button.interactable = false;
+                    }
+                }
             }
         }
     }

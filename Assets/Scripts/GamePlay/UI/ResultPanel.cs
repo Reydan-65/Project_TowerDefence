@@ -39,10 +39,12 @@ namespace SpaceShooter
         private LevelCondition m_LevelCondition;
         //private bool AudioClipHasPlayed = false;
 
+        private int m_PlayerHealthAtStartLevel;
+
         private void Start()
         {
             //AudioClipHasPlayed = false;
-
+            m_PlayerHealthAtStartLevel = TD_Player.Instance.CurrentNumLives;
             m_LevelCondition = FindObjectOfType<LevelCondition>();
             gameObject.SetActive(false);
             m_PassedImage.gameObject.SetActive(false);
@@ -101,7 +103,7 @@ namespace SpaceShooter
             {
                 m_PassedImage.gameObject.SetActive(true);
                 CheckTimeResult(m_LevelTimeText, (int)LevelController.Instance.LevelTime, (int)LevelController.Instance.ReferenceTime);
-                CheckLivesResult(m_LivesLeftText, TD_Player.Instance.CurrentNumLives, TD_Player.Instance.StartNumLives);
+                CheckLivesResult(m_LivesLeftText, TD_Player.Instance.CurrentNumLives, m_PlayerHealthAtStartLevel);
             }
             else
             {

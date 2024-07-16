@@ -13,7 +13,21 @@ namespace SpaceShooter
         }
 
         [SerializeField] private ExplosionType m_Type;
-        [SerializeField] private float m_DebuffTime;
+        [SerializeField] private float m_DebuffDuration;
+        [SerializeField] private float m_DebuffSlowPower;
+
+        private void Awake()
+        {
+            float durationStep = 0.2f;
+            float SlowPowerStep = 0.2f;
+            var upgradeLevel = Upgrades.GetUpgradeLevel(Upgrades.Instance.Assets.TowerProperties[1].UpgradeName);
+
+            if (durationStep > 0)
+            {
+                m_DebuffDuration += durationStep * (upgradeLevel - 1);
+                m_DebuffSlowPower += SlowPowerStep * (upgradeLevel - 1);
+            }
+        }
 
         public void Explode(float explosionRadius, float explosionDamage, Projectile projectile = null, DebuffEffect disablerPrefab = null)
         {
@@ -32,30 +46,14 @@ namespace SpaceShooter
                 {
                     Projectile.DamageType type;
 
-                    if (m_Type == ExplosionType.Frost) type = Projectile.DamageType.Magic;
-                    else type = Projectile.DamageType.Base;
+                    if (m_Type == ExplosionType.Frost)
+                        type = Projectile.DamageType.Magic;
+                    else
+                        type = Projectile.DamageType.Base;
 
-                    //enemy.GetComponent<Destructible>().ApplyDamage(damage);
                     enemy.TakeDamage(damage, type);
-
-                    //if (projectile != null)
-                    //    projectile.OnTargetDestroyed(enemy.GetComponent<Destructible>());
                 }
 
-                /*
-                if (m_Type == ExplosionType.Missle || m_Type == ExplosionType.Mine)
-                {
-                    if (hit.transform.root.TryGetComponent(out Rigidbody2D rb) == true)
-                    {
-                        Vector2 direction = (hit.transform.position - transform.position).normalized;
-
-                        if (hit.transform.root.GetComponent<SpaceShip>() == true)
-                            rb.AddForce(direction * CalculateDamage(dist, explosionRadius, explosionDamage) * 2f, ForceMode2D.Force);
-
-                        rb.AddForce(direction * CalculateDamage(dist, explosionRadius, explosionDamage) * 4f, ForceMode2D.Force);
-                    }
-                }
-                */
                 if (m_Type == ExplosionType.Frost)
                 {
                     if (disablerPrefab != null)
@@ -65,15 +63,14 @@ namespace SpaceShooter
                             if (enemy.TryGetComponent(out DebuffEffect debuff) == true)
                             {
                                 ship.RestoreMaxLinearVelocityOnValue();
-                                //ship.Thrust *= 2;
-
                                 Destroy(debuff);
                             }
 
                             DebuffEffect de = enemy.gameObject.AddComponent<DebuffEffect>();
 
                             de.Type = DebuffEffect.DebuffType.Frost;
-                            de.DebuffTime = m_DebuffTime;
+                            de.DebuffTime = m_DebuffDuration;
+                            de.DebuffSlowPower = m_DebuffSlowPower;
                         }
                     }
                 }

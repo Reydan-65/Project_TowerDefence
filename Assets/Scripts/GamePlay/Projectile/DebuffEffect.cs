@@ -12,12 +12,14 @@ namespace SpaceShooter
             Frost
         }
 
-        [SerializeField] private DebuffType m_Type;
+        private DebuffType m_Type;
+        private float m_DebuffTime = 1;
+        private float m_DebuffSlowPower;
 
         public DebuffType Type { get => m_Type; set => m_Type = value; }
 
-        private float m_DebuffTime = 1;
         public float DebuffTime { get => m_DebuffTime; set => m_DebuffTime = value; }
+        public float DebuffSlowPower { get => m_DebuffSlowPower; set => m_DebuffSlowPower = value; }
 
         private void Start()
         {

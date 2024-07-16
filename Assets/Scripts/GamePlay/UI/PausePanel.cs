@@ -54,7 +54,6 @@ namespace SpaceShooter
             isPaused = false;
             OnLeaveLevelSceneUnsubscribe();
             TDButton.PlayClickSound();
-            LevelController.ReturnLevelActivity();
             m_SceneTransitionManager.LoadScene("levelMap");
             //SceneManager.LoadScene(1);
 
@@ -66,7 +65,6 @@ namespace SpaceShooter
             isPaused = false;
             OnLeaveLevelSceneUnsubscribe();
             TDButton.PlayClickSound();
-            LevelController.ReturnLevelActivity();
             m_SceneTransitionManager.LoadScene("mainMenu");
             //SceneManager.LoadScene(0);
 

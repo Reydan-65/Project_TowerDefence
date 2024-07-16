@@ -148,9 +148,17 @@ namespace TowerDefence
             }
         }
 
-        //При выходе из программы иногда создаются враги...
-        //Очистка памяти.
+        private void OnDestroy()
+        {
+            ClearScene();
+        }
+        
         private void OnApplicationQuit()
+        {
+            ClearScene();
+        }
+
+        private void ClearScene()
         {
             m_CurrentWave = null;
             m_NextWaveGUI.NextWaveBar = null;

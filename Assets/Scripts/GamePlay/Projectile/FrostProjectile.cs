@@ -5,8 +5,6 @@ namespace TowerDefence
 {
     public class FrostProjectile : ProjectileWithExplosion
     {
-        
-
         private void Start()
         {
             m_Explosion = GetComponent<Explosion>();
@@ -46,5 +44,6 @@ namespace TowerDefence
         }
 
 #endif
+
     }
 }

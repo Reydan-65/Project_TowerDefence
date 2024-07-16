@@ -1,6 +1,7 @@
 using UnityEngine;
 using SpaceShooter;
 using Common;
+using System.Linq;
 
 namespace TowerDefence
 {
@@ -9,6 +10,7 @@ namespace TowerDefence
         [SerializeField] private float m_Radius;
 
         private Turret[] m_Turrets;
+        private Turret m_FirstTurret;
         private Destructible m_SelectedTarget = null;
         public Destructible SelectedTarget => m_SelectedTarget;
 
@@ -20,7 +22,10 @@ namespace TowerDefence
         private void Start()
         {
             m_Turrets = GetComponentsInChildren<Turret>();
-            m_PlayerCamp = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+            m_PlayerCamp = GameObject.FindGameObjectWithTag("Player").transform;
+
+            if (m_Turrets.Length > 0)
+                m_FirstTurret = m_Turrets[0];
         }
 
         private void Update()
@@ -29,23 +34,21 @@ namespace TowerDefence
             {
                 if (CanAttackTarget())
                 {
-                    Vector2 targetVector = m_SelectedTarget.GetComponentInChildren<Collider2D>().transform.position - GetComponentInChildren<Turret>().transform.position;
+                    Vector2 targetVector = m_SelectedTarget.GetComponentInChildren<Collider2D>().transform.position - m_FirstTurret.transform.position;
 
                     if (targetVector.magnitude <= m_Radius)
                     {
                         foreach (var turret in m_Turrets)
                         {
-                            turret.transform.up = MakeLead(targetVector, GetComponentInChildren<Turret>().TurretProperties.ProjectilePrefab.GetComponent<Projectile>().Velocity,
-                                                           GetComponentInChildren<Turret>().transform.localPosition, m_SelectedTarget);
+                            turret.transform.up = MakeLead(targetVector, turret.TurretProperties.ProjectilePrefab.GetComponent<Projectile>().Velocity,
+                                                            turret.transform.localPosition, m_SelectedTarget);
                             turret.Fire();
                         }
                     }
                     else
+                    {
                         m_SelectedTarget = null;
-                }
-                else
-                {
-                    m_SelectedTarget = null;
+                    }
                 }
             }
             else
@@ -86,23 +89,12 @@ namespace TowerDefence
         {
             if (m_SelectedTarget == null) return false;
 
-            foreach (var turret in m_Turrets)
-            {
-                if (m_SelectedTarget.GetComponent<Enemy>().UType == Enemy.UnitType.Ground)
-                {
-                    if (turret.TowerAsset.Type == TowerAsset.TargetType.All ||
-                        turret.TowerAsset.Type == TowerAsset.TargetType.Ground) return true;
-                }
-                else if (m_SelectedTarget.GetComponent<Enemy>().UType == Enemy.UnitType.Air)
-                {
-                    if (turret.TowerAsset.Type == TowerAsset.TargetType.All ||
-                            turret.TowerAsset.Type == TowerAsset.TargetType.Air) return true;
-                }
-            }
-
-            return false;
+            var enemyType = m_SelectedTarget.GetComponent<Enemy>().UType;
+            return m_Turrets.Any(turret =>
+                turret.TowerAsset.Type == TowerAsset.TargetType.All ||
+                (enemyType == Enemy.UnitType.Ground && turret.TowerAsset.Type == TowerAsset.TargetType.Ground) ||
+                (enemyType == Enemy.UnitType.Air && turret.TowerAsset.Type == TowerAsset.TargetType.Air));
         }
-
 
 #if UNITY_EDITOR
 
