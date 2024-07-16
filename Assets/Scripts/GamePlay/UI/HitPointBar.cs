@@ -30,10 +30,10 @@ namespace SpaceShooter
         {
             if (m_Unit != null)
             {
-            m_Canvas.transform.position = m_Unit.position;
+                m_Canvas.transform.position = m_Unit.position;
 
-            float angle = m_Unit.rotation.eulerAngles.y;
-            m_Canvas.transform.eulerAngles = new Vector3(0, 0, -angle);
+                float angle = m_Unit.rotation.eulerAngles.y;
+                m_Canvas.transform.eulerAngles = new Vector3(0, 0, -angle);
 
                 if (m_Unit.transform.root.GetComponent<Destructible>().HitPoints <
                     m_Unit.transform.root.GetComponent<Destructible>().MaxHitPoints)

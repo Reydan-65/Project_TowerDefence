@@ -9,7 +9,8 @@ namespace Common
     {
         [SerializeField] protected float m_Velocity;
         [SerializeField] protected float m_Lifetime;
-        [SerializeField] protected int m_Damage;
+        protected int m_Damage;
+        public int Damage { get => m_Damage; set => m_Damage = value; }
 
         protected virtual void OnHit(Destructible destructible) { }
         protected virtual void OnHit(Collider2D collider2D) { }

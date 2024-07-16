@@ -51,6 +51,7 @@ namespace TowerDefence
             {
                 m_BuyButton.interactable = false;
                 m_BuyButton.transform.Find("ScoreIcon_Image").gameObject.SetActive(false);
+                m_CostText.color = Color.green;
                 m_CostText.text = "Max";
                 m_CostText.color = Color.yellow;
                 m_CostText.alignment = TextAlignmentOptions.Center;
@@ -66,27 +67,27 @@ namespace TowerDefence
 
         public void EX_Buy()
         {
+            TDButton.PlayClickSound();
+
             // Выполнение покупки
             if (m_PropertiesUpgrade != null)
             {
                 Upgrades.BuyUpgrade(m_PropertiesUpgrade.UpgradeName);
                 Initialize(); // Обновление после покупки
             }
+
+            // Обновление ColorBlock у кнопки
+            m_BuyButton.interactable = false;
+            m_BuyButton.interactable = true;
         }
 
         public void CheckCost(int m_Money)
         {
             // Проверка стоимости улучшения
             if (m_Money >= m_Cost && m_Cost >= 0)
-            {
-                m_CostText.color = Color.green;
                 m_BuyButton.interactable = true;
-            }
             else
-            {
-                m_CostText.color = Color.red;
                 m_BuyButton.interactable = false;
-            }
         }
     }
 }

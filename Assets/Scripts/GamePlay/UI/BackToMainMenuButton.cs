@@ -1,6 +1,5 @@
-using SpaceShooter;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace TowerDefence
 {
@@ -16,6 +15,13 @@ namespace TowerDefence
         }
         public void EX_LoadMainMenuScene()
         {
+            TDButton.PlayClickSound();
+            StartCoroutine(DelayTime());
+        }
+
+        private IEnumerator DelayTime()
+        {
+            yield return new WaitForSeconds(0.3f);
             m_SceneTransitionManager.LoadScene("mainMenu");
             //SceneManager.LoadScene(0);
         }

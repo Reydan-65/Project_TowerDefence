@@ -17,7 +17,7 @@ namespace TowerDefence
 
         private void Start()
         {
-            m_ProtectionImage = GetComponent<Image>();    
+            m_ProtectionImage = GetComponent<Image>();
         }
 
         private Action<Vector2> m_OnClickAction;

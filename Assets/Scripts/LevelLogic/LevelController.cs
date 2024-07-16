@@ -40,7 +40,6 @@ namespace SpaceShooter
 
         private void Start()
         {
-            Time.timeScale = 1.0f;
             m_LevelTime = 0;
 
             m_ReferenceTime += Time.time;
@@ -63,10 +62,7 @@ namespace SpaceShooter
 
             TD_Player.Instance.OnLivesUpdate += LifeScoreChange;
 
-
-            //FollowCamera camera = FindAnyObjectByType<FollowCamera>();
-
-            //m_AudioSource = camera.GetComponent<AudioSource>();
+            m_AudioSource = Camera.main.GetComponent<AudioSource>();
 
             //SoundManager.Instance.PlayOneShot(SoundManager.Instance.AudioProperties.SoundtrackClips, 1,
             //             m_AudioSource, SoundManager.Instance.AudioProperties.MusicVolume);
@@ -76,16 +72,18 @@ namespace SpaceShooter
         {
             if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("levelMap"))
             {
+                if (PausePanel.isPaused) return;
+
                 if (m_IsLevelCompleted == false)
                 {
+
                     m_LevelTime += Time.deltaTime;
+
                     CheckLevelConditions();
                 }
 
                 if (Player.Instance.CurrentNumLives == 0)
-                {
                     Lose();
-                }
             }
         }
 
@@ -96,15 +94,12 @@ namespace SpaceShooter
             for (int i = 0; i < m_Conditions.Length; i++)
             {
                 if (m_Conditions[i].IsCompleted == true)
-                {
                     numCompleted++;
-                }
             }
 
             if (numCompleted == m_Conditions.Length)
             {
                 m_IsLevelCompleted = true;
-
                 Pass();
             }
         }
@@ -114,7 +109,17 @@ namespace SpaceShooter
             StopLevelActivity();
 
             LevelLost.Invoke();
-            //Time.timeScale = 0f;
+        }
+
+        private void Pass()
+        {
+            if (m_ReferenceTime <= Time.time)
+                m_LevelScore -= 1;
+
+            MapCompletion.Instance.SaveLevelResult(m_LevelScore);
+            StopLevelActivity();
+
+            LevelPassed.Invoke();
         }
 
         public static void StopLevelActivity()
@@ -133,30 +138,46 @@ namespace SpaceShooter
             void DisableAll<T>() where T : MonoBehaviour
             {
                 foreach (var obj in FindObjectsOfType<T>())
-                {
                     obj.enabled = false;
-                }
             }
 
             DisableAll<Spawner>();
             DisableAll<Projectile>();
             DisableAll<Tower>();
             DisableAll<NextWave_GUI>();
+            DisableAll<TextUpdate>();
+            DisableAll<Abilities>();
+            DisableAll<TD_Player>();
+            DisableAll<EnemyWaveManager>();
         }
 
-        private void Pass()
+        public static void ReturnLevelActivity()
         {
-            if (m_ReferenceTime <= Time.time)
-                m_LevelScore -= 1;
+            BuyControl buyControl = FindAnyObjectByType<BuyControl>();
 
-            //if (TD_Player.Instance.CurrentNumLives < TD_Player.Instance.NumLives)
-            //    m_LevelScore -= 1;
+            if (buyControl != null)
+                buyControl.gameObject.SetActive(true);
 
-            MapCompletion.Instance.SaveLevelResult(m_LevelScore);
-            StopLevelActivity();
+            foreach (var enemy in FindObjectsOfType<Enemy>())
+            {
+                enemy.GetComponent<SpaceShip>().enabled = true;
+                enemy.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            }
 
-            LevelPassed.Invoke();
-            //Time.timeScale = 0f;
+            void EnableAll<T>() where T : MonoBehaviour
+            {
+                foreach (var obj in FindObjectsOfType<T>())
+                    obj.enabled = true;
+            }
+
+            EnableAll<Spawner>();
+            EnableAll<Projectile>();
+            EnableAll<Tower>();
+            EnableAll<NextWave_GUI>();
+            EnableAll<TextUpdate>();
+            EnableAll<Abilities>();
+            EnableAll<TD_Player>();
+            EnableAll<EnemyWaveManager>();
         }
 
         public void LoadNextLevel()
@@ -166,26 +187,18 @@ namespace SpaceShooter
                 string nextLevelSceneName = m_LevelSequencesController.GetNextLevelProperties(m_CurrentLevelProperties).SceneName;
 
                 m_SceneTransitionManager.LoadScene(nextLevelSceneName);
-                //SceneManager.LoadScene(nextLevelSceneName);
             }
             else
                 m_SceneTransitionManager.LoadScene(MainMenuSceneName);
-            //SceneManager.LoadScene(MainMenuSceneName);
         }
 
         public void RestartLevel()
         {
             if (m_CurrentLevelProperties != null)
-            {
                 m_SceneTransitionManager.LoadScene(m_CurrentLevelProperties.SceneName);
-                //SceneManager.LoadScene(m_CurrentLevelProperties.SceneName);
-            }
 
             if (m_CurrentBranchLevelProperties != null)
-            {
                 m_SceneTransitionManager.LoadScene(m_CurrentBranchLevelProperties.SceneName);
-                //SceneManager.LoadScene(m_CurrentBranchLevelProperties.SceneName);
-            }
         }
 
         public void ReturnLevelMap()

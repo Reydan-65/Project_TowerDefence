@@ -17,12 +17,6 @@ namespace SpaceShooter
         [Header("Projectile LifeEnd SFX")]
         [SerializeField] private AudioClip[] m_ProjectileEndClips;
 
-        [Header("Ship Sounds")]
-        [SerializeField] private AudioClip[] m_ShipClips; 
-        
-        [Header("PowerUp Sounds")]
-        [SerializeField] private AudioClip[] m_PowerUpClips;
-
         [Header("Other Sounds")]
         [SerializeField] private AudioClip[] m_OtherClips;
 
@@ -36,8 +30,6 @@ namespace SpaceShooter
         public AudioClip[] ClickClips => m_ClickClips;
         public AudioClip[] ProjectileLaunchClips => m_ProjectileLaunchClips;
         public AudioClip[] ProjectileEndClips => m_ProjectileEndClips;
-        public AudioClip[] ShipClips => m_ShipClips;
-        public AudioClip[] PowerUpClips => m_PowerUpClips;
         public AudioClip[] OtherClips => m_OtherClips;
 
         public float MusicVolume { get => m_MusicVolume; set => m_MusicVolume = value; }

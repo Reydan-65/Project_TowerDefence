@@ -40,7 +40,7 @@ namespace TowerDefence
             {
                 m_EnemyCountInWave += count;
             }
-
+            m_NextWaveGUI.SwitchEnabledForceNextWaveButton(false);
             StartCoroutine(SpawnEnemies());
         }
 
@@ -86,15 +86,21 @@ namespace TowerDefence
                     Debug.LogWarning($"Invalid pathIndex {pathIndex} in {name}. Ensure m_Paths is correctly assigned.");
             }
 
-            //Обнуляем прогресс бар
-            if (m_NextWaveGUI != null)
-            {
-                m_NextWaveGUI.NextWaveBar.fillAmount = 0f;
-                m_NextWaveGUI.WaveIndex++;
-            }
-
             //Готовится следующая волна
             m_CurrentWave = m_CurrentWave.PrepareNext(SpawnWave);
+
+            // Если след. волна есть, включаем кнопку вызова след. волны
+            if (m_CurrentWave)
+            {
+                m_NextWaveGUI.SwitchEnabledForceNextWaveButton(true);
+
+                //Обнуляем прогресс бар
+                if (m_NextWaveGUI != null)
+                {
+                    m_NextWaveGUI.NextWaveBar.fillAmount = 0f;
+                    m_NextWaveGUI.WaveIndex++;
+                }
+            }
         }
 
         /// <summary>
@@ -110,6 +116,11 @@ namespace TowerDefence
                 if (m_CurrentWave)
                 {
                     ForceNextWave();
+
+                    //Награда за завершение прошлой волны
+                    var levelGoldUpgrade = Upgrades.GetUpgradeLevel(Upgrades.Instance.Assets.PlayerProperties[1].UpgradeName);
+                    TD_Player.Instance.ChangeGold(TD_Player.Instance.StartGold + levelGoldUpgrade * 5);
+
                     m_NextWaveGUI.SwitchEnabledForceNextWaveButton(false);
                 }
                 else
@@ -130,7 +141,7 @@ namespace TowerDefence
             if (m_CurrentWave)
             {
                 //Награда за принудительный вызов волны
-                TD_Player.Instance.ChangeGold((int)m_CurrentWave.GetRemainingTime());
+                TD_Player.Instance.ChangeGold((int)(m_CurrentWave.GetRemainingTime() * 0.5f));
 
                 //Вызов волны
                 SpawnWave();

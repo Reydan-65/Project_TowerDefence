@@ -1,6 +1,10 @@
 using UnityEngine;
 using TMPro;
 using Common;
+using TowerDefence;
+using UnityEngine.UI;
+using System;
+using Unity.VisualScripting;
 
 namespace SpaceShooter
 {
@@ -22,18 +26,28 @@ namespace SpaceShooter
         [SerializeField] private TextMeshProUGUI m_Score;
         [SerializeField] private TextMeshProUGUI m_Time;
         */
+
         [SerializeField] private TextMeshProUGUI m_Result;
-        [SerializeField] private TextMeshProUGUI m_Button;
+
+        [SerializeField] private Image m_PassedImage;
+        [SerializeField] private Image m_NotPassedImage;
+        [SerializeField] private TextMeshProUGUI m_LevelTimeText;
+        [SerializeField] private TextMeshProUGUI m_LivesLeftText;
+        //[SerializeField] private TextMeshProUGUI m_Button;
 
         private bool m_LevelPassed = false;
+        private LevelCondition m_LevelCondition;
         //private bool AudioClipHasPlayed = false;
 
         private void Start()
         {
             //AudioClipHasPlayed = false;
 
+            m_LevelCondition = FindObjectOfType<LevelCondition>();
             gameObject.SetActive(false);
-
+            m_PassedImage.gameObject.SetActive(false);
+            m_NotPassedImage.gameObject.SetActive(false)
+                ;
             LevelController.Instance.LevelLost += OnLevelLost;
             LevelController.Instance.LevelPassed += OnLevelPassed;
         }
@@ -55,18 +69,18 @@ namespace SpaceShooter
 
             //PlaySoundByIndexOneTime(2);
 
-            //FillLevelStatistics();
+            FillLevelStatistics();
 
             m_Result.text = PassedText;
 
-            if (LevelSequencesController.Instance.CurrentLevelIsLast() == true)
-            {
-                m_Button.text = MainMenuText;
-            }
-            else
-            {
-                m_Button.text = NextText;
-            }
+            //if (LevelSequencesController.Instance.CurrentLevelIsLast() == true)
+            //{
+            //    m_Button.text = MainMenuText;
+            //}
+            //else
+            //{
+            //    m_Button.text = NextText;
+            //}
         }
 
         private void OnLevelLost()
@@ -75,23 +89,63 @@ namespace SpaceShooter
 
             //PlaySoundByIndexOneTime(3);
 
-            //FillLevelStatistics();
+            FillLevelStatistics();
 
             m_Result.text = LostText;
-            m_Button.text = RestartText;
+            //m_Button.text = RestartText;
         }
-        /*
+
         private void FillLevelStatistics()
         {
-            m_Kills.text = KillsPrefix + Player.Instance.NumKills.ToString();
-            m_Score.text = ScoresPrefix + Player.Instance.Score.ToString();
-            m_Time.text = TimePrefix + LevelController.Instance.LevelTime.ToString("F0");
+            if (m_LevelPassed == true)
+            {
+                m_PassedImage.gameObject.SetActive(true);
+                CheckTimeResult(m_LevelTimeText, (int)LevelController.Instance.LevelTime, (int)LevelController.Instance.ReferenceTime);
+                CheckLivesResult(m_LivesLeftText, TD_Player.Instance.CurrentNumLives, TD_Player.Instance.StartNumLives);
+            }
+            else
+            {
+                m_NotPassedImage.gameObject.SetActive(true);
+                m_LevelTimeText.transform.parent.GetChild(2).gameObject.SetActive(true);
+                m_LivesLeftText.transform.parent.GetChild(2).gameObject.SetActive(true);
+
+                m_LevelTimeText.gameObject.SetActive(false);
+                m_LivesLeftText.gameObject.SetActive(false);
+            }
+
+            //m_Kills.text = KillsPrefix + Player.Instance.NumKills.ToString();
+            //m_Score.text = ScoresPrefix + Player.Instance.Score.ToString();
+            //m_Time.text = TimePrefix + LevelController.Instance.LevelTime.ToString("F0");
         }
-        */
+
+        private void CheckResult(TextMeshProUGUI text, int resultText, int needText, Func<int, int, bool> comparison)
+        {
+            if (comparison(resultText, needText))
+                text.color = Color.red;
+            else
+            {
+                text.transform.parent.GetChild(1).gameObject.SetActive(true);
+                text.transform.parent.GetChild(0).gameObject.SetActive(false);
+            }
+
+            text.text = $"{resultText}/{needText}";
+        }
+
+        private void CheckTimeResult(TextMeshProUGUI text, int resultText, int needText)
+        {
+            CheckResult(text, resultText, needText, (resultText, needText) => resultText > needText);
+        }
+
+        private void CheckLivesResult(TextMeshProUGUI text, int resultText, int needText)
+        {
+            CheckResult(text, resultText, needText, (resultText, needText) => resultText < needText);
+        }
+
         public void EX_OnButtonAction()
         {
             gameObject.SetActive(false);
 
+            TDButton.PlayClickSound();
             //AudioClipHasPlayed = false;
 
             if (m_LevelPassed == true)
@@ -106,6 +160,7 @@ namespace SpaceShooter
 
         public void EX_ReturnLevelMap()
         {
+            TDButton.PlayClickSound();
             LevelController.Instance.ReturnLevelMap();
         }
 

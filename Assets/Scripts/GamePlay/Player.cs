@@ -10,11 +10,22 @@ namespace SpaceShooter
     {
         public static SpaceShip SelectedSpaceShip;
 
-        [SerializeField] protected int m_NumLives;
-        protected int m_CurrentNumLives;
+        [SerializeField] protected int m_StartNumLives;
+        [SerializeField] protected int m_MaxEnergy;
+        [SerializeField] protected int m_StartEnergy;
+        [SerializeField] protected float m_BaseEnergyRegenRate;
 
-        public int NumLives => m_NumLives;
+        protected int m_CurrentNumLives;
+        protected int m_CurrentNumEnergy;
+        protected float m_CurrentEnergyRegenRate;
+        protected float m_RegenTimer = 0f;
+
+        public int StartNumLives => m_StartNumLives;
         public int CurrentNumLives { get { return m_CurrentNumLives; } }
+        public int StartEnergy => m_StartEnergy;
+        public int CurrentNumEnergy { get { return m_CurrentNumEnergy; } }
+        public float BaseEnergyRegenRate => m_BaseEnergyRegenRate;
+        public float CurrentEnergyRegenRate => m_CurrentEnergyRegenRate;
 
         //[SerializeField] private SpaceShip m_PlayerShipPrefab;
         //[SerializeField] private float respawnTime;
@@ -61,10 +72,11 @@ namespace SpaceShooter
         protected virtual void Start()
         {
             m_LevelCompletionScore = FindAnyObjectByType<LevelCompletionScore>();
-            
-            
+
             //Respawn();
         }
+
+        
 
         /*
         private void OnShipDeath()
@@ -147,5 +159,7 @@ namespace SpaceShooter
             m_LevelCompletionScore.EnemiesLast -= 1;
         }
         */
+
+        
     }
 }

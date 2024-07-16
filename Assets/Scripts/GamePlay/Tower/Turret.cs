@@ -8,7 +8,7 @@ namespace SpaceShooter
     {
         private Tower m_Tower;
         private float m_RefireTimer;
-
+        
         public bool CanFire => m_RefireTimer <= 0;
 
         private void Start()
@@ -45,6 +45,13 @@ namespace SpaceShooter
 
             // Получение данных о том кто выпустил снаряд, для измегания попаданий в самого себя
             projectile.SetParentShooter(m_Tower);
+            projectile.Damage = m_TurretProperties.ProjectileDamage;
+
+            if (projectile.TryGetComponent(out ProjectileWithExplosion explosion) == true)
+            {
+                explosion.ExplosionDamage = m_TurretProperties.ProjectileExplosionDamage;
+                explosion.ExplosionRadius = m_TurretProperties.ProjectileExplosionRadius;
+            }
 
             /*
             if (m_Ship.TeamId == 0) projectile.Nickname = "Neutral Projectile";

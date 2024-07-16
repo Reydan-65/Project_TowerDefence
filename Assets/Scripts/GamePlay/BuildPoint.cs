@@ -14,6 +14,8 @@ namespace TowerDefence
 
         protected virtual void Start()
         {
+            transform.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
+
             if (transform.root.TryGetComponent(out Tower tower) == false)
                 transform.SetParent(null);
         }

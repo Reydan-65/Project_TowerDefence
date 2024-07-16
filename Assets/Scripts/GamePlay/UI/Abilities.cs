@@ -13,13 +13,13 @@ namespace TowerDefence
         [Serializable]
         public class Ability
         {
-            [SerializeField] protected float m_Cost;
+            [SerializeField] protected int m_Cost;
             [SerializeField] protected float m_Cooldown;
 
             [Space(10)]
             [SerializeField] protected string m_RequaredName;
             [SerializeField] protected int m_RequaredLevelUpgrade;
-            public float Cost => m_Cost;
+            public int Cost => m_Cost;
             public float Cooldown => m_Cooldown;
             public string RequaredName => m_RequaredName;
             public int RequaredLevelUpgrade => m_RequaredLevelUpgrade;
@@ -85,6 +85,7 @@ namespace TowerDefence
                     Instance.m_ExplosionAbilityButton.interactable = false;
                     Instance.m_ExplosionAbilityCooldownImage.fillAmount = 0;
 
+                    TD_Player.Instance.ChangeEnergy(-m_Cost);
                     Instance.StartCoroutine(OnCooldownEnd());
                 });
 
@@ -136,6 +137,7 @@ namespace TowerDefence
                 {
                     Slow(enemy);
                 }
+                TD_Player.Instance.ChangeEnergy(-m_Cost);
 
                 EnemyWaveManager.OnEnemySpawn += Slow;
 
@@ -189,7 +191,9 @@ namespace TowerDefence
         [SerializeField] private Button m_ExplosionAbilityButton;
         [SerializeField] private Image m_ExplosionAbilityCooldownImage;
         [SerializeField] private Image m_ExplosionAbilityImage;
+        [SerializeField] private Image m_ExplosionAbilityLockerImage;
         [SerializeField] private TextMeshProUGUI m_ExplosionAbilityTimerText;
+        [SerializeField] private TextMeshProUGUI m_ExplosionAbilityCostText;
         [SerializeField] private Image m_TargetingCircle;
         [SerializeField] private GameObject m_ExplosionAbilityPrefab;
 
@@ -198,7 +202,9 @@ namespace TowerDefence
         [SerializeField] private Button m_SlowEnemyAbilityButton;
         [SerializeField] private Image m_SlowEnemyAbilityCooldownImage;
         [SerializeField] private Image m_SlowEnemyAbilityImage;
+        [SerializeField] private Image m_SlowEnemyAbilityLockerImage;
         [SerializeField] private TextMeshProUGUI m_SlowEnemyAbilityTimerText;
+        [SerializeField] private TextMeshProUGUI m_SlowEnemyAbilityCostText;
 
         private float m_ExplosionAbilityCooldownTime;
         private float m_SlowEnemyAbilityCooldownTime;
@@ -218,23 +224,28 @@ namespace TowerDefence
             m_ExplosionAbilityTimerText.enabled = false;
             m_SlowEnemyAbilityTimerText.enabled = false;
 
+            m_ExplosionAbilityCostText.text = m_ExplosionAbility.Cost.ToString();
+            m_SlowEnemyAbilityCostText.text = m_SlowEnemyAbility.Cost.ToString();
+
             transform.GetChild(0).gameObject.SetActive(false);
             transform.GetChild(1).gameObject.SetActive(false);
 
             if (IsAvailable(m_ExplosionAbility))
             {
                 transform.GetChild(0).gameObject.SetActive(true);
-                if (Upgrades.GetUpgradeLevel(m_ExplosionAbility.RequaredName) > 1) 
-                    m_ExplosionAbility.Damage += (int) (m_ExplosionAbility.BaseDamage * 0.5f * Upgrades.GetUpgradeLevel(m_ExplosionAbility.RequaredName));
+
+                if (Upgrades.GetUpgradeLevel(m_ExplosionAbility.RequaredName) > 1)
+                    m_ExplosionAbility.Damage += (int)(m_ExplosionAbility.BaseDamage * 0.5f * Upgrades.GetUpgradeLevel(m_ExplosionAbility.RequaredName));
             }
 
             if (IsAvailable(m_SlowEnemyAbility))
             {
                 transform.GetChild(1).gameObject.SetActive(true);
+
                 if (Upgrades.GetUpgradeLevel(m_SlowEnemyAbility.RequaredName) > 1)
                 {
                     m_SlowEnemyAbility.ValueToChangeVelocity -= 0.05f * Upgrades.GetUpgradeLevel(m_SlowEnemyAbility.RequaredName);
-                    m_SlowEnemyAbility.Duration += (float) (m_SlowEnemyAbility.BaseDuration * 0.25f);
+                    m_SlowEnemyAbility.Duration += (float)(m_SlowEnemyAbility.BaseDuration * 0.25f);
                 }
             }
         }
@@ -243,13 +254,17 @@ namespace TowerDefence
         {
             if (m_ExplosionAbilityButton != null)
             {
+                CheckEnergyEnough(m_ExplosionAbilityButton, m_ExplosionAbility.Cost, m_ExplosionAbilityLockerImage);
+
                 m_ExplosionAbilityCooldownTime -= Time.deltaTime;
-                if (m_ExplosionAbilityCooldownTime <= 0) m_ExplosionAbilityCooldownTime = 0;
+
                 m_ExplosionAbility.ImageUpdate(m_ExplosionAbilityButton, m_ExplosionAbility.Cooldown, m_ExplosionAbilityCooldownTime, m_ExplosionAbilityTimerText, 1);
             }
 
             if (m_SlowEnemyAbilityButton != null)
             {
+                CheckEnergyEnough(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Cost,m_SlowEnemyAbilityLockerImage);
+
                 if (m_SlowEnemyAbilityDurationTime > 0)
                 {
                     m_SlowEnemyAbilityDurationTime -= Time.deltaTime;
@@ -267,6 +282,20 @@ namespace TowerDefence
             {
                 Vector3 mousePosition = Input.mousePosition;
                 Instance.m_TargetingCircle.transform.position = mousePosition;
+            }
+        }
+
+        private void CheckEnergyEnough(Button button, int costEnergy, Image lockerImage)
+        {
+            if (TD_Player.Instance.CurrentNumEnergy >= costEnergy)
+            {
+                lockerImage.enabled = false;
+                button.interactable = true;
+            }
+            else
+            {
+                lockerImage.enabled = true;
+                button.interactable = false;
             }
         }
     }

@@ -23,7 +23,7 @@ MonoBehaviour:
   ColliderOffsetY: 0.04
   TeamID: 2
   HitPoints: 60
-  ArmorPoints: 8
+  ArmorPoints: 7
   ScoreValue: 1
   MoveSpeed: 1.4
   damageToPlayer: 1

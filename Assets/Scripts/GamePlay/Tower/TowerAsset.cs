@@ -15,7 +15,7 @@ namespace TowerDefence
 
         [Header("Properties")]
         public TargetType Type;
-        public int GoldCost = 15;
+        public int GoldCost;
         public Sprite Sprite;
         public Sprite GUISprite;
         public TurretProperties TurretProperties;

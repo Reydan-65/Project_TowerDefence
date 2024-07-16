@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using SpaceShooter;
+using Unity.VisualScripting;
 
 namespace TowerDefence
 {
@@ -29,6 +31,7 @@ namespace TowerDefence
 
         public float GetRemainingTime() { return m_PrepareTime - Time.time; }
 
+
         private void Awake()
         {
             enabled = false;
@@ -47,6 +50,8 @@ namespace TowerDefence
 
         private void Update()
         {
+            if (PausePanel.isPaused) m_PrepareTime += Time.deltaTime;
+
             if (Time.time >= m_PrepareTime)
             {
                 enabled = false;

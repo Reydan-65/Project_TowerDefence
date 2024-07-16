@@ -3,14 +3,8 @@ using UnityEngine;
 
 namespace TowerDefence
 {
-    public class SiegeProjectile : Projectile
+    public class SiegeProjectile : ProjectileWithExplosion
     {
-        [SerializeField] private float m_ExplosionRadius;
-        [SerializeField] private float m_ExplosionDamage;
-        [SerializeField] private DebuffEffect m_DebuffPrefab;
-
-        private Explosion m_Explosion;
-
         private void Start()
         {
             m_Explosion = GetComponent<Explosion>();

@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a57f74a7f3b32448cc908fe902eeda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NumLives: 10
+  m_StartNumLives: 10
+  m_MaxEnergy: 100
+  m_StartEnergy: 0
+  m_BaseEnergyRegenRate: 1
   m_StartGold: 5
-  m_HealthUpgradeAsset: {fileID: 11400000, guid: 0e6e5bf89bb36af4e8f092c41299ca2a, type: 2}
-  m_GoldUpgradeAsset: {fileID: 11400000, guid: f945f28467f2f2e4882beb79ab65e64b, type: 2}
   m_TowerPrefab: {fileID: 1872876884523521784, guid: f07ad853076b53a45b234d68b53a7ce7, type: 3}

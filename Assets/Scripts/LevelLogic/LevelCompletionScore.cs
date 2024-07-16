@@ -15,7 +15,7 @@ namespace SpaceShooter
         public static Stats TotalStats { get; private set; }
 
         //[SerializeField] private EnemySpawner[] m_EnemySpawners;
-        [SerializeField] private float m_TimeLimit;
+        //[SerializeField] private float m_TimeLimit;
 
         //[SerializeField] private int m_Score;
         //[SerializeField] private int m_Kills;

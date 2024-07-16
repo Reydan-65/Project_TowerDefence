@@ -3,22 +3,13 @@ using UnityEngine;
 
 namespace TowerDefence
 {
-    public class FrostProjectile : Projectile
+    public class FrostProjectile : ProjectileWithExplosion
     {
-        [SerializeField] private float m_ExplosionRadius;
-        [SerializeField] private float m_ExplosionDamage;
-        [SerializeField] private DebuffEffect m_DebuffPrefab;
-        //[SerializeField] private UpgradeAsset m_FrostProjectileRadiusUpgradeAsset;
-
-        private Explosion m_Explosion;
+        
 
         private void Start()
         {
             m_Explosion = GetComponent<Explosion>();
-
-            //Радиус взрыва
-            //var level = Upgrades.GetUpgradeLevel(m_FrostProjectileRadiusUpgradeAsset);
-            //m_ExplosionRadius += (float)(level * 0.15);
         }
 
         protected override void FixedUpdate()

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 namespace TowerDefence
 {
@@ -23,6 +24,8 @@ namespace TowerDefence
 
         public void EX_StartNewGame()
         {
+            TDButton.PlayClickSound();
+
             if (FileHandler.HasFile(MapCompletion.filename))
                 m_AcceptPanel.gameObject.SetActive(true);
             else
@@ -34,12 +37,21 @@ namespace TowerDefence
 
         public void EX_ContinueGame()
         {
+            TDButton.PlayClickSound();
             m_SceneTransitionManager.LoadScene("levelMap");
             //SceneManager.LoadScene(1);
         }
 
         public void EX_Quit()
         {
+            TDButton.PlayClickSound();
+
+            StartCoroutine(DelayTime());
+        }
+
+        private IEnumerator DelayTime()
+        {
+            yield return new WaitForSeconds(0.3f);
             Application.Quit();
         }
     }

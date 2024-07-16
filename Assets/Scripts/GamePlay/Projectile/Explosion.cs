@@ -86,6 +86,8 @@ namespace SpaceShooter
         {
             float _damage = explosionDamage * (1 - Mathf.Clamp01(distance / explosionRadius));
 
+            if (_damage < 1) _damage = 0;
+
             return (int)_damage;
         }
     }

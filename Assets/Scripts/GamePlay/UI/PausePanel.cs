@@ -1,83 +1,88 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
-using Common;
 using TowerDefence;
 
 namespace SpaceShooter
 {
     public class PausePanel : MonoBehaviour
     {
+        public static bool isPaused = false;
+
         [SerializeField] private GameObject m_Panel;
 
         private EnemyWaveManager m_EnemyWaveManager;
         private SceneTransitionManager m_SceneTransitionManager;
-
-        private bool OnPause = false;
 
         private void Start()
         {
             m_EnemyWaveManager = FindObjectOfType<EnemyWaveManager>();
             m_SceneTransitionManager = FindObjectOfType<SceneTransitionManager>();
 
-            OnPause = false;
+            isPaused = false;
             gameObject.SetActive(false);
-            Time.timeScale = 1.0f;
         }
 
-        public void EX_ShowPause()
+        public void EX_PauseGame()
         {
-            if (OnPause == false)
-            {
-                gameObject.SetActive(true);
-                OnPause = true;
-                //PlayClickSound();
+            isPaused = true;
 
-                Time.timeScale = 0f;
-            }
-            else
-            {
-                gameObject.SetActive(false);
-                OnPause = false;
-                //PlayClickSound();
+            LevelController.StopLevelActivity();
 
-                Time.timeScale = 1.0f;
-            }
+            TDButton.PlayClickSound();
+            ShowPause();
         }
 
-        public void EX_HidePause()
+        public void EX_ResumeGame()
         {
-            gameObject.SetActive(false);
-            OnPause = false;
-            //PlayClickSound();
+            TDButton.PlayClickSound();
+            StartCoroutine(DelayTime());
+        }
 
-            Time.timeScale = 1.0f;
+        private IEnumerator DelayTime()
+        {
+            yield return new WaitForSeconds(0.35f);
+
+            isPaused = false;
+
+            LevelController.ReturnLevelActivity();
+
+            HidePause();
         }
 
         public void EX_LoadLevelMap()
         {
-            OnPause = false;
+            isPaused = false;
             OnLeaveLevelSceneUnsubscribe();
-            //PlayClickSound();
-            LevelController.StopLevelActivity();
+            TDButton.PlayClickSound();
+            LevelController.ReturnLevelActivity();
             m_SceneTransitionManager.LoadScene("levelMap");
             //SceneManager.LoadScene(1);
-            Time.timeScale = 1.0f;
 
             //StartCoroutine(OnLoadMenu());
         }
 
         public void EX_LoadMainMenu()
         {
-            OnPause = false;
+            isPaused = false;
             OnLeaveLevelSceneUnsubscribe();
-            //PlayClickSound();
-            LevelController.StopLevelActivity();
+            TDButton.PlayClickSound();
+            LevelController.ReturnLevelActivity();
             m_SceneTransitionManager.LoadScene("mainMenu");
             //SceneManager.LoadScene(0);
-            Time.timeScale = 1.0f;
 
             //StartCoroutine(OnLoadMenu());
+        }
+
+        private void ShowPause()
+        {
+            gameObject.SetActive(true);
+            isPaused = true;
+        }
+
+        private void HidePause()
+        {
+            gameObject.SetActive(false);
+            isPaused = false;
         }
 
         //Когда покидаем сцену уровня,
@@ -94,20 +99,13 @@ namespace SpaceShooter
             }
         }
 
-        /*
-        private void PlayClickSound()
-        {
-            SoundManager.Instance.PlayOneShot(SoundManager.Instance.AudioProperties.ClickClips, 0,
-                                              LevelController.Instance.AudioSource, SoundManager.Instance.AudioProperties.SoundsVolume);
-        }
+        //private IEnumerator OnLoadMenu()
+        //{
+        //    yield return new WaitForSeconds(SoundManager.Instance.AudioProperties.ClickClips[0].length);
 
-        private IEnumerator OnLoadMenu()
-        {
-            yield return new WaitForSeconds(SoundManager.Instance.AudioProperties.ClickClips[0].length);
+        //    m_Panel.SetActive(false);
+        //    SceneManager.LoadScene(0);
+        //}
 
-            m_Panel.SetActive(false);
-            SceneManager.LoadScene(0);
-        }
-        */
     }
 }

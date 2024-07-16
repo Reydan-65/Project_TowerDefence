@@ -7,12 +7,19 @@ namespace Common
     {
         public AudioProperties AudioProperties;
 
-        public void PlayOneShot(AudioClip[] audioClips, int soundID, AudioSource audioSource, float volume)
+        private AudioSource m_AudioSource;
+
+        private void Awake()
+        {
+            m_AudioSource = Camera.main.GetComponent<AudioSource>();
+        }
+
+        public void PlayOneShot(AudioClip[] audioClips, int soundID, float volume)
         {
             if (soundID >= 0 && soundID < audioClips.Length)
             {
-                audioSource.PlayOneShot(audioClips[soundID]);
-                audioSource.volume = volume;
+                m_AudioSource.PlayOneShot(audioClips[soundID]);
+                m_AudioSource.volume = volume;
             }
             else
             {

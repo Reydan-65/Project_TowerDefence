@@ -1,4 +1,4 @@
-using System.Collections;
+using SpaceShooter;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,7 +48,8 @@ namespace TowerDefence
             {
                 m_TimeNextWave = time;
 
-                if (m_WaveIndex != 0)
+                // Включение кноки вызова след. волны после выхода первой волны
+                if (m_WaveIndex != 0 && m_EnemyWaveManager.CurrentWave)
                 {
                     SwitchEnabledForceNextWaveButton(true);
                 }
@@ -57,6 +58,8 @@ namespace TowerDefence
 
         private void Update()
         {
+            if (PausePanel.isPaused) return;
+
             var bonus = (int)(m_TimeNextWave * 0.5f);
 
             if (bonus < 0) bonus = 0;
@@ -71,6 +74,7 @@ namespace TowerDefence
             else
                 m_NextWaveBar.enabled = false;
 
+            // Отключение кнопки, если волна последняя
             if (m_WaveIndex == m_EnemyWaves.Length)
             {
                 SwitchEnabledForceNextWaveButton(false);
@@ -83,7 +87,6 @@ namespace TowerDefence
         /// <summary>
         /// Принудительный вызов новой волны, если она есть.
         /// - закрыть BuyControl, если открыт;
-        /// - отключить кнопку вызова волны, до окончания текущего призыва.
         /// </summary>
         public void EX_CallWave()
         {
@@ -95,16 +98,6 @@ namespace TowerDefence
 
             if (bc != null) bc.gameObject.SetActive(false);
 
-            StartCoroutine(WaitCooldown(delay));
-        }
-
-        private IEnumerator WaitCooldown(float delay)
-        {
-            SwitchEnabledForceNextWaveButton(false);
-
-            yield return new WaitForSeconds(delay);
-
-            SwitchEnabledForceNextWaveButton(true);
         }
 
         public void SwitchEnabledForceNextWaveButton(bool value)

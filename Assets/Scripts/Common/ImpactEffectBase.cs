@@ -1,3 +1,4 @@
+using SpaceShooter;
 using UnityEngine;
 
 namespace Common

@@ -17,7 +17,6 @@ namespace SpaceShooter
         [SerializeField] private PlayerSpawner m_PlayerSpawner;
         //[SerializeField] private LevelBoundary m_LevelBoundary;
         [SerializeField] private LevelController m_LevelController;
-        //[SerializeField] private SoundManager m_SoundManager;
         [SerializeField] private Abilities m_Abilities;
         [SerializeField] private ClickProtection m_ClickProtection;
 
@@ -31,7 +30,6 @@ namespace SpaceShooter
             player.Init();
             m_Abilities.Init();
             m_ClickProtection.Init();
-            //m_SoundManager.Init();
 
             //Instantiate(m_PlayerHUDPrefab);       
             //Instantiate(m_LevelGUIPrefab);
