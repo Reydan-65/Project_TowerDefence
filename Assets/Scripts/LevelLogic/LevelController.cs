@@ -27,11 +27,13 @@ namespace SpaceShooter
         private SceneTransitionManager m_SceneTransitionManager;
 
         private AudioSource m_AudioSource;
+        private float m_StartReferenceTime;
 
         public AudioSource AudioSource { get => m_AudioSource; set => m_AudioSource = value; }
 
         public float LevelTime => m_LevelTime;
         public float ReferenceTime => m_ReferenceTime;
+        public float StartReferenceTime => m_StartReferenceTime;
 
         public LevelProperties CurrentLevelProperties => m_CurrentLevelProperties;
         public BranchLevelProperties CurrentBranchLevelProperties => m_CurrentBranchLevelProperties;
@@ -41,8 +43,8 @@ namespace SpaceShooter
         private void Start()
         {
             m_LevelTime = 0;
-
-            m_ReferenceTime += Time.time;
+            m_StartReferenceTime = m_ReferenceTime;
+            //m_ReferenceTime += Time.time;
 
             m_LevelSequencesController = LevelSequencesController.Instance;
             m_SceneTransitionManager = FindObjectOfType<SceneTransitionManager>();
@@ -76,7 +78,6 @@ namespace SpaceShooter
 
                 if (m_IsLevelCompleted == false)
                 {
-
                     m_LevelTime += Time.deltaTime;
 
                     CheckLevelConditions();
@@ -113,7 +114,7 @@ namespace SpaceShooter
 
         private void Pass()
         {
-            if (m_ReferenceTime <= Time.time)
+            if (m_ReferenceTime <= m_LevelTime)
                 m_LevelScore -= 1;
 
             MapCompletion.Instance.SaveLevelResult(m_LevelScore);

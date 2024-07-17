@@ -1,10 +1,8 @@
 using UnityEngine;
 using TMPro;
-using Common;
 using TowerDefence;
 using UnityEngine.UI;
 using System;
-using Unity.VisualScripting;
 
 namespace SpaceShooter
 {
@@ -102,7 +100,7 @@ namespace SpaceShooter
             if (m_LevelPassed == true)
             {
                 m_PassedImage.gameObject.SetActive(true);
-                CheckTimeResult(m_LevelTimeText, (int)LevelController.Instance.LevelTime, (int)LevelController.Instance.ReferenceTime);
+                CheckTimeResult(m_LevelTimeText, (int)LevelController.Instance.LevelTime, (int)LevelController.Instance.StartReferenceTime);
                 CheckLivesResult(m_LivesLeftText, TD_Player.Instance.CurrentNumLives, m_PlayerHealthAtStartLevel);
             }
             else

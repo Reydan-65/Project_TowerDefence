@@ -3395,7 +3395,7 @@ RectTransform:
   m_GameObject: {fileID: 3483866511253664269}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.88000005, y: 0.88000005, z: 1}
+  m_LocalScale: {x: 0.8800001, y: 0.8800001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4072990850044757100}
@@ -3426,7 +3426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.22745098}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.23529412}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5465,7 +5465,7 @@ MonoBehaviour:
     m_RequaredName: Explosion Ability
     m_RequaredLevelUpgrade: 1
     m_Radius: 1
-    m_Damage: 10
+    m_Damage: 20
     m_TargetingColor: {r: 1, g: 0, b: 0, a: 0.19607843}
   m_ExplosionAbilityButton: {fileID: 6513623094822790078}
   m_ExplosionAbilityCooldownImage: {fileID: 6504765757167323267}
@@ -6324,7 +6324,7 @@ RectTransform:
   m_GameObject: {fileID: 7391810104012993307}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.88000005, y: 0.88000005, z: 1}
+  m_LocalScale: {x: 0.8800001, y: 0.8800001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 30015534807255404}
@@ -6355,7 +6355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.22745098}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.23529412}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

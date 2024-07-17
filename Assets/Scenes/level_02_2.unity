@@ -3581,7 +3581,7 @@ MonoBehaviour:
   m_PathGroups:
   - Squads:
     - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
-      Count: 0
+      Count: 1
   - Squads:
     - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
       Count: 1

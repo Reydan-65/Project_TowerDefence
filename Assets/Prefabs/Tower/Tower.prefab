@@ -45,8 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 534c89ca81ed65a40b2eb34b4a7a4a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BuildableTowers:
-  - {fileID: 11400000, guid: 144def97ebe33244ab52c8603df35afd, type: 2}
+  m_BuildableTowers: []
 --- !u!1 &7848196879513739781
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,8 +354,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Mode: 0
-  m_TurretProperties: {fileID: 11400000, guid: f53e2a57a595c2f4faf7aa7d33bd7c7f, type: 2}
-  m_TowerAsset: {fileID: 0}
 --- !u!1 &8986673297120437378
 GameObject:
   m_ObjectHideFlags: 0

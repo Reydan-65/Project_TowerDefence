@@ -9,6 +9,7 @@ namespace TowerDefence
 
         private List<TowerBuyControl> m_ActiveTowerBuyControl;
         private RectTransform m_RectTransform;
+        private BuildPoint m_SelectedBuildPoint;
 
         #region Unity Events
 
@@ -17,6 +18,7 @@ namespace TowerDefence
             m_RectTransform = GetComponent<RectTransform>();
 
             BuildPoint.OnClickEvent += MoveToBuildPoint;
+            m_ActiveTowerBuyControl = new List<TowerBuyControl>();
 
             gameObject.SetActive(false);
         }
@@ -35,12 +37,19 @@ namespace TowerDefence
         {
             if (buildPoint)
             {
+                if (m_SelectedBuildPoint != null && m_SelectedBuildPoint != buildPoint)
+                {
+                    ClearBuyControl();
+                }
+
+                m_SelectedBuildPoint = buildPoint;
+
                 if (m_RectTransform != null)
                 {
                     var position = Camera.main.WorldToScreenPoint(buildPoint.transform.root.position);
                     m_RectTransform.anchoredPosition = new Vector2(position.x, position.y);
 
-                    m_ActiveTowerBuyControl = new List<TowerBuyControl>();
+                    m_ActiveTowerBuyControl.Clear();
 
                     foreach (var asset in buildPoint.BuildableTowers)
                     {
@@ -74,15 +83,19 @@ namespace TowerDefence
             }
             else
             {
-                if (m_ActiveTowerBuyControl != null)
-                {
-                    foreach (var control in m_ActiveTowerBuyControl)
-                        Destroy(control.gameObject);
-
-                    m_ActiveTowerBuyControl.Clear();
-                }
-
+                ClearBuyControl();
                 gameObject.SetActive(false);
+            }
+        }
+
+        private void ClearBuyControl()
+        {
+            if (m_ActiveTowerBuyControl != null)
+            {
+                foreach (var control in m_ActiveTowerBuyControl)
+                    Destroy(control.gameObject);
+
+                m_ActiveTowerBuyControl.Clear();
             }
         }
     }

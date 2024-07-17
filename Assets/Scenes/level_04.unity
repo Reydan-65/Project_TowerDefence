@@ -584,7 +584,7 @@ PrefabInstance:
       objectReference: {fileID: 1304182378}
     - target: {fileID: 4925879468183622336, guid: 78d1d373fe277fc4cb6607f68bb5331e, type: 3}
       propertyPath: m_ReferenceTime
-      value: 50
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4925879468183622336, guid: 78d1d373fe277fc4cb6607f68bb5331e, type: 3}
       propertyPath: m_Conditions.Array.size

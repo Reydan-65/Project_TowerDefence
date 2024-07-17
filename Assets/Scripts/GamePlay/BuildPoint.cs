@@ -22,8 +22,10 @@ namespace TowerDefence
 
         public void SetBuildableTowers(TowerAsset[] towers)
         {
-            if (towers == null || towers.Length == 0) Destroy(this);
-            else m_BuildableTowers = towers;
+            if (towers == null || towers.Length == 0) 
+                Destroy(this);
+
+            m_BuildableTowers = towers;
         }
 
         public static void HideControls()

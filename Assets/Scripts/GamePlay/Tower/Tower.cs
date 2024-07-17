@@ -67,6 +67,7 @@ namespace TowerDefence
         {
             GetComponentInChildren<SpriteRenderer>().sprite = towerAsset.Sprite;
             GetComponentInChildren<Turret>().TurretProperties = towerAsset.TurretProperties;
+
             GetComponentInChildren<BuildPoint>().SetBuildableTowers(towerAsset.m_UpgradesTo);
         }
 

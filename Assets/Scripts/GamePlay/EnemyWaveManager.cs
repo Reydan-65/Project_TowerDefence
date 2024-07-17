@@ -14,13 +14,12 @@ namespace TowerDefence
         [SerializeField] private Path[] m_Paths;
         [SerializeField] private EnemyWave m_CurrentWave;
 
-        public EnemyWave CurrentWave => m_CurrentWave;
-
-        public event Action OnAllWavesDead;
-
         private int m_ActiveEnemyCount = 0;
         private NextWave_GUI m_NextWaveGUI;
         private int m_EnemyCountInWave;
+        private bool IsSpawning = false;
+        public EnemyWave CurrentWave => m_CurrentWave;
+        public event Action OnAllWavesDead;
         public int EnemyCountInWave => m_EnemyCountInWave;
 
         private void Start()
@@ -34,14 +33,29 @@ namespace TowerDefence
         /// </summary>
         private void SpawnWave()
         {
-            m_EnemyCountInWave = 0;
+            if (IsSpawning) return;
 
-            foreach ((EnemyAsset enemyAsset, int count, int pathIndex) in m_CurrentWave.EnumerateSquads())
+            if (IsSpawning)
             {
-                m_EnemyCountInWave += count;
+                Debug.Log("SpawnWave already in progress, exiting.");
+                return;
             }
-            m_NextWaveGUI.SwitchEnabledForceNextWaveButton(false);
-            StartCoroutine(SpawnEnemies());
+
+            IsSpawning = true;
+
+            if (m_CurrentWave)
+            {
+                m_EnemyCountInWave = 0;
+
+                foreach ((EnemyAsset enemyAsset, int count, int pathIndex) in m_CurrentWave.EnumerateSquads())
+                {
+                    m_EnemyCountInWave += count;
+                }
+
+                m_NextWaveGUI.SwitchEnabledForceNextWaveButton(false);
+
+                StartCoroutine(SpawnEnemies());
+            }
         }
 
         /// <summary>
@@ -51,12 +65,16 @@ namespace TowerDefence
         /// </summary>
         private IEnumerator SpawnEnemies()
         {
+            if (m_CurrentWave == null) yield break;
+
             foreach ((EnemyAsset enemyAsset, int count, int pathIndex) in m_CurrentWave.EnumerateSquads())
             {
+
                 if (pathIndex < m_Paths.Length)
                 {
                     for (int i = 0; i < count; i++)
                     {
+
                         Vector3 spawnPosition = m_Paths[pathIndex].StartArea.GetRandomInsideZone();
 
                         var enemy = Instantiate(m_EnemyPrefab, spawnPosition, Quaternion.identity);
@@ -79,6 +97,7 @@ namespace TowerDefence
                         m_ActiveEnemyCount++;
                         OnEnemySpawn?.Invoke(enemy);
 
+
                         yield return new WaitForSeconds(CurrentWave.SpawnDelayForEachEnemyInWave);
                     }
                 }
@@ -86,11 +105,12 @@ namespace TowerDefence
                     Debug.LogWarning($"Invalid pathIndex {pathIndex} in {name}. Ensure m_Paths is correctly assigned.");
             }
 
-            //Готовится следующая волна
             m_CurrentWave = m_CurrentWave.PrepareNext(SpawnWave);
 
+            //Готовится следующая волна
             // Если след. волна есть, включаем кнопку вызова след. волны
-            if (m_CurrentWave)
+            if (m_CurrentWave == null) yield break;
+            else
             {
                 m_NextWaveGUI.SwitchEnabledForceNextWaveButton(true);
 
@@ -101,6 +121,8 @@ namespace TowerDefence
                     m_NextWaveGUI.WaveIndex++;
                 }
             }
+
+            IsSpawning = false;
         }
 
         /// <summary>
@@ -152,7 +174,7 @@ namespace TowerDefence
         {
             ClearScene();
         }
-        
+
         private void OnApplicationQuit()
         {
             ClearScene();

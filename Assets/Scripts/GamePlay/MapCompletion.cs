@@ -1,7 +1,5 @@
 using System;
-using UnityEngine;
 using SpaceShooter;
-using Unity.VisualScripting;
 using System.Collections.Generic;
 
 namespace TowerDefence

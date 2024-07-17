@@ -453,7 +453,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
     - target: {fileID: 431821778076181317, guid: 653e5b72452274a4b87d11d6642e0fc5, type: 3}
       propertyPath: m_PathGroups.Array.data[0].Squads.Array.data[0].Count
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 431821778076181317, guid: 653e5b72452274a4b87d11d6642e0fc5, type: 3}
       propertyPath: m_PathGroups.Array.data[0].Squads.Array.data[1].Asset

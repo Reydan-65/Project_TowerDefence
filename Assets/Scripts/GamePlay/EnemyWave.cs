@@ -78,6 +78,8 @@ namespace TowerDefence
 
             if (m_NextWave)
                 m_NextWave.Prepare(spawnEnemies);
+            else
+                return null;
 
             return m_NextWave;
         }
