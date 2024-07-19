@@ -11,8 +11,9 @@ namespace SpaceShooter
 
         protected override void OnDeath()
         {
-            Destroy(gameObject);
+            Sound.EnemyDie.Play();
 
+            Destroy(gameObject);
             base.OnDeath();
         }
 

@@ -197,10 +197,10 @@ MonoBehaviour:
   m_Nickname: 
   m_Velocity: 4
   m_Lifetime: 10
-  m_Damage: 30
+  m_DamageType: 0
   m_ImpactEffect: {fileID: 1631787946939491745, guid: bd62d6b0ba58378459b06f6d9a532f82, type: 3}
-  m_ExplosionRadius: 1.2
-  m_ExplosionDamage: 40
+  m_ShootSound: 6
+  m_HitSound: 7
   m_DebuffPrefab: {fileID: 0}
 --- !u!114 &-5938484089505520804
 MonoBehaviour:
@@ -215,7 +215,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Type: 2
-  m_DebuffTime: 3
+  m_DebuffDuration: 0
+  m_DebuffSlowPower: 0
 --- !u!82 &-8130374766736755278
 AudioSource:
   m_ObjectHideFlags: 0

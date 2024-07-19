@@ -15,7 +15,7 @@ namespace TowerDefence
         }
         public void EX_LoadMainMenuScene()
         {
-            TDButton.PlayClickSound();
+            Sound.Click.Play();
             StartCoroutine(DelayTime());
         }
 

@@ -28,8 +28,9 @@ namespace TowerDefence
             }
             else
             {
+                Sound.PlayerLoseHP.Play();
+
                 OnEndPath.Invoke();
-                //TD_Player.Instance.ReduceEnemiesLast();
                 Destroy(gameObject);
             }
         }

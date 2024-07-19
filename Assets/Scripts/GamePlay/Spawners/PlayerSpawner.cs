@@ -11,9 +11,6 @@ namespace SpaceShooter
         //[SerializeField] private ShipInputController m_ShipInputControllerPrefab;
         //[SerializeField] private VirtualGamePad m_VirtualGamePadPrefab;
 
-        [Header("Player Spawn Point")]
-        [SerializeField] private Transform m_SpawnPoint;
-
         public Player Spawn()
         {
             //FollowCamera followCamera = Instantiate(m_followCameraPrefab, m_SpawnPoint);
@@ -23,7 +20,7 @@ namespace SpaceShooter
             //shipInputController.Construct(virtualGamePad);
 
             Player player = Instantiate(m_PlayerPrefab);
-            player.Construct(/*followCamera, shipInputController,*/ m_SpawnPoint);
+            player.Construct(/*followCamera, shipInputController,*/ transform);
 
             return player;
         }

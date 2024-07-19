@@ -20,7 +20,7 @@ MonoBehaviour:
   Animations: {fileID: 9100000, guid: 08fe099e33ee12c4eb23ac654dfc1e5d, type: 2}
   ColliderRadius: 0.29
   ColliderOffsetX: 0
-  ColliderOffsetY: 0.04
+  ColliderOffsetY: 0
   TeamID: 2
   HitPoints: 60
   ArmorPoints: 7

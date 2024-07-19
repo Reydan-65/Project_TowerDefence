@@ -16,16 +16,16 @@ namespace TowerDefence
 
         public void EX_Accept()
         {
-            TDButton.PlayClickSound();
             FileHandler.Reset(MapCompletion.filename);
             FileHandler.Reset(Upgrades.filename);
 
+            Sound.Click.Play();
             m_SceneTransitionManager.LoadScene("levelMap");
         }
 
         public void EX_Cancel()
         {
-            TDButton.PlayClickSound();
+            Sound.Click.Play();
             StartCoroutine(WaitTimer());
         }
 

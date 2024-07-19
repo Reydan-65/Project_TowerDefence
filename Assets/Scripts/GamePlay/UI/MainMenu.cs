@@ -24,27 +24,25 @@ namespace TowerDefence
 
         public void EX_StartNewGame()
         {
-            TDButton.PlayClickSound();
+            Sound.Click.Play();
 
             if (FileHandler.HasFile(MapCompletion.filename))
                 m_AcceptPanel.gameObject.SetActive(true);
             else
             {
                 m_SceneTransitionManager.LoadScene("levelMap");
-                //SceneManager.LoadScene(1);
             }
         }
 
         public void EX_ContinueGame()
         {
-            TDButton.PlayClickSound();
+            Sound.Click.Play();
             m_SceneTransitionManager.LoadScene("levelMap");
-            //SceneManager.LoadScene(1);
         }
 
         public void EX_Quit()
         {
-            TDButton.PlayClickSound();
+            Sound.Click.Play();
 
             StartCoroutine(DelayTime());
         }

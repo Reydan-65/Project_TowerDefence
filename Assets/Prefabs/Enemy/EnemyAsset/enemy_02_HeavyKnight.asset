@@ -19,8 +19,8 @@ MonoBehaviour:
   SpriteScale: {x: 1.2, y: 1.2}
   Animations: {fileID: 9100000, guid: 902aadc68b2f4e745b5a1a4603b17bea, type: 2}
   ColliderRadius: 0.34
-  ColliderOffsetX: -0.025
-  ColliderOffsetY: 0.12
+  ColliderOffsetX: 0
+  ColliderOffsetY: 0
   TeamID: 2
   HitPoints: 100
   ArmorPoints: 5

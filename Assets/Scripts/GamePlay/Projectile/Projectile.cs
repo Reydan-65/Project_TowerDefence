@@ -10,10 +10,18 @@ namespace SpaceShooter
 
         [SerializeField] protected DamageType m_DamageType;
         [SerializeField] protected GameObject m_ImpactEffect;
+        [SerializeField] protected Sound m_ShootSound;
+        [SerializeField] protected Sound m_HitSound;
 
+        protected override void Awake()
+        {
+            base.Awake();
+            m_ShootSound.Play();
+        }
         protected override void OnHit(Destructible destructible)
         {
             base.OnHit(destructible);
+            m_HitSound.Play();
 
             //OnTargetDestroyed(destructible);
         }

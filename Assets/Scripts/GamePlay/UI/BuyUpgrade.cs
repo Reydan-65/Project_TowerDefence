@@ -67,7 +67,7 @@ namespace TowerDefence
 
         public void EX_Buy()
         {
-            TDButton.PlayClickSound();
+            Sound.Click.Play();
 
             // Выполнение покупки
             if (m_PropertiesUpgrade != null)

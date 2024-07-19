@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501b47e2e92a154491b451b220023ea, type: 3}
   m_Name: Audio Properties
   m_EditorClassIdentifier: 
-  m_SoundtrackClips: []
-  m_ClickClips:
+  m_Sounds:
+  - {fileID: 8300000, guid: d04de44dd857c304ebfcb8f6c0af5082, type: 3}
+  - {fileID: 8300000, guid: 76ecc18ca309fd94aa9228d507023d36, type: 3}
   - {fileID: 8300000, guid: 4817801531c7ca14da9d38b154a5f90e, type: 3}
-  m_ProjectileLaunchClips: []
-  m_ProjectileEndClips: []
-  m_OtherClips: []
-  m_MusicVolume: 0.5
-  m_SoundsVolume: 0.5
+  - {fileID: 8300000, guid: 1e410f8122e38a143b1e4aa345b012d3, type: 3}
+  - {fileID: 8300000, guid: 79fc94190501988418ba790647f0a5d4, type: 3}
+  - {fileID: 8300000, guid: 6a706a61342e65d4e83e1ca264092e25, type: 3}
+  - {fileID: 8300000, guid: 3d95380a791ebca428dc4c5a368132f3, type: 3}
+  - {fileID: 8300000, guid: e740e5682cf235444a91163bc9d0409e, type: 3}
+  - {fileID: 8300000, guid: 13e8a4fc9a447674a928e2889eb0623b, type: 3}

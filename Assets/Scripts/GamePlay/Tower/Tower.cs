@@ -41,7 +41,7 @@ namespace TowerDefence
                         foreach (var turret in m_Turrets)
                         {
                             turret.transform.up = MakeLead(targetVector, turret.TurretProperties.ProjectilePrefab.GetComponent<Projectile>().Velocity,
-                                                            turret.transform.localPosition, m_SelectedTarget);
+                                                           turret.transform.localPosition, m_SelectedTarget);
                             turret.Fire();
                         }
                     }

@@ -306,6 +306,8 @@ MonoBehaviour:
   m_Lifetime: 10
   m_DamageType: 1
   m_ImpactEffect: {fileID: 1631787946939491745, guid: 2057caf1a54d80742a3bd83768f7b9d0, type: 3}
+  m_ShootSound: 6
+  m_HitSound: 7
   m_DebuffPrefab: {fileID: 3954142562345299217, guid: a7940d21f8d0a4145a4fe75cae9421c7, type: 3}
 --- !u!114 &-5938484089505520804
 MonoBehaviour:

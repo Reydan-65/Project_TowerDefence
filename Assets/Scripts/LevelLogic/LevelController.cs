@@ -26,10 +26,7 @@ namespace SpaceShooter
         private BranchLevelProperties m_CurrentBranchLevelProperties;
         private SceneTransitionManager m_SceneTransitionManager;
 
-        private AudioSource m_AudioSource;
         private float m_StartReferenceTime;
-
-        public AudioSource AudioSource { get => m_AudioSource; set => m_AudioSource = value; }
 
         public float LevelTime => m_LevelTime;
         public float ReferenceTime => m_ReferenceTime;
@@ -44,7 +41,6 @@ namespace SpaceShooter
         {
             m_LevelTime = 0;
             m_StartReferenceTime = m_ReferenceTime;
-            //m_ReferenceTime += Time.time;
 
             m_LevelSequencesController = LevelSequencesController.Instance;
             m_SceneTransitionManager = FindObjectOfType<SceneTransitionManager>();
@@ -63,11 +59,6 @@ namespace SpaceShooter
             }
 
             TD_Player.Instance.OnLivesUpdate += LifeScoreChange;
-
-            m_AudioSource = Camera.main.GetComponent<AudioSource>();
-
-            //SoundManager.Instance.PlayOneShot(SoundManager.Instance.AudioProperties.SoundtrackClips, 1,
-            //             m_AudioSource, SoundManager.Instance.AudioProperties.MusicVolume);
         }
 
         private void FixedUpdate()
@@ -142,7 +133,6 @@ namespace SpaceShooter
                     obj.enabled = false;
             }
 
-            DisableAll<Spawner>();
             DisableAll<Projectile>();
             DisableAll<Tower>();
             DisableAll<NextWave_GUI>();
@@ -171,7 +161,6 @@ namespace SpaceShooter
                     obj.enabled = true;
             }
 
-            EnableAll<Spawner>();
             EnableAll<Projectile>();
             EnableAll<Tower>();
             EnableAll<NextWave_GUI>();

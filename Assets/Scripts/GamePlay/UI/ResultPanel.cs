@@ -10,44 +10,27 @@ namespace SpaceShooter
     {
         private const string PassedText = "You Won!";
         private const string LostText = "You Lose!";
-        private const string NextText = "Next";
-        private const string LevelDoneText = "Continue";
-        private const string RestartText = "Restart";
-        private const string BackToLevelMapText = "Back";
-        private const string MainMenuText = "Main Menu";
-        private const string KillsPrefix = "Kills: ";
-        private const string ScoresPrefix = "Score: ";
-        private const string TimePrefix = "Time: ";
-
-        /*
-        [SerializeField] private TextMeshProUGUI m_Kills;
-        [SerializeField] private TextMeshProUGUI m_Score;
-        [SerializeField] private TextMeshProUGUI m_Time;
-        */
 
         [SerializeField] private TextMeshProUGUI m_Result;
-
         [SerializeField] private Image m_PassedImage;
         [SerializeField] private Image m_NotPassedImage;
         [SerializeField] private TextMeshProUGUI m_LevelTimeText;
         [SerializeField] private TextMeshProUGUI m_LivesLeftText;
-        //[SerializeField] private TextMeshProUGUI m_Button;
 
         private bool m_LevelPassed = false;
-        private LevelCondition m_LevelCondition;
-        //private bool AudioClipHasPlayed = false;
 
         private int m_PlayerHealthAtStartLevel;
+        private bool AudioClipHasPlayed;
 
         private void Start()
         {
-            //AudioClipHasPlayed = false;
+            AudioClipHasPlayed = false;
             m_PlayerHealthAtStartLevel = TD_Player.Instance.CurrentNumLives;
-            m_LevelCondition = FindObjectOfType<LevelCondition>();
+
             gameObject.SetActive(false);
             m_PassedImage.gameObject.SetActive(false);
-            m_NotPassedImage.gameObject.SetActive(false)
-                ;
+            m_NotPassedImage.gameObject.SetActive(false);
+
             LevelController.Instance.LevelLost += OnLevelLost;
             LevelController.Instance.LevelPassed += OnLevelPassed;
         }
@@ -63,36 +46,21 @@ namespace SpaceShooter
 
         private void OnLevelPassed()
         {
+            PlayResultTrack(Sound.Win);
+            
             gameObject.SetActive(true);
-
             m_LevelPassed = true;
-
-            //PlaySoundByIndexOneTime(2);
-
             FillLevelStatistics();
-
             m_Result.text = PassedText;
-
-            //if (LevelSequencesController.Instance.CurrentLevelIsLast() == true)
-            //{
-            //    m_Button.text = MainMenuText;
-            //}
-            //else
-            //{
-            //    m_Button.text = NextText;
-            //}
         }
 
         private void OnLevelLost()
         {
+            PlayResultTrack(Sound.Lose);
+
             gameObject.SetActive(true);
-
-            //PlaySoundByIndexOneTime(3);
-
             FillLevelStatistics();
-
             m_Result.text = LostText;
-            //m_Button.text = RestartText;
         }
 
         private void FillLevelStatistics()
@@ -112,10 +80,6 @@ namespace SpaceShooter
                 m_LevelTimeText.gameObject.SetActive(false);
                 m_LivesLeftText.gameObject.SetActive(false);
             }
-
-            //m_Kills.text = KillsPrefix + Player.Instance.NumKills.ToString();
-            //m_Score.text = ScoresPrefix + Player.Instance.Score.ToString();
-            //m_Time.text = TimePrefix + LevelController.Instance.LevelTime.ToString("F0");
         }
 
         private void CheckResult(TextMeshProUGUI text, int resultText, int needText, Func<int, int, bool> comparison)
@@ -143,41 +107,33 @@ namespace SpaceShooter
 
         public void EX_OnButtonAction()
         {
+            Sound.Click.Play();
+
             gameObject.SetActive(false);
 
-            TDButton.PlayClickSound();
-            //AudioClipHasPlayed = false;
-
             if (m_LevelPassed == true)
-            {
                 LevelController.Instance.LoadNextLevel();
-            }
             else
-            {
                 LevelController.Instance.RestartLevel();
-            }
         }
 
         public void EX_ReturnLevelMap()
         {
-            TDButton.PlayClickSound();
+            Sound.Click.Play();
+
             LevelController.Instance.ReturnLevelMap();
         }
 
-        /*
         // Выключить фоновый звук, и включить звук события
-        private void PlaySoundByIndexOneTime(int index)
+        private void PlayResultTrack(Sound sound)
         {
             if (AudioClipHasPlayed == false)
             {
-                SoundManager.Instance.Stop(LevelController.Instance.AudioSource);
-
-                SoundManager.Instance.PlayOneShot(SoundManager.Instance.AudioProperties.SoundtrackClips, index,
-                             LevelController.Instance.AudioSource, SoundManager.Instance.AudioProperties.MusicVolume);
+                SoundPlayer.Instance.Stop();
+                sound.Play();
 
                 AudioClipHasPlayed = true;
             }
         }
-        */
     }
 }

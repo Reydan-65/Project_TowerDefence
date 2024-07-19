@@ -38,9 +38,7 @@ namespace TowerDefence
             if (buildPoint)
             {
                 if (m_SelectedBuildPoint != null && m_SelectedBuildPoint != buildPoint)
-                {
                     ClearBuyControl();
-                }
 
                 m_SelectedBuildPoint = buildPoint;
 

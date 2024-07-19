@@ -18,21 +18,11 @@ namespace TowerDefence
             [Space(10)]
             [SerializeField] protected string m_RequaredName;
             [SerializeField] protected int m_RequaredLevelUpgrade;
+
             public int Cost => m_Cost;
             public float Cooldown => m_Cooldown;
             public string RequaredName => m_RequaredName;
             public int RequaredLevelUpgrade => m_RequaredLevelUpgrade;
-
-            //public virtual void ImageUpdate(Button button, float startTime, float time, TextMeshProUGUI text, int value)
-            //{
-            //    if (button != null)
-            //    {
-            //        button.GetComponent<Image>().fillAmount += (Time.deltaTime / startTime) * value;
-
-            //        if (time <= 0) time = 0;
-            //        text.text = Mathf.Ceil(time).ToString();
-            //    }
-            //}
         }
 
         [Serializable]
@@ -62,6 +52,8 @@ namespace TowerDefence
 
                 ClickProtection.Instance.Activate((Vector2 clickPosition) =>
                 {
+                    Sound.ExplosionAbility.Play();
+
                     Instance.m_ExplosionAbilityCooldownImage.color = Color.red;
                     Instance.m_ExplosionAbilityTimerText.enabled = true;
                     Instance.m_ExplosionAbilityCooldownTime = m_Cooldown;
@@ -95,12 +87,6 @@ namespace TowerDefence
                     Instance.m_ExplosionAbilityTimerText.enabled = false;
                 }
             }
-
-            //public override void ImageUpdate(Button button, float startTime, float time, TextMeshProUGUI text, int value)
-            //{
-            //    base.ImageUpdate(button, startTime, time, text, value);
-            //    time = startTime;
-            //}
         }
 
         [Serializable]
@@ -123,6 +109,8 @@ namespace TowerDefence
             /// </summary>
             public void Use()
             {
+                Sound.SlowEnemyAbility.Play();
+
                 Instance.m_SlowEnemyAbilityDurationTime = m_Duration;
                 Instance.m_SlowEnemyAbilityButton.interactable = false;
 
@@ -174,12 +162,6 @@ namespace TowerDefence
                     Instance.m_SlowEnemyAbilityTimerText.enabled = false;
                 }
             }
-
-            //public override void ImageUpdate(Button button, float startTime, float time, TextMeshProUGUI text, int value)
-            //{
-            //    base.ImageUpdate(button, startTime, time, text, value);
-            //    time = startTime;
-            //}
         }
 
         [Header("FireAbility")]
@@ -255,33 +237,6 @@ namespace TowerDefence
             else
                 UpdateButtonState(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Cooldown, ref m_SlowEnemyAbilityCooldownTime, m_SlowEnemyAbilityTimerText, 1, m_SlowEnemyAbility.Cost, m_SlowEnemyAbilityLockerImage);
 
-
-            //if (m_ExplosionAbilityButton != null)
-            //{
-            //    CheckEnergyEnough(m_ExplosionAbilityButton, m_ExplosionAbility.Cost, m_ExplosionAbilityLockerImage);
-
-            //    m_ExplosionAbilityCooldownTime -= Time.deltaTime;
-
-            //    m_ExplosionAbility.ImageUpdate(m_ExplosionAbilityButton, m_ExplosionAbility.Cooldown, m_ExplosionAbilityCooldownTime, m_ExplosionAbilityTimerText, 1);
-            //}
-
-            //if (m_SlowEnemyAbilityButton != null)
-            //{
-            //    CheckEnergyEnough(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Cost,m_SlowEnemyAbilityLockerImage);
-
-            //    if (m_SlowEnemyAbilityDurationTime > 0)
-            //    {
-            //        m_SlowEnemyAbilityDurationTime -= Time.deltaTime;
-            //        m_SlowEnemyAbility.ImageUpdate(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Duration, m_SlowEnemyAbilityDurationTime, m_SlowEnemyAbilityTimerText, -1);
-            //    }
-
-            //    if (m_SlowEnemyAbilityCooldownTime > 0)
-            //    {
-            //        m_SlowEnemyAbilityCooldownTime -= Time.deltaTime;
-            //        m_SlowEnemyAbility.ImageUpdate(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Cooldown, m_SlowEnemyAbilityCooldownTime, m_SlowEnemyAbilityTimerText, 1);
-            //    }
-            //}
-
             if (Instance.m_TargetingCircle.gameObject.activeSelf)
             {
                 Vector3 mousePosition = Input.mousePosition;
@@ -290,20 +245,16 @@ namespace TowerDefence
 
         }
 
-        //private void CheckEnergyEnough(Button button, int costEnergy, Image lockerImage)
-        //{
-        //    if (TD_Player.Instance.CurrentNumEnergy >= costEnergy)
-        //    {
-        //        lockerImage.enabled = false;
-        //        button.interactable = true;
-        //    }
-        //    else
-        //    {
-        //        lockerImage.enabled = true;
-        //        button.interactable = false;
-        //    }
-        //}
-
+        /// <summary>
+        /// Обновление состояния кнопки.
+        /// </summary>
+        /// <param name="button"></param> - кнопка
+        /// <param name="startTime"></param> - стартовое время
+        /// <param name="time"></param> - текущее время
+        /// <param name="text"></param> - обновляемый текст
+        /// <param name="value"></param> - значение для изменения направления заполнения изображения
+        /// <param name="costEnergy"></param> - стоимость способности
+        /// <param name="lockerImage"></param> - визуал - кнопка не активна
         public virtual void UpdateButtonState(Button button, float startTime, ref float time, TextMeshProUGUI text, int value, int costEnergy, Image lockerImage = null)
         {
             // Обновление заполнения кнопки

@@ -24,17 +24,17 @@ namespace SpaceShooter
 
         public void EX_PauseGame()
         {
+            Sound.Click.Play();
+
             isPaused = true;
-
             LevelController.StopLevelActivity();
-
-            TDButton.PlayClickSound();
             ShowPause();
         }
 
         public void EX_ResumeGame()
         {
-            TDButton.PlayClickSound();
+            Sound.Click.Play();
+
             StartCoroutine(DelayTime());
         }
 
@@ -43,32 +43,26 @@ namespace SpaceShooter
             yield return new WaitForSeconds(0.35f);
 
             isPaused = false;
-
             LevelController.ReturnLevelActivity();
-
             HidePause();
         }
 
         public void EX_LoadLevelMap()
         {
+            Sound.Click.Play();
+
             isPaused = false;
             OnLeaveLevelSceneUnsubscribe();
-            TDButton.PlayClickSound();
             m_SceneTransitionManager.LoadScene("levelMap");
-            //SceneManager.LoadScene(1);
-
-            //StartCoroutine(OnLoadMenu());
         }
 
         public void EX_LoadMainMenu()
         {
+            Sound.Click.Play();
+
             isPaused = false;
             OnLeaveLevelSceneUnsubscribe();
-            TDButton.PlayClickSound();
             m_SceneTransitionManager.LoadScene("mainMenu");
-            //SceneManager.LoadScene(0);
-
-            //StartCoroutine(OnLoadMenu());
         }
 
         private void ShowPause()
@@ -96,14 +90,5 @@ namespace SpaceShooter
                 Destroy(enemy);
             }
         }
-
-        //private IEnumerator OnLoadMenu()
-        //{
-        //    yield return new WaitForSeconds(SoundManager.Instance.AudioProperties.ClickClips[0].length);
-
-        //    m_Panel.SetActive(false);
-        //    SceneManager.LoadScene(0);
-        //}
-
     }
 }

@@ -57,7 +57,6 @@ namespace TowerDefence
 
         public void EX_LoadLevel()
         {
-            TDButton.PlayClickSound();
 
             if (m_LevelIndex >= 0)
                 m_SceneTransitionManager.LoadScene(m_LevelProperties.SceneName);
