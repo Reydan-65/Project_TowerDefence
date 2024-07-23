@@ -538,6 +538,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1304182378}
     - target: {fileID: 4925879468183622336, guid: 78d1d373fe277fc4cb6607f68bb5331e, type: 3}
+      propertyPath: m_ReferenceTime
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 4925879468183622336, guid: 78d1d373fe277fc4cb6607f68bb5331e, type: 3}
       propertyPath: m_Conditions.Array.data[0]
       value: 
       objectReference: {fileID: 1918231580}
@@ -1379,6 +1383,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Radius: 0.7
+--- !u!1 &1406381415
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1406381416}
+  - component: {fileID: 1406381417}
+  m_Layer: 0
+  m_Name: EnemyWave 0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1406381416
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406381415}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8269332520694643477}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1406381417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406381415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a08b7adca73c1e4194edc21d57c940f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PathGroups: []
+  m_PrepareTime: 0
+  m_SpawnDelayForEachEnemyInWave: 0.5
+  m_NextWave: {fileID: 7827220204138176335}
 --- !u!1 &1406642808
 GameObject:
   m_ObjectHideFlags: 0
@@ -3675,6 +3727,7 @@ Transform:
   - {fileID: 7063985978499031812}
   - {fileID: 828197624}
   - {fileID: 4695243567244461332}
+  - {fileID: 1406381416}
   - {fileID: 7172932929461225154}
   - {fileID: 7206426293090071855}
   - {fileID: 6626464154773960361}
@@ -3699,7 +3752,7 @@ MonoBehaviour:
   - {fileID: 2833122313903840119}
   - {fileID: 828197625}
   - {fileID: 6332561812001601735}
-  m_CurrentWave: {fileID: 7827220204138176335}
+  m_CurrentWave: {fileID: 1406381417}
 --- !u!1 &8460726034676151449
 GameObject:
   m_ObjectHideFlags: 0

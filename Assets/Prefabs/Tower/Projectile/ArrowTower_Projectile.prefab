@@ -134,5 +134,5 @@ MonoBehaviour:
   m_Lifetime: 10
   m_DamageType: 0
   m_ImpactEffect: {fileID: 2999067560246322789, guid: d053a90fdea379a48bad37095342c14e, type: 3}
-  m_ShootSound: 6
-  m_HitSound: 7
+  m_ShootSound: 4
+  m_HitSound: 5

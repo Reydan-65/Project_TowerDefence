@@ -22,10 +22,14 @@ namespace TowerDefence
         public event Action OnAllWavesDead;
         public int EnemyCountInWave => m_EnemyCountInWave;
 
+        private bool SpawnOnPause = false;
+        private Coroutine m_SpawnEnemiesCoroutine;
+
         private void Start()
         {
             m_CurrentWave.Prepare(SpawnWave);
             m_NextWaveGUI = FindObjectOfType<NextWave_GUI>();
+            m_SpawnEnemiesCoroutine = StartCoroutine(SpawnEnemies());
         }
 
         /// <summary>
@@ -35,16 +39,20 @@ namespace TowerDefence
         {
             if (IsSpawning) return;
 
-            if (IsSpawning)
-            {
-                Debug.Log("SpawnWave already in progress, exiting.");
-                return;
-            }
-
             IsSpawning = true;
 
             if (m_CurrentWave)
             {
+                //Награда за принудительный вызов волны,
+                //либо уничтожение всех текущих противников,
+                //либо при выходе новой волны.
+                //не учитываются волны 0 и 1
+                if (m_CurrentWave.transform.name != "EnemyWave 0" && m_CurrentWave.transform.name != "EnemyWave 1")
+                {
+                    var levelGoldUpgrade = Upgrades.GetUpgradeLevel(Upgrades.Instance.Assets.PlayerProperties[1].UpgradeName);
+                    TD_Player.Instance.ChangeGold((int)((m_CurrentWave.GetRemainingTime() * 0.5f) + (TD_Player.Instance.StartGold / 2) + levelGoldUpgrade * 5));
+                }
+
                 m_EnemyCountInWave = 0;
 
                 foreach ((EnemyAsset enemyAsset, int count, int pathIndex) in m_CurrentWave.EnumerateSquads())
@@ -69,11 +77,14 @@ namespace TowerDefence
 
             foreach ((EnemyAsset enemyAsset, int count, int pathIndex) in m_CurrentWave.EnumerateSquads())
             {
-
                 if (pathIndex < m_Paths.Length)
                 {
                     for (int i = 0; i < count; i++)
                     {
+                        while (SpawnOnPause)
+                        {
+                            yield return null;
+                        }
 
                         Vector3 spawnPosition = m_Paths[pathIndex].StartArea.GetRandomInsideZone();
 
@@ -97,8 +108,10 @@ namespace TowerDefence
                         m_ActiveEnemyCount++;
                         OnEnemySpawn?.Invoke(enemy);
 
-
                         yield return new WaitForSeconds(CurrentWave.SpawnDelayForEachEnemyInWave);
+
+                        if (SpawnOnPause)
+                            yield return null;
                     }
                 }
                 else
@@ -107,7 +120,7 @@ namespace TowerDefence
 
             m_CurrentWave = m_CurrentWave.PrepareNext(SpawnWave);
 
-            //Готовится следующая волна
+            // Готовится следующая волна
             // Если след. волна есть, включаем кнопку вызова след. волны
             if (m_CurrentWave == null) yield break;
             else
@@ -125,11 +138,21 @@ namespace TowerDefence
             IsSpawning = false;
         }
 
+        public void PauseSpawnEnemiesCoroutine()
+        {
+            if (m_SpawnEnemiesCoroutine != null) SpawnOnPause = true;
+        }
+
+        public void ResumeSpawnEnemiesCoroutine()
+        {
+            if (m_SpawnEnemiesCoroutine != null) SpawnOnPause = false;
+        }
+
         /// <summary>
         /// Считаем оставшихся врагов на сцене.
         /// Если уменьшенное количество врагов равно нулю и,
-        ///      если есть готовая волна - вызваем новую волну,
-        ///      иначе вызываем событие, что все волны врагов мертвы.
+        /// если есть готовая волна - вызваем новую волну,
+        /// иначе вызываем событие, что все волны врагов мертвы.
         /// </summary>
         public void RecordEnemyDead()
         {
@@ -138,38 +161,25 @@ namespace TowerDefence
                 if (m_CurrentWave)
                 {
                     ForceNextWave();
-
-                    //Награда за завершение прошлой волны
-                    var levelGoldUpgrade = Upgrades.GetUpgradeLevel(Upgrades.Instance.Assets.PlayerProperties[1].UpgradeName);
-                    TD_Player.Instance.ChangeGold(TD_Player.Instance.StartGold + levelGoldUpgrade * 5);
-
                     m_NextWaveGUI.SwitchEnabledForceNextWaveButton(false);
                 }
                 else
-                {
-                    print("All waves dead!");
                     OnAllWavesDead?.Invoke();
-                }
             }
         }
 
         /// <summary>
         /// Принудительный вызов новой волны, если она есть.
-        /// И получение игроком золота (в зависимости от времени,
-        /// оставшегося до выхода новой волны).
         /// </summary>  
         public void ForceNextWave()
         {
             if (m_CurrentWave)
-            {
-                //Награда за принудительный вызов волны
-                TD_Player.Instance.ChangeGold((int)(m_CurrentWave.GetRemainingTime() * 0.5f));
-
-                //Вызов волны
                 SpawnWave();
-            }
         }
 
+        /// <summary>
+        /// Очистка.
+        /// </summary>
         private void OnDestroy()
         {
             ClearScene();

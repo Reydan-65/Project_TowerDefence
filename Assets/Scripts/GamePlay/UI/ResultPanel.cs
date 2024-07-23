@@ -105,6 +105,7 @@ namespace SpaceShooter
             CheckResult(text, resultText, needText, (resultText, needText) => resultText < needText);
         }
 
+        /*
         public void EX_OnButtonAction()
         {
             Sound.Click.Play();
@@ -116,10 +117,11 @@ namespace SpaceShooter
             else
                 LevelController.Instance.RestartLevel();
         }
+        */
 
         public void EX_ReturnLevelMap()
         {
-            Sound.Click.Play();
+            Sound.Click.PlaySound();
 
             LevelController.Instance.ReturnLevelMap();
         }
@@ -130,7 +132,7 @@ namespace SpaceShooter
             if (AudioClipHasPlayed == false)
             {
                 SoundPlayer.Instance.Stop();
-                sound.Play();
+                sound.PlaySound();
 
                 AudioClipHasPlayed = true;
             }

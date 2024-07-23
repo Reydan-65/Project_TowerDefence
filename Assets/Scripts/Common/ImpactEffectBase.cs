@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace Common
 {
-    [RequireComponent(typeof(AudioSource))]
     public class ImpactEffectBase : MonoBehaviour
     {
         [SerializeField] protected float m_LifeTime;

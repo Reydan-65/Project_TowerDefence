@@ -5,8 +5,6 @@ namespace TowerDefence
 {
     public class BackToMainMenuButton : MonoBehaviour
     {
-        [SerializeField] private Transform m_Transition;
-
         private SceneTransitionManager m_SceneTransitionManager;
 
         private void Start()
@@ -15,7 +13,7 @@ namespace TowerDefence
         }
         public void EX_LoadMainMenuScene()
         {
-            Sound.Click.Play();
+            Sound.Click.PlaySound();
             StartCoroutine(DelayTime());
         }
 
@@ -23,7 +21,6 @@ namespace TowerDefence
         {
             yield return new WaitForSeconds(0.3f);
             m_SceneTransitionManager.LoadScene("mainMenu");
-            //SceneManager.LoadScene(0);
         }
     }
 }

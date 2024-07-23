@@ -510,7 +510,7 @@ PrefabInstance:
       objectReference: {fileID: 1304182378}
     - target: {fileID: 4925879468183622336, guid: 78d1d373fe277fc4cb6607f68bb5331e, type: 3}
       propertyPath: m_ReferenceTime
-      value: 60
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4925879468183622336, guid: 78d1d373fe277fc4cb6607f68bb5331e, type: 3}
       propertyPath: m_Conditions.Array.size
@@ -746,6 +746,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Radius: 0.7
+--- !u!1 &306800414
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 306800415}
+  - component: {fileID: 306800416}
+  m_Layer: 0
+  m_Name: EnemyWave 0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &306800415
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306800414}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4055905045120706330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &306800416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306800414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a08b7adca73c1e4194edc21d57c940f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PathGroups: []
+  m_PrepareTime: 0
+  m_SpawnDelayForEachEnemyInWave: 0.5
+  m_NextWave: {fileID: 9023111944469855624}
 --- !u!114 &382476644 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5468728349877399447, guid: c7bc20afbae68324282238c39ab19385, type: 3}
@@ -3957,13 +4005,13 @@ MonoBehaviour:
   m_PathGroups:
   - Squads:
     - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
-      Count: 2
+      Count: 6
   - Squads:
     - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
-      Count: 2
+      Count: 6
   - Squads:
     - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
-      Count: 1
+      Count: 6
   m_PrepareTime: 20
   m_SpawnDelayForEachEnemyInWave: 0.5
   m_NextWave: {fileID: 431821778968117527}
@@ -3982,16 +4030,22 @@ MonoBehaviour:
   m_PathGroups:
   - Squads:
     - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
-      Count: 2
+      Count: 3
+    - Asset: {fileID: 11400000, guid: 44430cdde0d87274a9c6173f5434dfd9, type: 2}
+      Count: 1
   - Squads:
+    - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
+      Count: 3
     - Asset: {fileID: 11400000, guid: 44430cdde0d87274a9c6173f5434dfd9, type: 2}
       Count: 1
   - Squads: []
   - Squads: []
-  - Squads: []
   - Squads:
     - Asset: {fileID: 11400000, guid: 3248a2273e11db141857bd8f4fc95349, type: 2}
-      Count: 1
+      Count: 2
+  - Squads:
+    - Asset: {fileID: 11400000, guid: 3248a2273e11db141857bd8f4fc95349, type: 2}
+      Count: 2
   m_PrepareTime: 20
   m_SpawnDelayForEachEnemyInWave: 0.5
   m_NextWave: {fileID: 431821779298879318}
@@ -4010,30 +4064,30 @@ MonoBehaviour:
   m_PathGroups:
   - Squads:
     - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
-      Count: 2
+      Count: 4
     - Asset: {fileID: 11400000, guid: 533661c9f7ff3644b910f808cf88a015, type: 2}
-      Count: 2
-    - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
-      Count: 1
-  - Squads:
-    - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
-      Count: 2
-    - Asset: {fileID: 11400000, guid: 533661c9f7ff3644b910f808cf88a015, type: 2}
-      Count: 2
+      Count: 4
     - Asset: {fileID: 11400000, guid: d26cabe677af6cd4795035b2aab2b292, type: 2}
-      Count: 1
+      Count: 2
+  - Squads:
+    - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
+      Count: 4
+    - Asset: {fileID: 11400000, guid: 533661c9f7ff3644b910f808cf88a015, type: 2}
+      Count: 4
+    - Asset: {fileID: 11400000, guid: d26cabe677af6cd4795035b2aab2b292, type: 2}
+      Count: 2
   - Squads:
     - Asset: {fileID: 11400000, guid: 44430cdde0d87274a9c6173f5434dfd9, type: 2}
-      Count: 1
+      Count: 2
   - Squads:
     - Asset: {fileID: 11400000, guid: 44430cdde0d87274a9c6173f5434dfd9, type: 2}
-      Count: 1
+      Count: 2
   - Squads:
     - Asset: {fileID: 11400000, guid: 3248a2273e11db141857bd8f4fc95349, type: 2}
-      Count: 1
+      Count: 3
   - Squads:
     - Asset: {fileID: 11400000, guid: 3248a2273e11db141857bd8f4fc95349, type: 2}
-      Count: 1
+      Count: 3
   m_PrepareTime: 20
   m_SpawnDelayForEachEnemyInWave: 0.5
   m_NextWave: {fileID: 1457574713727243577}
@@ -4218,21 +4272,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PathGroups:
   - Squads:
+    - Asset: {fileID: 11400000, guid: 3248a2273e11db141857bd8f4fc95349, type: 2}
+      Count: 2
     - Asset: {fileID: 11400000, guid: 60335cb514140fb4db4c4c2944bc825d, type: 2}
       Count: 1
   - Squads:
+    - Asset: {fileID: 11400000, guid: 3248a2273e11db141857bd8f4fc95349, type: 2}
+      Count: 2
     - Asset: {fileID: 11400000, guid: 60335cb514140fb4db4c4c2944bc825d, type: 2}
       Count: 1
   - Squads:
+    - Asset: {fileID: 11400000, guid: 3248a2273e11db141857bd8f4fc95349, type: 2}
+      Count: 2
     - Asset: {fileID: 11400000, guid: 60335cb514140fb4db4c4c2944bc825d, type: 2}
       Count: 1
   - Squads:
+    - Asset: {fileID: 11400000, guid: 3248a2273e11db141857bd8f4fc95349, type: 2}
+      Count: 2
     - Asset: {fileID: 11400000, guid: 60335cb514140fb4db4c4c2944bc825d, type: 2}
       Count: 1
   - Squads:
+    - Asset: {fileID: 11400000, guid: 3248a2273e11db141857bd8f4fc95349, type: 2}
+      Count: 2
     - Asset: {fileID: 11400000, guid: 60335cb514140fb4db4c4c2944bc825d, type: 2}
       Count: 1
   - Squads:
+    - Asset: {fileID: 11400000, guid: 3248a2273e11db141857bd8f4fc95349, type: 2}
+      Count: 2
     - Asset: {fileID: 11400000, guid: 60335cb514140fb4db4c4c2944bc825d, type: 2}
       Count: 1
   m_PrepareTime: 20
@@ -4422,6 +4488,7 @@ Transform:
   - {fileID: 280325486}
   - {fileID: 5930778268938371326}
   - {fileID: 1784907437}
+  - {fileID: 306800415}
   - {fileID: 8227011853568582661}
   - {fileID: 786613358113757802}
   - {fileID: 786613357174823066}
@@ -4483,7 +4550,7 @@ MonoBehaviour:
   - {fileID: 280325487}
   - {fileID: 5657814514053390523}
   - {fileID: 1784907438}
-  m_CurrentWave: {fileID: 9023111944469855624}
+  m_CurrentWave: {fileID: 306800416}
 --- !u!4 &4401417200191319139
 Transform:
   m_ObjectHideFlags: 0
@@ -5094,10 +5161,10 @@ MonoBehaviour:
   m_PathGroups:
   - Squads:
     - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
-      Count: 1
+      Count: 3
   - Squads:
     - Asset: {fileID: 11400000, guid: 436ed73d54f91d34bbe2fc069fee4d07, type: 2}
-      Count: 1
+      Count: 3
   m_PrepareTime: 2
   m_SpawnDelayForEachEnemyInWave: 0.5
   m_NextWave: {fileID: 431821778028135399}

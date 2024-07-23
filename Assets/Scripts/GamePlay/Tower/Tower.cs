@@ -7,6 +7,8 @@ namespace TowerDefence
 {
     public class Tower : Entity
     {
+        private static readonly Color GizmoColor = new Color(0, 1, 1, 0.2f);
+        
         [SerializeField] private float m_Radius;
 
         private Turret[] m_Turrets;
@@ -17,7 +19,8 @@ namespace TowerDefence
         private Transform m_PlayerCamp;
         public float Radius => m_Radius;
 
-        private static readonly Color GizmoColor = new Color(0, 1, 1, 0.2f);
+        private Vector2 m_TargetPoint;
+        public Vector2 TargetPoint => m_TargetPoint;
 
         private void Start()
         {
@@ -38,12 +41,10 @@ namespace TowerDefence
 
                     if (targetVector.magnitude <= m_Radius)
                     {
-                        foreach (var turret in m_Turrets)
-                        {
-                            turret.transform.up = MakeLead(targetVector, turret.TurretProperties.ProjectilePrefab.GetComponent<Projectile>().Velocity,
-                                                           turret.transform.localPosition, m_SelectedTarget);
-                            turret.Fire();
-                        }
+                        m_TargetPoint = MakeLead(targetVector, m_FirstTurret.TurretProperties.ProjectilePrefab.GetComponent<Projectile>().Velocity,
+                                                 m_FirstTurret.transform.localPosition, m_SelectedTarget);
+                        m_FirstTurret.transform.up = m_TargetPoint;
+                        m_FirstTurret.Fire();
                     }
                     else
                     {

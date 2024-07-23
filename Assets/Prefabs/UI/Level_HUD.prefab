@@ -6154,6 +6154,7 @@ GameObject:
   - component: {fileID: 8355208496828237913}
   - component: {fileID: 8652014494487581914}
   - component: {fileID: 5306775974155774668}
+  - component: {fileID: 6740181417501697718}
   - component: {fileID: 1553116374216692463}
   m_Layer: 5
   m_Name: Resume_Button
@@ -6264,6 +6265,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 6740181417501697718}
+        m_TargetAssemblyTypeName: TowerDefence.ButtonFix, Assembly-CSharp
+        m_MethodName: EX_FixAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8894520194390628493}
         m_TargetAssemblyTypeName: SpaceShooter.PausePanel, Assembly-CSharp
         m_MethodName: EX_ResumeGame
@@ -6276,6 +6289,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6740181417501697718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6893075147106023276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c9296cd99fd9c247aeca4ea12851e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &1553116374216692463
 Animator:
   serializedVersion: 5

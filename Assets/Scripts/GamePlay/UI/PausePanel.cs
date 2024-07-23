@@ -24,7 +24,7 @@ namespace SpaceShooter
 
         public void EX_PauseGame()
         {
-            Sound.Click.Play();
+            Sound.Click.PlaySound();
 
             isPaused = true;
             LevelController.StopLevelActivity();
@@ -33,7 +33,7 @@ namespace SpaceShooter
 
         public void EX_ResumeGame()
         {
-            Sound.Click.Play();
+            Sound.Click.PlaySound();
 
             StartCoroutine(DelayTime());
         }
@@ -49,7 +49,7 @@ namespace SpaceShooter
 
         public void EX_LoadLevelMap()
         {
-            Sound.Click.Play();
+            Sound.Click.PlaySound();
 
             isPaused = false;
             OnLeaveLevelSceneUnsubscribe();
@@ -58,7 +58,7 @@ namespace SpaceShooter
 
         public void EX_LoadMainMenu()
         {
-            Sound.Click.Play();
+            Sound.Click.PlaySound();
 
             isPaused = false;
             OnLeaveLevelSceneUnsubscribe();

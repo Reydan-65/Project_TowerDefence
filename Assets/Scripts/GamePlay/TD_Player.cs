@@ -47,6 +47,7 @@ namespace TowerDefence
             m_CurrentNumLives = m_StartNumLives;
             m_CurrentGold = m_StartGold;
             m_CurrentNumEnergy = m_StartEnergy;
+            m_CurrentGoldAddRate = m_BaseGoldAddRate;
             m_CurrentEnergyRegenRate = m_BaseEnergyRegenRate;
         }
 
@@ -86,17 +87,30 @@ namespace TowerDefence
 
         private void Update()
         {
+            AddGoldRate(Time.deltaTime);
             RegenRateEnergy(Time.deltaTime);
+        }
+
+        private void AddGoldRate(float deltaTime)
+        {
+            m_AddGoldTimer += deltaTime;
+
+            if (m_AddGoldTimer >= 1.0f)
+            {
+                m_CurrentGold = (int)MathF.Min(m_CurrentGold + m_CurrentGoldAddRate, 999);
+                m_AddGoldTimer = 0.0f;
+                OnGoldUpdate(m_CurrentGold);
+            }
         }
 
         private void RegenRateEnergy(float deltaTime)
         {
-            m_RegenTimer += deltaTime;
+            m_EnergyRegenTimer += deltaTime;
 
-            if (m_RegenTimer >= 1.0f)
+            if (m_EnergyRegenTimer >= 1.0f)
             {
                 m_CurrentNumEnergy = (int)MathF.Min(m_CurrentNumEnergy + m_CurrentEnergyRegenRate, m_MaxEnergy);
-                m_RegenTimer = 0.0f;
+                m_EnergyRegenTimer = 0.0f;
                 OnEnergyUpdate(m_CurrentNumEnergy);
             }
         }

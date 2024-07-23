@@ -28,7 +28,7 @@ namespace TowerDefence
             }
             else
             {
-                Sound.PlayerLoseHP.Play();
+                Sound.PlayerLoseHP.PlaySound();
 
                 OnEndPath.Invoke();
                 Destroy(gameObject);

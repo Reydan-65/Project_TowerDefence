@@ -48,11 +48,11 @@ namespace SpaceShooter
 
             /// Звук выстрела.
             if (Mode == TurretMode.Primary && m_TurretProperties.ProjectilePrefab.GetComponent<ArrowProjectile>() == true)
-                Sound.Arrow.Play();
+                Sound.Arrow.PlaySound();
             if (Mode == TurretMode.Primary && m_TurretProperties.ProjectilePrefab.GetComponent<FrostProjectile>() == true)
-                Sound.Arrow.Play();
+                Sound.Arrow.PlaySound();
             if (Mode == TurretMode.Primary && m_TurretProperties.ProjectilePrefab.GetComponent<SiegeProjectile>() == true)
-                Sound.Arrow.Play();
+                Sound.Arrow.PlaySound();
         }
 
         public override void AssingLoadout(TurretProperties properties)

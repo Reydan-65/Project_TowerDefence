@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf0c1cafa9fe94147a69e7a77a0f1c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MusicVolume: 0.293
-  m_SoundsVolume: 0.293
+  m_SoundsVolume: 0.202
+  m_Musics: {fileID: 11400000, guid: 02b9c88c130ae9e47b47217dbc564e8a, type: 2}
   m_Sounds: {fileID: 11400000, guid: 02b9c88c130ae9e47b47217dbc564e8a, type: 2}
-  m_BGM: {fileID: 8300000, guid: d04de44dd857c304ebfcb8f6c0af5082, type: 3}
+  m_SettingsPanel: {fileID: 0}
 --- !u!82 &1050185200865121354
 AudioSource:
   m_ObjectHideFlags: 0
@@ -61,7 +61,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.247
   m_Pitch: 1
   Loop: 0
   Mute: 0

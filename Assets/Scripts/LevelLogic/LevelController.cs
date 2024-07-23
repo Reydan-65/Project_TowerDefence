@@ -63,7 +63,7 @@ namespace SpaceShooter
 
         private void FixedUpdate()
         {
-            if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("levelMap"))
+            if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName(LevelMapSceneName))
             {
                 if (PausePanel.isPaused) return;
 
@@ -76,6 +76,23 @@ namespace SpaceShooter
 
                 if (Player.Instance.CurrentNumLives == 0)
                     Lose();
+            }
+        }
+        private void OnDestroy()
+        {
+            ClearScene();
+        }
+
+        /// <summary>
+        /// Очистка.
+        /// </summary>
+        private void ClearScene()
+        {
+            Enemy[] enemies = FindObjectsOfType<Enemy>();
+
+            foreach (var enemy in enemies)
+            {
+                if (enemy != null) Destroy(enemy);
             }
         }
 
@@ -109,6 +126,7 @@ namespace SpaceShooter
                 m_LevelScore -= 1;
 
             MapCompletion.Instance.SaveLevelResult(m_LevelScore);
+
             StopLevelActivity();
 
             LevelPassed.Invoke();
@@ -120,6 +138,11 @@ namespace SpaceShooter
 
             if (buyControl != null)
                 buyControl.gameObject.SetActive(false);
+
+            EnemyWaveManager enemyWaveManager = FindAnyObjectByType<EnemyWaveManager>();
+
+            if (enemyWaveManager != null)
+                enemyWaveManager.PauseSpawnEnemiesCoroutine();
 
             foreach (var enemy in FindObjectsOfType<Enemy>())
             {
@@ -168,27 +191,11 @@ namespace SpaceShooter
             EnableAll<Abilities>();
             EnableAll<TD_Player>();
             EnableAll<EnemyWaveManager>();
-        }
 
-        public void LoadNextLevel()
-        {
-            if (m_LevelSequencesController.CurrentLevelIsLast() == false)
-            {
-                string nextLevelSceneName = m_LevelSequencesController.GetNextLevelProperties(m_CurrentLevelProperties).SceneName;
+            EnemyWaveManager enemyWaveManager = FindAnyObjectByType<EnemyWaveManager>();
 
-                m_SceneTransitionManager.LoadScene(nextLevelSceneName);
-            }
-            else
-                m_SceneTransitionManager.LoadScene(MainMenuSceneName);
-        }
-
-        public void RestartLevel()
-        {
-            if (m_CurrentLevelProperties != null)
-                m_SceneTransitionManager.LoadScene(m_CurrentLevelProperties.SceneName);
-
-            if (m_CurrentBranchLevelProperties != null)
-                m_SceneTransitionManager.LoadScene(m_CurrentBranchLevelProperties.SceneName);
+            if (enemyWaveManager != null)
+                enemyWaveManager.ResumeSpawnEnemiesCoroutine();
         }
 
         public void ReturnLevelMap()

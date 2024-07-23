@@ -1,7 +1,10 @@
 using UnityEngine;
 using SpaceShooter;
-using UnityEditor;
 using System;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace TowerDefence
 {
@@ -120,7 +123,7 @@ namespace TowerDefence
 
                 EnemyAsset asset = EditorGUILayout.ObjectField(null, typeof(EnemyAsset), false) as EnemyAsset;
 
-                if (asset != null)
+                if (asset)
                 {
                     (target as Enemy).Use(asset);
                 }

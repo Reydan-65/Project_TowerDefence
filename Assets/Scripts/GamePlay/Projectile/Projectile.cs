@@ -10,20 +10,18 @@ namespace SpaceShooter
 
         [SerializeField] protected DamageType m_DamageType;
         [SerializeField] protected GameObject m_ImpactEffect;
-        [SerializeField] protected Sound m_ShootSound;
+        [SerializeField] protected Sound m_LaunchSound;
         [SerializeField] protected Sound m_HitSound;
 
         protected override void Awake()
         {
             base.Awake();
-            m_ShootSound.Play();
+            m_LaunchSound.PlaySound();
         }
         protected override void OnHit(Destructible destructible)
         {
             base.OnHit(destructible);
-            m_HitSound.Play();
-
-            //OnTargetDestroyed(destructible);
+            m_HitSound.PlaySound();
         }
 
         protected override void OnHit(RaycastHit2D hit)
@@ -38,38 +36,6 @@ namespace SpaceShooter
                 OnProjectileLifeEnd(hit.collider, hit.point);
             }
         }
-
-        /*
-        /// <summary>
-        /// Начисление очков за уничтожение объектов.
-        /// Начисление количества убитых противников.
-        /// Исключить корабль игрока.
-        /// </summary>
-        /// <param name="destructible"></param>
-        public void OnTargetDestroyed(Destructible destructible)
-        {
-            if (destructible == null) return;
-            
-            if (destructible.HitPoints <= 0)
-            {
-                if (m_Parent == Player.Instance.ActiveShip)
-                {
-                    if (destructible != Player.Instance.ActiveShip)
-                    {
-                        Player.Instance.AddScore(destructible.ScoreValue);
-
-                        if (destructible is SpaceShip)
-                        {
-                            if (destructible.HitPoints <= 0)
-                                Player.Instance.AddKill();
-                        }
-                    }
-                }
-
-                TD_Player.Instance.ReduceEnemiesLast();
-            
-        }
-        */
 
         protected override void OnProjectileLifeEnd(Collider2D collider, Vector2 position)
         {
@@ -87,12 +53,8 @@ namespace SpaceShooter
         {
             Collider2D collider = hit.collider.GetComponent<Collider2D>();
 
-            //if (collider.GetComponent<Wall>() == true || collider.transform.root.GetComponent<GravityWell>() == true)
-            //    OnProjectileLifeEnd(hit.collider, hit.point);
-
             return base.OnHitObstacles(hit);
         }
-
 
         protected bool CanDealDamageToTarget(Enemy target, Turret turret)
         {

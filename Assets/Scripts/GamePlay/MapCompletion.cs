@@ -19,7 +19,7 @@ namespace TowerDefence
         private LevelProperties[] m_LevelProperties;
         private BranchLevelProperties[] m_BranchLevelProperties;
         private int m_TotalScore;
-        
+
         public int TotalScore => m_TotalScore;
 
         private void Awake()

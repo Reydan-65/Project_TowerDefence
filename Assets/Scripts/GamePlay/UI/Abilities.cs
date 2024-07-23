@@ -47,12 +47,14 @@ namespace TowerDefence
             /// </summary>
             public void Use()
             {
+                Sound.ExplosionAbility_Use.PlaySound();
+
                 Instance.m_TargetingCircle.gameObject.SetActive(true);
                 Instance.m_TargetingCircle.GetComponent<RectTransform>().sizeDelta = new Vector2(m_Radius * 2 * 100, m_Radius * 2 * 100);
 
                 ClickProtection.Instance.Activate((Vector2 clickPosition) =>
                 {
-                    Sound.ExplosionAbility.Play();
+                    Sound.ExplosionAbility_Active.PlaySound();
 
                     Instance.m_ExplosionAbilityCooldownImage.color = Color.red;
                     Instance.m_ExplosionAbilityTimerText.enabled = true;
@@ -109,7 +111,7 @@ namespace TowerDefence
             /// </summary>
             public void Use()
             {
-                Sound.SlowEnemyAbility.Play();
+                Sound.SlowEnemyAbility_Active.PlaySound();
 
                 Instance.m_SlowEnemyAbilityDurationTime = m_Duration;
                 Instance.m_SlowEnemyAbilityButton.interactable = false;
@@ -137,6 +139,7 @@ namespace TowerDefence
 
                     foreach (var enemy in FindObjectsOfType<Enemy>())
                     {
+                        Sound.SlowEnemyAbility_End.PlaySound();
                         enemy.GetComponent<SpaceShip>().RestoreMaxLinearVelocityOnValue();
                     }
 
@@ -232,7 +235,7 @@ namespace TowerDefence
         {
             UpdateButtonState(m_ExplosionAbilityButton, m_ExplosionAbility.Cooldown, ref m_ExplosionAbilityCooldownTime, m_ExplosionAbilityTimerText, 1, m_ExplosionAbility.Cost, m_ExplosionAbilityLockerImage);
 
-            if (m_SlowEnemyAbilityDurationTime > 0 && m_SlowEnemyAbilityCooldownTime ==0)
+            if (m_SlowEnemyAbilityDurationTime > 0 && m_SlowEnemyAbilityCooldownTime == 0)
                 UpdateButtonState(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Duration, ref m_SlowEnemyAbilityDurationTime, m_SlowEnemyAbilityTimerText, -1, m_SlowEnemyAbility.Cost);
             else
                 UpdateButtonState(m_SlowEnemyAbilityButton, m_SlowEnemyAbility.Cooldown, ref m_SlowEnemyAbilityCooldownTime, m_SlowEnemyAbilityTimerText, 1, m_SlowEnemyAbility.Cost, m_SlowEnemyAbilityLockerImage);

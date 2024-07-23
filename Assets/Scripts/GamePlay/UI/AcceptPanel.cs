@@ -1,3 +1,4 @@
+using SpaceShooter;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,13 +20,13 @@ namespace TowerDefence
             FileHandler.Reset(MapCompletion.filename);
             FileHandler.Reset(Upgrades.filename);
 
-            Sound.Click.Play();
+            Sound.Click.PlaySound();
             m_SceneTransitionManager.LoadScene("levelMap");
         }
 
         public void EX_Cancel()
         {
-            Sound.Click.Play();
+            Sound.Click.PlaySound();
             StartCoroutine(WaitTimer());
         }
 

@@ -9,7 +9,7 @@ namespace TowerDefence
 
         public void EX_OpenShop()
         {
-            Sound.Click.Play();
+            Sound.Click.PlaySound();
             StartCoroutine(DelayTime());
         }
 

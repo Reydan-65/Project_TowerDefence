@@ -9,6 +9,7 @@ namespace TowerDefence
     {
         [SerializeField] private Button m_ContinueButton;
         [SerializeField] private AcceptPanel m_AcceptPanel;
+        [SerializeField] private Transform m_SettingsPanel;
 
         private SceneTransitionManager m_SceneTransitionManager;
 
@@ -24,7 +25,7 @@ namespace TowerDefence
 
         public void EX_StartNewGame()
         {
-            Sound.Click.Play();
+            Sound.Click.PlaySound();
 
             if (FileHandler.HasFile(MapCompletion.filename))
                 m_AcceptPanel.gameObject.SetActive(true);
@@ -36,13 +37,19 @@ namespace TowerDefence
 
         public void EX_ContinueGame()
         {
-            Sound.Click.Play();
+            Sound.Click.PlaySound();
             m_SceneTransitionManager.LoadScene("levelMap");
+        }
+
+        public void EX_OpenSettings()
+        {
+            Sound.Click.PlaySound();
+            m_SettingsPanel.gameObject.SetActive(true);
         }
 
         public void EX_Quit()
         {
-            Sound.Click.Play();
+            Sound.Click.PlaySound();
 
             StartCoroutine(DelayTime());
         }

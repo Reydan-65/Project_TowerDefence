@@ -14,17 +14,21 @@ namespace SpaceShooter
         [SerializeField] protected int m_MaxEnergy;
         [SerializeField] protected int m_StartEnergy;
         [SerializeField] protected float m_BaseEnergyRegenRate;
+        [SerializeField] protected float m_BaseGoldAddRate;
 
         protected int m_CurrentNumLives;
         protected int m_CurrentNumEnergy;
+        protected float m_CurrentGoldAddRate;
         protected float m_CurrentEnergyRegenRate;
-        protected float m_RegenTimer = 0f;
+        protected float m_AddGoldTimer = 0f;
+        protected float m_EnergyRegenTimer = 0f;
 
         public int StartNumLives => m_StartNumLives;
         public int CurrentNumLives { get { return m_CurrentNumLives; } }
         public int StartEnergy => m_StartEnergy;
         public int CurrentNumEnergy { get { return m_CurrentNumEnergy; } }
         public float BaseEnergyRegenRate => m_BaseEnergyRegenRate;
+        public float CurrentGoldAddRate => m_BaseGoldAddRate;
         public float CurrentEnergyRegenRate => m_CurrentEnergyRegenRate;
 
         //[SerializeField] private SpaceShip m_PlayerShipPrefab;

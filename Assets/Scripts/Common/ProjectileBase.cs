@@ -48,12 +48,6 @@ namespace Common
 
             transform.position += new Vector3(step.x, step.y, 0);
         }
-        /*
-        
-        */
-        
-        
-        
 
         // Попадание в препятствие
         protected virtual RaycastHit2D OnHitObstacles(RaycastHit2D hit)
@@ -67,9 +61,11 @@ namespace Common
             m_Parent = parent;
         }
 
+        /*
         public void SetTarget(Destructible target)
         {
 
         }
+        */
     }
 }

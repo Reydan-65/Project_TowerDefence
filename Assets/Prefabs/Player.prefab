@@ -48,5 +48,6 @@ MonoBehaviour:
   m_MaxEnergy: 100
   m_StartEnergy: 0
   m_BaseEnergyRegenRate: 1
-  m_StartGold: 5
+  m_BaseGoldAddRate: 1
+  m_StartGold: 10
   m_TowerPrefab: {fileID: 1872876884523521784, guid: f07ad853076b53a45b234d68b53a7ce7, type: 3}

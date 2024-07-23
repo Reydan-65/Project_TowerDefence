@@ -20,7 +20,6 @@ namespace TowerDefence
 
         private void Awake()
         {
-
             while (m_Saves.Count < Instance.Assets.PlayerProperties.Length +
                                    Instance.Assets.TowerProperties.Length +
                                    Instance.Assets.AbilityProperties.Length)
@@ -42,6 +41,7 @@ namespace TowerDefence
             {
                 m_Saves[Instance.Assets.PlayerProperties.Length + Instance.Assets.TowerProperties.Length + i].UpgradeName = Instance.Assets.AbilityProperties[i].UpgradeName;
             }
+
             Saver<List<UpgradeSave>>.TryLoad(filename, ref m_Saves);
         }
 

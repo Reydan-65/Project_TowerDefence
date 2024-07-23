@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using SpaceShooter;
 using UnityEngine.UI;
 
@@ -25,14 +24,21 @@ namespace TowerDefence
         {
             get
             {
-                return gameObject.activeSelf &&
-                       m_ResultPanel.gameObject.activeSelf;
+                return gameObject.activeSelf && m_ResultPanel.gameObject.activeSelf;
             }
         }
 
         private void Awake()
         {
-            //Назначаем каждому уровню соответствующую его типу и индексу сцену.
+            SetScene();
+
+            m_SceneTransitionManager = FindObjectOfType<SceneTransitionManager>();
+            m_ResultPanel.gameObject.SetActive(false);
+        }
+
+        //Назначаем каждому уровню соответствующую его типу и индексу сцену.
+        private void SetScene()
+        {
             int index = -1;
 
             m_LevelIndex = index;
@@ -45,19 +51,12 @@ namespace TowerDefence
 
             if (m_LevelIndex >= 0)
                 m_LevelProperties = LevelSequencesController.Instance.LevelSequences.LevelsProperties[m_LevelIndex];
-            else
-            if (m_BranchLevelIndex >= 0)
+            else if (m_BranchLevelIndex >= 0)
                 m_BranchLevelProperties = LevelSequencesController.Instance.LevelSequences.BranchLevelsProperties[m_BranchLevelIndex];
-            
-            m_SceneTransitionManager = FindObjectOfType<SceneTransitionManager>();
-
-            //Отключаем панель результата уровня
-            m_ResultPanel.gameObject.SetActive(false);
         }
 
         public void EX_LoadLevel()
         {
-
             if (m_LevelIndex >= 0)
                 m_SceneTransitionManager.LoadScene(m_LevelProperties.SceneName);
 
